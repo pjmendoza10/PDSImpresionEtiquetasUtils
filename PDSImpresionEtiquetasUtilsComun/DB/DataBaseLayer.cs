@@ -24,22 +24,56 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
         #region DB_pds_progutils_PALETS
 
         #region Canonicas
-        public bool DB_pds_progutils_PALETS_Insert(DB_pds_progutils_GER01_PALETS p_dato)
+        public bool DB_pds_progutils_PALETS_Insert(string sscc, string idEtiqueta, string datosSerialiados)
         {
             using (var command = new SqlCommand(
                     @"INSERT INTO PDSImpresionEtiquetasUtils.dbo.HISTORICO_ETIQUETAS 
-                    ([SSCC],
+                    ([uid_etiqueta],
+                    [SSCC],
                     [Fecha_registro],
                     [uid_tipo_etiqueta],
                     [Datos]
                     ) 
                     VALUES
-                    (@value1, @value2, @value3, @value4) "))
+                    (@value1, @value2, @value3, @value4, value5) "))
             {
-                command.Parameters.AddWithValue("@value1", p_dato.IdEtiquetaPalet);
-                command.Parameters.AddWithValue("@value2", DateTime.Now);
-                command.Parameters.AddWithValue("@value3", p_dato.CodArticulo);
-                command.Parameters.AddWithValue("@value4", p_dato.DescripcionArticulo);
+                //command.Parameters.AddWithValue("@value1", id);
+                command.Parameters.AddWithValue("@value2", idEtiqueta);
+                command.Parameters.AddWithValue("@value3", DateTime.Now);
+                command.Parameters.AddWithValue("@value4", idEtiqueta);
+                command.Parameters.AddWithValue("@value5", datosSerialiados);
+
+                bool b_ok = MyExecuteNonQueryCommand(command);
+
+                return b_ok;
+            }
+        }
+
+        public bool DB_pds_progutils_PALETS_Update(string sscc, string idEtiqueta, string datosSerialiados)
+        {
+            using (var command = new SqlCommand(
+                    @"UPDATE PDSImpresionEtiquetasUtils.dbo.HISTORICO_ETIQUETAS SET      
+                    [uid_tipo_etiqueta] = @value1,
+                    [Datos] = @value2
+                    WHERE [SSCC] = @w_value1"))
+            {
+                command.Parameters.AddWithValue("@value1", idEtiqueta);
+                command.Parameters.AddWithValue("@value2", datosSerialiados);
+                command.Parameters.AddWithValue("@w_value1", sscc);
+
+                bool b_ok = MyExecuteNonQueryCommand(command);
+
+                return b_ok;
+            }
+        }
+
+        public bool DB_pds_progutils_PALETS_Delete(string p_IdEtiquetaPalet)
+        {
+            using (var command = new SqlCommand(
+                    @"DELETE FROM PDSImpresionEtiquetasUtils.dbo.HISTORICO_ETIQUETAS 
+                    WHERE [IdEtiquetaPalet] = @w_value1"))
+            {
+                command.Parameters.AddWithValue("@w_value1", p_IdEtiquetaPalet);
 
                 bool b_ok = MyExecuteNonQueryCommand(command);
 
@@ -284,6 +318,7 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
 
             return b_item;
         }
+
         #endregion
 
         #region DB_pds_progutils_GER01_PALETS_BOBINAS
