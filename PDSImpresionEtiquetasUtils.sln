@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDSImpresionEtiquetasUtils", "PDSImpresionEtiquetasUtils\PDSImpresionEtiquetasUtils.csproj", "{79511646-2B71-4DB5-B2A5-EC0026A051E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDSDataBaseLayerBasico", "PDSDataBaseLayerBasico\PDSDataBaseLayerBasico.csproj", "{658BBA15-1F17-40C0-B91A-F6A356E81ABC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDSImpresionEtiquetasUtilsComun", "PDSImpresionEtiquetasUtilsComun\PDSImpresionEtiquetasUtilsComun.csproj", "{B2A8FE5F-4B02-4478-9743-9FCD3769D787}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDSImpresionEtiquetasUtilsInit", "PDSImpresionEtiquetasUtilsInit\PDSImpresionEtiquetasUtilsInit.csproj", "{B8F03BA4-4163-4CD8-B0DC-E37A952ADA5F}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupPDSImpresionEtiquetasUtils", "SetupPDSImpresionEtiquetasUtils\SetupPDSImpresionEtiquetasUtils.vdproj", "{B996139B-7397-4FBD-AF03-D8F8C45927BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79511646-2B71-4DB5-B2A5-EC0026A051E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79511646-2B71-4DB5-B2A5-EC0026A051E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79511646-2B71-4DB5-B2A5-EC0026A051E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79511646-2B71-4DB5-B2A5-EC0026A051E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{658BBA15-1F17-40C0-B91A-F6A356E81ABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{658BBA15-1F17-40C0-B91A-F6A356E81ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{658BBA15-1F17-40C0-B91A-F6A356E81ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{658BBA15-1F17-40C0-B91A-F6A356E81ABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2A8FE5F-4B02-4478-9743-9FCD3769D787}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2A8FE5F-4B02-4478-9743-9FCD3769D787}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2A8FE5F-4B02-4478-9743-9FCD3769D787}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2A8FE5F-4B02-4478-9743-9FCD3769D787}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8F03BA4-4163-4CD8-B0DC-E37A952ADA5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8F03BA4-4163-4CD8-B0DC-E37A952ADA5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8F03BA4-4163-4CD8-B0DC-E37A952ADA5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8F03BA4-4163-4CD8-B0DC-E37A952ADA5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B996139B-7397-4FBD-AF03-D8F8C45927BA}.Debug|Any CPU.ActiveCfg = Debug
+		{B996139B-7397-4FBD-AF03-D8F8C45927BA}.Debug|Any CPU.Build.0 = Debug
+		{B996139B-7397-4FBD-AF03-D8F8C45927BA}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {33604DE0-6669-43B1-8ED4-BCA93C092676}
+	EndGlobalSection
+EndGlobal

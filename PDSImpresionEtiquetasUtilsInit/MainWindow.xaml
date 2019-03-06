@@ -1,0 +1,19 @@
+﻿<Window x:Class="PDSImpresionEtiquetasUtilsInit.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PDSImpresionEtiquetasUtilsInit"
+        mc:Ignorable="d"
+       Title="PDS - Impresión - Etiquetas - Actualizador" Height="164" Width="525" Icon="SGAUtils-01.ico">
+    <Window.DataContext>
+        <!-- Declaratively create an instance of our SongViewModel -->
+        <local:MainWindow_ViewModel />
+    </Window.DataContext>
+    <Grid>
+        <ProgressBar x:Name="pgbPrincipal" Margin="10,0,10,23" Height="20" VerticalAlignment="Bottom" Maximum="{Binding MaximoProgressBar}" Value="{Binding ValorProgressBar, Mode=OneWay}"/>
+        <Label Content="{Binding LabelProgreso}" Margin="10,0,10,48" Height="26" VerticalAlignment="Bottom"/>
+        <TextBlock Margin="10,10,10,0" TextWrapping="Wrap" Text="Actualizando PDSImpresionEtiquetas a nueva versión. Espere por favor." VerticalAlignment="Top" Height="49"/>
+        <Label Content="{Binding Version, Mode=OneWay}" Margin="0,0,5,1" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="8" HorizontalContentAlignment="Right"/>
+    </Grid>
+</Window>

@@ -1,0 +1,93 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="ColorLineasGrid01" Color="#FF8F8F8F"/>
+
+    <!-- Flat Button Style -->
+    <Color x:Key="FBS_BackgroundDefaultColor">White</Color>
+    <Color x:Key="FBS_BackgroundHighlightColor">#FFE8FBFA</Color>
+    <Color x:Key="FBS_BackgroundPressedColor">White</Color>
+
+    <SolidColorBrush x:Key="FBS_BackgroundDefaultBrush" Color="{StaticResource FBS_BackgroundDefaultColor}" />
+    <SolidColorBrush x:Key="FSB_BackgroundHighlightBrush" Color="{StaticResource FBS_BackgroundHighlightColor}" />
+    <SolidColorBrush x:Key="FSB_BackgroundPressedBrush" Color="{StaticResource FBS_BackgroundPressedColor}" />
+
+    <Style TargetType="Button" x:Key="FlatButton">
+        <Setter Property="Opacity" Value="1"/>
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Background" Value="{StaticResource FBS_BackgroundDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="DimGray" />
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        Background="{TemplateBinding Background}"
+                        Padding="{TemplateBinding Padding}"
+                        CornerRadius="2">
+                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource FSB_BackgroundHighlightBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource FSB_BackgroundPressedBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="Gray"/>
+                <Setter Property="BorderBrush" Value="LightGray" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Button.IsPressed" Value="False" />
+                    <Condition Property="Button.IsEnabled" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect BlurRadius="3" ShadowDepth="1" RenderingBias="Quality"/>
+                    </Setter.Value>
+                </Setter>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Flat Button Mini Style -->
+    <Style x:Key="FlatButtonMini" BasedOn="{StaticResource FlatButton}"  TargetType="{x:Type Button}">
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Button.IsPressed" Value="False" />
+                    <Condition Property="Button.IsEnabled" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect BlurRadius="2" ShadowDepth="0.7" RenderingBias="Quality"/>
+                    </Setter.Value>
+                </Setter>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Flat Button Mini 2 Style -->
+    <Style x:Key="FlatButtonMini2" BasedOn="{StaticResource FlatButton}"  TargetType="{x:Type Button}">
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Button.IsPressed" Value="False" />
+                    <Condition Property="Button.IsEnabled" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect BlurRadius="1.5" ShadowDepth="0.3" Color="#FF999999" Opacity="0.5" RenderingBias="Quality" />
+                    </Setter.Value>
+                </Setter>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+    </ResourceDictionary>
