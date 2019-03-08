@@ -96,9 +96,16 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 if (e.Argument.ToString() == "GUARDARENBDD")
                 {
                     // TODO Serializar Entity
-                    
+                    string serializado = csEstadoPermanente.Serialize(Entity);
+                    DataBaseLayer dbl = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_PDSImpresionEtiquetas);
+
                     // TODO Guardar En BDD
-                    
+                    Entity.UIDEtiqueta = Guid.NewGuid().ToString();
+                    dbl.DB_pds_progutils_PALETS_Insert(Guid.Parse(Entity.UIDEtiqueta), Entity.NumPalet, dbl.DB_pds_progutils_PALETS_GetUIDEtiqueta("3"), serializado);
+
+                    IsStoredInBD = true;
+                    TextoBotonImpresion = "Reimprimir";
+
                 }
                 else
                 {
@@ -530,6 +537,8 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         private string _cliente;
         private string _codCliente;
 
+        private string _uidEtiqueta = null;
+
         private ObservableCollection<csItem_ListaLineasGridEtiquetaEstiu> _ListaLineasGridEtiqueta = new ObservableCollection<csItem_ListaLineasGridEtiquetaEstiu>();
         public ObservableCollection<csItem_ListaLineasGridEtiquetaEstiu> ListaLineasGridEtiqueta
         {
@@ -548,6 +557,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             set { _ListaLineasGridEtiqueta_SelectedItem = value; RaisePropertyChanged("ListaLineasGridEtiqueta_SelectedItem"); }
         }
 
+        public string UIDEtiqueta { get => _uidEtiqueta; set { _uidEtiqueta = value; RaisePropertyChanged("UIDEtiqueta"); } }
         public string CodCliente { get => _codCliente; set { _codCliente = value; RaisePropertyChanged("CodCliente"); } }
         public string Cliente { get => _cliente; set { _cliente = value; RaisePropertyChanged("Cliente"); } }
         public string CodArticulo { get => _codArticulo; set { _codArticulo = value; RaisePropertyChanged("CodArticulo"); } }

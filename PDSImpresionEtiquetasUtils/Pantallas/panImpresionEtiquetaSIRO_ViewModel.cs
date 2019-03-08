@@ -75,9 +75,6 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
             _bkgwk_GuardarEtiquetaEnBDD.Dispose();
 
-            TextoBotonImpresion = "Reimprimir";
-            IsStoredInBD = true;
-
             ((panImpresionEtiquetaSIRO)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
 
             return;
@@ -98,6 +95,8 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                     Entity.UIDEtiqueta = Guid.NewGuid().ToString(); 
                     dbl.DB_pds_progutils_PALETS_Insert(Guid.Parse(Entity.UIDEtiqueta), "", dbl.DB_pds_progutils_PALETS_GetUIDEtiqueta("2"), serializado);
 
+                    TextoBotonImpresion = "Reimprimir";
+                    IsStoredInBD = true;
                 }
                 else
                 {

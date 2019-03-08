@@ -69,8 +69,8 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         {
             CommandManager.InvalidateRequerySuggested();
 
-            _bkgwk_GuardarEtiquetaEnBDD.Dispose();
-
+            _bkgwk_GuardarEtiquetaEnBDD.Dispose();                       
+           
             ((panImpresionEtiquetaGen01)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
 
             return;
@@ -84,9 +84,15 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 if (e.Argument.ToString() == "GUARDARENBDD")
                 {
                     // TODO Serializar Entity
+                    string serializado = csEstadoPermanente.Serialize(Entity);
+                    DataBaseLayer dbl = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_PDSImpresionEtiquetas);
 
                     // TODO Guardar En BDD
+                    Entity.UIDEtiqueta = Guid.NewGuid().ToString();
+                    dbl.DB_pds_progutils_PALETS_Insert(Guid.Parse(Entity.UIDEtiqueta), Entity.Sscc, dbl.DB_pds_progutils_PALETS_GetUIDEtiqueta("1"), serializado);
 
+                    IsStoredInBD = true;
+                    TextoBotonImpresion = "Reimprimir";
                 }
                 else
                 {
@@ -414,7 +420,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                     if (!ImprimirZPL)
                     {
                         filename = imprime.GenerarPDFdesdeZPL(sLine);
-                        Process.Start(Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + filename); Thread.Sleep(500);
+                        Process.Start(Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + filename); Thread.Sleep(1000);
                         File.Delete(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + filename);
                     }
                 } else
@@ -430,10 +436,8 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                     {
                         _bkgwk_GuardarEtiquetaEnBDD.RunWorkerAsync("GUARDARENBDD");
                     }
-                    IsStoredInBD = true;
                 }
 
-                TextoBotonImpresion = "Reimprimir";
             }
             catch (Exception ex)
             {
@@ -833,6 +837,9 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             set { _ListaLineasGridEtiqueta_SelectedItem = value; RaisePropertyChanged("ListaLineasGridEtiqueta_SelectedItem"); }
         }
 
+        public string UIDEtiqueta { get => _uidEtiqueta; set { _uidEtiqueta = value; RaisePropertyChanged("UIDEtiqueta"); } }
+
+        private string _uidEtiqueta = null;
         public string CodArticulo { get => _codArticulo; set { _codArticulo = value; RaisePropertyChanged("CodArticulo"); } }
         public string Lote { get => _lote; set { _lote = value; RaisePropertyChanged("Lote"); }
         }

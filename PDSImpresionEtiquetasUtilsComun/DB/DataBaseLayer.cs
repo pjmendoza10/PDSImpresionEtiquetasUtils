@@ -63,7 +63,7 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
                     (@value1, @value2, @value3, @value4, @value5) "))
             {
                 command.Parameters.AddWithValue("@value1", guid);
-                command.Parameters.AddWithValue("@value2", "");
+                command.Parameters.AddWithValue("@value2", sscc);
                 command.Parameters.AddWithValue("@value3", DateTime.Now);
                 command.Parameters.AddWithValue("@value4", uidEtiqueta);
                 command.Parameters.AddWithValue("@value5", datosSerialiados);
