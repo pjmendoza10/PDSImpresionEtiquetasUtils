@@ -24,23 +24,48 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
         #region DB_pds_progutils_PALETS
 
         #region Canonicas
-        public bool DB_pds_progutils_PALETS_Insert(string sscc, string idEtiqueta, string datosSerialiados)
+        public Guid DB_pds_progutils_PALETS_GetUIDEtiqueta(string codEtiqueta)
+        {
+            Guid b_resultado = new Guid();
+
+            using (var command = new SqlCommand(@"SELECT [uid_tipo_etiqueta]      
+                                      FROM [PDSImpresionEtiquetasUtils].[dbo].[TIPO_ETIQUETA]
+                                      WHERE CodEtiqueta =  @codEtiqueta"))
+            {
+                command.Parameters.AddWithValue("@codEtiqueta", codEtiqueta);
+                DataTable b_dt = MyExecuteQueryCommand(command);
+
+                foreach (DataRow i_dr in b_dt.Rows)
+                {
+                    try
+                    {
+                        b_resultado = Guid.Parse(i_dr["uid_tipo_etiqueta"].ToString()); 
+                    }
+                    catch (Exception ex) { }
+                }
+            }
+
+            return b_resultado;
+        }
+
+        public bool DB_pds_progutils_PALETS_Insert(Guid guid, string sscc, Guid uidEtiqueta, string datosSerialiados)
         {
             using (var command = new SqlCommand(
                     @"INSERT INTO PDSImpresionEtiquetasUtils.dbo.HISTORICO_ETIQUETAS 
+
                     ([uid_etiqueta],
                     [SSCC],
-                    [Fecha_registro],
+                    [FechaCreacion],
                     [uid_tipo_etiqueta],
                     [Datos]
                     ) 
                     VALUES
-                    (@value1, @value2, @value3, @value4, value5) "))
+                    (@value1, @value2, @value3, @value4, @value5) "))
             {
-                //command.Parameters.AddWithValue("@value1", id);
-                command.Parameters.AddWithValue("@value2", idEtiqueta);
+                command.Parameters.AddWithValue("@value1", guid);
+                command.Parameters.AddWithValue("@value2", "");
                 command.Parameters.AddWithValue("@value3", DateTime.Now);
-                command.Parameters.AddWithValue("@value4", idEtiqueta);
+                command.Parameters.AddWithValue("@value4", uidEtiqueta);
                 command.Parameters.AddWithValue("@value5", datosSerialiados);
 
                 bool b_ok = MyExecuteNonQueryCommand(command);

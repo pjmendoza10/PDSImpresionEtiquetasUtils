@@ -5,12 +5,33 @@ using System.Text;
 using System.Threading.Tasks;
 using PDSIEUCo = PDSImpresionEtiquetasUtils.Comun;
 using MicroMvvm;
+using System.Xml.Serialization;
+using System.IO;
 //using PDSImpresionEtiquetas.RPS;
 
 namespace PDSImpresionEtiquetasUtils
 {
-        public class csEstadoPermanente
+        public static class csEstadoPermanente
         {
+            public static T Deserialize<T>(this string toDeserialize)
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+                using (StringReader textReader = new StringReader(toDeserialize))
+                {
+                    return (T)xmlSerializer.Deserialize(textReader);
+                }
+            }
+
+            public static string Serialize<T>(this T toSerialize)
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+                using (StringWriter textWriter = new StringWriter())
+                {
+                    xmlSerializer.Serialize(textWriter, toSerialize);
+                    return textWriter.ToString();
+                }
+            }
+
             private static MainWindow _PantallaPrincipal = null;
             internal static MainWindow PantallaPrincipal
             {

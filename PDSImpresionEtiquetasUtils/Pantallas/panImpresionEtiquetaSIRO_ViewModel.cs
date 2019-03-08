@@ -15,6 +15,7 @@ using System.Windows.Threading;
 using System.Data.SqlClient;
 using System.Data;
 using PDSImpresionEtiquetasUtils.Comun.DB;
+using System.Xml.Serialization;
 
 namespace PDSImpresionEtiquetasUtils.Pantallas
 {
@@ -74,6 +75,9 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
             _bkgwk_GuardarEtiquetaEnBDD.Dispose();
 
+            TextoBotonImpresion = "Reimprimir";
+            IsStoredInBD = true;
+
             ((panImpresionEtiquetaSIRO)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
 
             return;
@@ -87,9 +91,13 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 if (e.Argument.ToString() == "GUARDARENBDD")
                 {
                     // TODO Serializar Entity
-                    
+                    string serializado = csEstadoPermanente.Serialize(Entity);
+                    DataBaseLayer dbl = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_PDSImpresionEtiquetas);
+
                     // TODO Guardar En BDD
-                    
+                    Entity.UIDEtiqueta = Guid.NewGuid().ToString(); 
+                    dbl.DB_pds_progutils_PALETS_Insert(Guid.Parse(Entity.UIDEtiqueta), "", dbl.DB_pds_progutils_PALETS_GetUIDEtiqueta("2"), serializado);
+
                 }
                 else
                 {
@@ -339,7 +347,6 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                     {
                         _bkgwk_GuardarEtiquetaEnBDD.RunWorkerAsync("GUARDARENBDD");
                     }
-                    IsStoredInBD = true;
                 }
 
                 csGeneraEtiqRepro_Comun imprimir = new csGeneraEtiqRepro_Comun();
@@ -347,7 +354,6 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 Entity.Volumen = DatosPalet.Volumen;
                 imprimir.ImprimeEtiquetaPalet(printerSettings, Entity, Convert.ToBoolean(SeleccionImpresion), true, ((panImpresionEtiquetaSIRO)View).Dispatcher);
 
-                TextoBotonImpresion = "Reimprimir";
             }
             catch (Exception ex)
             {
@@ -456,8 +462,6 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         {
             get { return ""; }
         }
-
-
         public string this[string columnName]
         {
             get { return ""; }
@@ -466,6 +470,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         {
             Volumen = AnchoPalet + "x" + LargoPalet + "x" + Math.Truncate((AltoMaterial * NumAlturas) + AltoPalet) + " cm3";
         }
+
     }
 
     public class csitem_EtiquetaSiroT1 : ObservableObject, IDataErrorInfo
@@ -488,6 +493,9 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         public string Lote { get => _lote; set { _lote = value; RaisePropertyChanged("Lote"); } }
         public string CuentaPaletAlbaran { get => _cuentaPaletAlbaran; set { _cuentaPaletAlbaran = value; RaisePropertyChanged("CuentaPaletAlbaran"); } }
         public string Observaciones { get => _observaciones; set { _observaciones = value; RaisePropertyChanged("Observaciones"); } }
+        public string UIDEtiqueta { get => _uidEtiqueta; set { _uidEtiqueta = value; RaisePropertyChanged("UIDEtiqueta"); } }
+
+        private string _uidEtiqueta = null;
 
         private string _codArticulo = null;
 
