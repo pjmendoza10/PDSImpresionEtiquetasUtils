@@ -237,13 +237,13 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
         {
             DB_pds_progutils_ETIQ01_PALETS_ESTIU_GEN01 db_item = new DB_pds_progutils_ETIQ01_PALETS_ESTIU_GEN01();
 
-            using (var command = new SqlCommand("SELECT Orden_id, N_Pedido, Cliente_id, Cliente, Elementos_palet, OrderNumberCustomer, Cantidad_palet, ART.CodArticle, ART.Description, CART.ReferenceCustomer " +
-                                                  "FROM[OLANET_BASE_DATOS_2013].[dbo].[HISTORICO_PALETS] PAL " +
-                                                  "inner join RPS2013.dbo.FACOrderSL PED on PED.CodOrder = PAL.N_Pedido " +
-                                                  "inner join RPS2013.dbo.FACOrderLineSL PEDL on PEDL.IDOrder = PED.IDOrder " +
-                                                  "inner join RPS2013.dbo.STKArticle ART on ART.IDArticle = PEDL.IDArticle " +
-                                                  "left join RPS2013.dbo.FACCustomerArticleSL CART on(CART.IDCustomer = PED.IDCustomer and CART.IDArticle = art.IDArticle) " +
-                                                  "WHERE sscc = @sscc"))
+            using (var command = new SqlCommand(@"SELECT Orden_id, N_Pedido, Cliente_id, Cliente, Elementos_palet, OrderNumberCustomer, Cantidad_palet, ART.CodArticle, ART.Description, CART.ReferenceCustomer 
+                                                  FROM[OLANET_BASE_DATOS_2013].[dbo].[HISTORICO_PALETS_NEW] PAL 
+                                                  inner join RPS2013.dbo.FACOrderSL PED on PED.CodOrder = PAL.N_Pedido 
+                                                  inner join RPS2013.dbo.FACOrderLineSL PEDL on PEDL.IDOrder = PED.IDOrder 
+                                                  inner join RPS2013.dbo.STKArticle ART on ART.IDArticle = PEDL.IDArticle 
+                                                  left join RPS2013.dbo.FACCustomerArticleSL CART on(CART.IDCustomer = PED.IDCustomer and CART.IDArticle = art.IDArticle) 
+                                                  WHERE sscc = @sscc"))
             {
                 command.Parameters.AddWithValue("@sscc", sscc);
                 DataTable b_dt = MyExecuteQueryCommand(command);
@@ -270,6 +270,36 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
             return db_item;
         }
 
+        public DB_pds_progutils_ETIQ01_PALETS_ESTIU_GEN01 DB_pds_progutils_ETIQ01_PALETS_ESTIU_REP01_GetItem(string sscc)
+        {
+            DB_pds_progutils_ETIQ01_PALETS_ESTIU_GEN01 db_item = new DB_pds_progutils_ETIQ01_PALETS_ESTIU_GEN01();
+
+            using (var command = new SqlCommand(@"SELECT REP.IdEtiquetaPalet, REP.CodArticulo, Lote, SSCC, CodCliente, CUS.Description as Cliente, ART.Description, CART.ReferenceCustomer  FROM [RPS2013_OLANET].[dbo].[_pds_progutils_GER01_PALETS] REP
+				                            inner join RPS2013.dbo.STKArticle ART on ART.IDArticle = REP.IDArticulo 
+                                            left join RPS2013.dbo.FACCustomerArticleSL CART on(CART.IDCustomer = REP.IdCliente  and CART.IDArticle = art.IDArticle) 
+				                            inner join RPS2013.dbo.FACCustomer CUS on CUS.IDCustomer = REP.IdCliente
+                                            WHERE sscc = @sscc"))
+            {
+                command.Parameters.AddWithValue("@sscc", sscc);
+                DataTable b_dt = MyExecuteQueryCommand(command);
+
+                if (b_dt.Rows.Count > 0)
+                {
+                    try
+                    {
+                        db_item.IDEtiquetaPalet = b_dt.Rows[0]["IdEtiquetaPalet"].ToString();
+                        db_item.Lote = b_dt.Rows[0]["Lote"].ToString();
+                        db_item.IdCliente = b_dt.Rows[0]["CodCliente"].ToString();
+                        db_item.Cliente = b_dt.Rows[0]["Cliente"].ToString();
+                        db_item.CodArticulo = b_dt.Rows[0]["CodArticulo"].ToString();
+                        db_item.Descripcion = b_dt.Rows[0]["Description"].ToString();
+                        db_item.ReferenciaESTIU = b_dt.Rows[0]["ReferenceCustomer"].ToString();
+                    }
+                    catch (Exception ex) { }
+                }
+            }
+            return db_item;
+        }
         public List<DB_pds_progutils_LINEAS_SSCC_GEN01> DB_Pds_Progutils_LINEAS_SSCC_GEN01_GetItems(string sscc)
         {
             List<DB_pds_progutils_LINEAS_SSCC_GEN01> b_resultado = new List<DB_pds_progutils_LINEAS_SSCC_GEN01>();
@@ -284,6 +314,32 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
                     try
                     {
                         DB_pds_progutils_LINEAS_SSCC_GEN01 b_item = DB_Pds_Progutils_LINEAS_SSCC_GEN01_GetObjByDataRow(i_dr);
+
+                        b_resultado.Add(b_item);
+                    }
+                    catch (Exception ex) { }
+                }
+            }
+
+            return b_resultado;
+        }
+
+        public List<DB_pds_progutils_LINEAS_SSCC_REP01> DB_Pds_Progutils_LINEAS_SSCC_REP01_GetItems(string idEtiquetaPalet)
+        {
+            List<DB_pds_progutils_LINEAS_SSCC_REP01> b_resultado = new List<DB_pds_progutils_LINEAS_SSCC_REP01>();
+
+            using (var command = new SqlCommand(@"SELECT NumeroElementos, UnidadesXElemento, TotalUnidades
+                                                 FROM[RPS2013_OLANET].[dbo].[_pds_progutils_GER01_PALETS_LINEAS]
+                                                 WHERE IdEtiquetaPalet = @idEtiquetaPalet"))
+            {
+                command.Parameters.AddWithValue("@idEtiquetaPalet", idEtiquetaPalet);
+                DataTable b_dt = MyExecuteQueryCommand(command);
+
+                foreach (DataRow i_dr in b_dt.Rows)
+                {
+                    try
+                    {
+                        DB_pds_progutils_LINEAS_SSCC_REP01 b_item = DB_Pds_Progutils_LINEAS_SSCC_REP01_GetObjByDataRow(i_dr);
 
                         b_resultado.Add(b_item);
                     }
@@ -335,6 +391,7 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
             b_item.ValueFeature = p_row["Value"].ToString();
             return b_item;
         }
+
         private DB_pds_progutils_LINEAS_SSCC_GEN01 DB_Pds_Progutils_LINEAS_SSCC_GEN01_GetObjByDataRow(DataRow p_row)
         {
             DB_pds_progutils_LINEAS_SSCC_GEN01 b_item = new DB_pds_progutils_LINEAS_SSCC_GEN01();
@@ -344,6 +401,15 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
             return b_item;
         }
 
+        private DB_pds_progutils_LINEAS_SSCC_REP01 DB_Pds_Progutils_LINEAS_SSCC_REP01_GetObjByDataRow(DataRow p_row)
+        {
+            DB_pds_progutils_LINEAS_SSCC_REP01 b_item = new DB_pds_progutils_LINEAS_SSCC_REP01();
+            if (Double.TryParse(p_row["NumeroElementos"].ToString(), out double aux_double)) b_item.NumElementos = aux_double;
+            if (Double.TryParse(p_row["UnidadesXElemento"].ToString(), out double aux_double1)) b_item.UnidadesXElemento = aux_double1;
+            if (Double.TryParse(p_row["TotalUnidades"].ToString(), out double aux_double2)) b_item.TotalUnidades = aux_double2;
+
+            return b_item;
+        }
         #endregion
 
         #region DB_pds_progutils_GER01_PALETS_BOBINAS

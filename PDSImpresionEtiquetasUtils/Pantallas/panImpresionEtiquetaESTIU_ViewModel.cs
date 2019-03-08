@@ -105,7 +105,6 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
                     IsStoredInBD = true;
                     TextoBotonImpresion = "Reimprimir";
-
                 }
                 else
                 {
@@ -142,9 +141,21 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                     DataBaseLayer b_base = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_OLANET_BASE_DATOS_2013);
                     if (Entity.NumPalet.StartsWith("00") && Entity.NumPalet.Count() == 20) Entity.NumPalet = Entity.NumPalet.Substring(2, Entity.NumPalet.Count() - 2);
                     DB_pds_progutils_ETIQ01_PALETS_ESTIU_GEN01 db_ESTIU_item = b_base.DB_pds_progutils_ETIQ01_PALETS_ESTIU_GEN01_GetItem(Entity.NumPalet);
-                    List<DB_pds_progutils_LINEAS_SSCC_GEN01> db_ESTIU_lineas = b_base.DB_Pds_Progutils_LINEAS_SSCC_GEN01_GetItems(Entity.NumPalet);
-                    RellenaListaArticuloCliente(db_ESTIU_lineas);
-                    
+                    if (String.IsNullOrWhiteSpace(db_ESTIU_item.CodArticulo))
+                    {
+                        DataBaseLayer b_reprocesado = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_RPS2013_OLANET);
+                        db_ESTIU_item = b_base.DB_pds_progutils_ETIQ01_PALETS_ESTIU_REP01_GetItem(Entity.NumPalet);
+
+                        List<DB_pds_progutils_LINEAS_SSCC_REP01> db_ESTIU_lineas = b_base.DB_Pds_Progutils_LINEAS_SSCC_REP01_GetItems(db_ESTIU_item.IDEtiquetaPalet);
+                        RellenaListaArticuloCliente(db_ESTIU_lineas);
+
+                        MessageBox.Show("Este palet proviene de reprocesado", "Atención");
+                    }
+                    else
+                    {
+                        List<DB_pds_progutils_LINEAS_SSCC_GEN01> db_ESTIU_lineas = b_base.DB_Pds_Progutils_LINEAS_SSCC_GEN01_GetItems(Entity.NumPalet);
+                        RellenaListaArticuloCliente(db_ESTIU_lineas);
+                    }
                     Entity.CodArticulo = db_ESTIU_item.CodArticulo;
                     Entity.NumBobinas = db_ESTIU_item.CantidadPalet;
                     Entity.Cliente = db_ESTIU_item.Cliente;
@@ -210,6 +221,47 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
         }
 
+        public delegate void RellenaListaArticuloClienteRep_Callback(List<DB_pds_progutils_LINEAS_SSCC_REP01> db_list_items);
+        public void RellenaListaArticuloCliente(List<DB_pds_progutils_LINEAS_SSCC_REP01> db_list_items)
+        {
+            panImpresionEtiquetaESTIU b_vista = (panImpresionEtiquetaESTIU)View;
+
+            if (!b_vista.Dispatcher.CheckAccess())
+            {
+                RellenaListaArticuloClienteRep_Callback d = new RellenaListaArticuloClienteRep_Callback(RellenaListaArticuloCliente);
+                b_vista.Dispatcher.Invoke(d, db_list_items);
+            }
+            else
+            {
+                IDisposable d = null;
+
+                try
+                {
+                    _Entity.ListaLineasGridEtiqueta.Clear();
+                    _Entity.ListaLineasGridEtiqueta_SelectedItem = null;
+                    foreach (DB_pds_progutils_LINEAS_SSCC_REP01 item in db_list_items)
+                    {
+                        csItem_ListaLineasGridEtiquetaEstiu newitem = new csItem_ListaLineasGridEtiquetaEstiu();
+                        newitem.NumBobinas = item.NumElementos;
+                        newitem.MetrosPorBobina = item.UnidadesXElemento;
+                        newitem.TotalMetros = item.TotalUnidades;
+                        Entity.TotalMetros += item.TotalUnidades;
+                        Entity.NumBobinas += item.NumElementos;
+                        Entity.ListaLineasGridEtiqueta.Add(newitem);
+                    }
+                }
+                catch (Exception ex1)
+                {
+
+
+                }
+                finally
+                {
+                    if (d != null) d.Dispose();
+                }
+            }
+
+        }
         public ICommand VolverPantallaAnterior_Command { get; set; }
 
         public bool VolverPantallaAnterior_Command_CanExecute()
@@ -362,14 +414,11 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                     {
                         _bkgwk_GuardarEtiquetaEnBDD.RunWorkerAsync("GUARDARENBDD");
                     }
-                    IsStoredInBD = true;
                 }
 
                 csGeneraEtiqRepro_Comun imprimir = new csGeneraEtiqRepro_Comun();
                 PrinterSettings printerSettings = new PrinterSettings();
                 imprimir.ImprimeEtiquetaPalet(printerSettings, Entity, Convert.ToBoolean(SeleccionImpresion), true, ((panImpresionEtiquetaESTIU)View).Dispatcher);
-
-                TextoBotonImpresion = "Reimprimir";
             }
             catch (Exception ex)
             {

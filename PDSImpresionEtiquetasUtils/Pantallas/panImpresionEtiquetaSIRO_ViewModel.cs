@@ -130,7 +130,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                     //DataBaseLayer b_base = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_RPS2013_OLANET);
                     //DataBaseLayer b_base = new DataBaseLayer("Data Source=OLANET;Initial Catalog=RPS2013_OLANET;User ID=sa;Password=plasticos");
                     //DataBaseLayer b_base = new DataBaseLayer("Data Source=PDS-BBDD;Initial Catalog=RPS2013;Trusted_Connection=No;User=RPSUser;Password=rpsuser;MultipleActiveResultSets=True");/* FUNCIONA*/
-                    DataBaseLayer b_base = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_RPS2013_OLANET);
+                    DataBaseLayer b_base = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_RPS2013);
                     DB_pds_progutils_ETIQ01_PALETS_SIRO_LINEAS db_SIRO_item = b_base.dB_Pds_Progutils_ETIQ01_PALETS_SIRO_LINEAS_GetItem(ReferenciaPedido, Entity.PedidoGrupoSIRO);
                     ReferenciaPedido = db_SIRO_item.CodPedido;
                     Entity.CodArticulo = db_SIRO_item.CodArticulo.ToString();

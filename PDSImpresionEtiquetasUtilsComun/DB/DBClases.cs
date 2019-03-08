@@ -48,6 +48,13 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
         public double NumBobinas { get; set; }
         public double MetrosXBobina { get; set; }
     }
+    public class DB_pds_progutils_LINEAS_SSCC_REP01
+    {
+        public double NumElementos { get; set; }
+        public double UnidadesXElemento { get; set; }
+        public double TotalUnidades { get; set; }
+    }
+
     public class DB_pds_progutils_ETIQ01_PALETS_GEN01
     {
         public string CodArticulo { get; set; }
@@ -82,6 +89,7 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
         public string Cliente { get; set; }
         public string IdCliente { get; set; }
         public string Lote { get; set; }
+        public string IDEtiquetaPalet { get; set; }
     }
 
     #endregion
