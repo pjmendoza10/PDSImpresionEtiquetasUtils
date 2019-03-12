@@ -16,6 +16,7 @@ using System.Data.SqlClient;
 using System.Data;
 using PDSImpresionEtiquetasUtils.Comun.DB;
 using System.Xml.Serialization;
+using PDSImpresionEtiquetasUtils.Conectores;
 
 namespace PDSImpresionEtiquetasUtils.Pantallas
 {
@@ -90,10 +91,13 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                     // TODO Serializar Entity
                     string serializado = csEstadoPermanente.Serialize(Entity);
                     DataBaseLayer dbl = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_PDSImpresionEtiquetas);
-
+                    DBConector_OLANET_BASE_2013 b_con_obase2013 = new DBConector_OLANET_BASE_2013(csEstadoPermanente.Configuracion.Datos.connectionString_OLANET_BASE_2013);
+                    string b_error = "";
+                    string b_sscc = b_con_obase2013.GetNewSSCCCode(ref b_error);
+                    Entity.Sscc = b_sscc;
                     // TODO Guardar En BDD
                     Entity.UIDEtiqueta = Guid.NewGuid().ToString(); 
-                    dbl.DB_pds_progutils_PALETS_Insert(Guid.Parse(Entity.UIDEtiqueta), "", dbl.DB_pds_progutils_PALETS_GetUIDEtiqueta("2"), serializado);
+                    dbl.DB_pds_progutils_PALETS_Insert(Guid.Parse(Entity.UIDEtiqueta), Entity.Sscc, dbl.DB_pds_progutils_PALETS_GetUIDEtiqueta("2"), serializado);
 
                     TextoBotonImpresion = "Reimprimir";
                     IsStoredInBD = true;
@@ -474,6 +478,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
     public class csitem_EtiquetaSiroT1 : ObservableObject, IDataErrorInfo
     {
+        public string Sscc { get => _sscc; set { _sscc = value; RaisePropertyChanged("Sscc"); } }
         public string CodArticulo { get => _codArticulo; set { _codArticulo = value; RaisePropertyChanged("CodArticulo"); } }
         public string NumProveedor { get => _numProveedor; set { _numProveedor = value; RaisePropertyChanged("NumProveedor"); } }
         public string Proveedor { get => _proveedor; set { _proveedor = value; RaisePropertyChanged("Proveedor"); } }
@@ -493,6 +498,8 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         public string CuentaPaletAlbaran { get => _cuentaPaletAlbaran; set { _cuentaPaletAlbaran = value; RaisePropertyChanged("CuentaPaletAlbaran"); } }
         public string Observaciones { get => _observaciones; set { _observaciones = value; RaisePropertyChanged("Observaciones"); } }
         public string UIDEtiqueta { get => _uidEtiqueta; set { _uidEtiqueta = value; RaisePropertyChanged("UIDEtiqueta"); } }
+
+        private string _sscc  = null;
 
         private string _uidEtiqueta = null;
 

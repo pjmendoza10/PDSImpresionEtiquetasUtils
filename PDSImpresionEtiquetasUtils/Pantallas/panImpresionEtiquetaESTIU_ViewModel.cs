@@ -376,23 +376,25 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         }
         public void VerHistoricoEtiqueta_Command_Execute()
         {
-            try
+            panHistorico b_pantalla = new Pantallas.panHistorico("3"); 
+            
+            if (Utilidades.UtilesCarga._pantallas_abiertas.Any(z => z.Key == b_pantalla.ToString()))
             {
-                ((panImpresionEtiquetaESTIU)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
+                //if (ListaClientesEtiquetas_SelectedItem.Id == 1) b_pantalla = (Pantallas.panImpresionEtiquetaGen01)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value; 
+                b_pantalla = (Pantallas.panHistorico)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
+            } else
+            {
+                Utilidades.UtilesCarga._pantallas_abiertas.Add(b_pantalla.ToString(), b_pantalla);
+            }
+            b_pantalla.CargarDatosHistorico();
 
-                /*if (_bkgwk_FiltrarFicheroArticuloLote.IsBusy != true)
-                {
-                    _bkgwk_FiltrarFicheroArticuloLote.RunWorkerAsync("FILTRAR");
-                }*/
-            }
-            catch (Exception ex)
-            {
-                Comun.Utilidades.csLogUtils.EscribeLineaLogError(ex);
-            }
-            finally
-            {
-                ((panImpresionEtiquetaESTIU)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
-            }
+            b_pantalla.PantallaAnterior = PantallaPrincipal.PantallaActual;
+
+            PantallaPrincipal.BotonMenuPrincipalPulsado_Animaciones();
+
+            PantallaPrincipal.CambiarPantalla(b_pantalla);
+
+            return;
         }
         
         public ICommand ImprimirEtiqueta_Command { get; set; }

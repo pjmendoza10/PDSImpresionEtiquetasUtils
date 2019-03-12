@@ -119,10 +119,14 @@
       <DependentUpon>panOpciones.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pantallas\panOpciones_ViewModel.cs" />
+    <Compile Include="Pantallas\panHistorico.xaml.cs">
+      <DependentUpon>panHistorico.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pantallas\panTipoEtiqueta.xaml.cs">
       <DependentUpon>panTipoEtiqueta.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pantallas\panImpresionEtiqueta_ViewModel.cs" />
+    <Compile Include="Pantallas\panHistorico_ViewModel.cs" />
     <Compile Include="Pantallas\panTipoEtiqueta_ViewModel.cs" />
     <Compile Include="Utilidades\ModControles.cs" />
     <Compile Include="Utilidades\UtilesCarga.cs" />
@@ -159,6 +163,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pantallas\panImpresionEtiqueta.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pantallas\panHistorico.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pantallas\panTipoEtiqueta.xaml">

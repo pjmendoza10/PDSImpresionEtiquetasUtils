@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 namespace PDSImpresionEtiquetasUtils.Comun.DB
 {
     #region PDSImpresionEtiquetas
+    public class DB_pds_progutils_ETIQ01_PALETS_HIST01
+    {
+        public string UidEtiqueta;
+        public string SSCC;
+        public string FechaCreacion;
+        public string Datos;
+    }
 
-    public class DBInt_Usuario : ICloneable
+        public class DBInt_Usuario : ICloneable
     {
         public string IDUsuario { get; set; }
         public string CodUsuario { get; set; }

@@ -23,7 +23,7 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
 
         #region DB_pds_progutils_PALETS
 
-        #region Canonicas
+        #region Canonicas       
         public Guid DB_pds_progutils_PALETS_GetUIDEtiqueta(string codEtiqueta)
         {
             Guid b_resultado = new Guid();
@@ -108,6 +108,7 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
         #endregion
 
         #region Especificas
+        
         public DB_pds_progutils_ETIQ01_PALETS_SIRO_LINEAS dB_Pds_Progutils_ETIQ01_PALETS_SIRO_LINEAS_GetItem(string CodPedido, string ReferenciaSIRO)
         {
             DB_pds_progutils_ETIQ01_PALETS_SIRO_LINEAS db_item = new DB_pds_progutils_ETIQ01_PALETS_SIRO_LINEAS();
@@ -143,6 +144,30 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
                 }
             }
             return db_item;
+        }
+        public List<DB_pds_progutils_ETIQ01_PALETS_HIST01> DB_pds_progutils_HIST_GetHistoricoEtiqueta(string codEtiq)
+        {
+            List<DB_pds_progutils_ETIQ01_PALETS_HIST01> dB_item = new List<DB_pds_progutils_ETIQ01_PALETS_HIST01>();
+            using (var command = new SqlCommand(@"SELECT TIP.CodEtiqueta, SSCC, FechaCreacion, Datos 
+                FROM [PDSImpresionEtiquetasUtils].[dbo].[HISTORICO_ETIQUETAS] HIS
+                inner join PDSImpresionEtiquetasUtils.dbo.TIPO_ETIQUETA TIP on TIP.uid_tipo_etiqueta = HIS.uid_tipo_etiqueta
+                WHERE TIP.CodEtiqueta = @codEtiqueta order by FechaCreacion desc"))
+            {
+                command.Parameters.AddWithValue("@codEtiqueta", codEtiq);
+                DataTable b_dt = MyExecuteQueryCommand(command);
+                foreach (DataRow i_dr in b_dt.Rows)
+                {
+                    try
+                    {
+                        DB_pds_progutils_ETIQ01_PALETS_HIST01 b_item = DB_pds_progutils_ETIQ01_PALETS_HIST01_GetObjByDataRow(i_dr);
+
+                        dB_item.Add(b_item);
+                    }
+                    catch (Exception ex) { }
+                }
+            }
+
+            return dB_item;
         }
 
         public List<DB_pds_progutils_ETIQ01_PALETS_GEN01> dB_Pds_Progutils_ETIQ01_PALETS_GEN01_GetItems(string Articulo)
@@ -365,6 +390,18 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
             b_item.DescripcionUdMedida = p_row["Abreviature"].ToString();
             b_item.DescripcionArticulo = p_row["Description"].ToString();
             b_item.PedidoGrupoSIRO = p_row["OrderNumberCustomer"].ToString();
+
+            return b_item;
+        }
+
+        private DB_pds_progutils_ETIQ01_PALETS_HIST01 DB_pds_progutils_ETIQ01_PALETS_HIST01_GetObjByDataRow(DataRow p_row)
+        {
+            DB_pds_progutils_ETIQ01_PALETS_HIST01 b_item = new DB_pds_progutils_ETIQ01_PALETS_HIST01();
+
+            b_item.Datos = p_row["Datos"].ToString();
+            b_item.FechaCreacion = p_row["FechaCreacion"].ToString();
+            b_item.SSCC = p_row["SSCC"].ToString();
+            b_item.UidEtiqueta = p_row["uid_etiqueta"].ToString();
 
             return b_item;
         }

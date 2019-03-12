@@ -6,33 +6,42 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace PDSImpresionEtiquetasUtils.Pantallas
 {
     /// <summary>
-    /// Lógica de interacción para panImpresionEtiqueta.xaml
+    /// Lógica de interacción para panTipoEtiqueta.xaml
     /// </summary>
-    public partial class panImpresionEtiquetaESTIU : UserControl, IPantallasContenedor
+    public partial class panHistorico : UserControl, IPantallasContenedor
     {
-        private panImpresionEtiquetaESTIU_ViewModel _viewmodel;
-        public panImpresionEtiquetaESTIU()
+        private panHistorico_ViewModel _viewmodel;
+        public panHistorico(string codEtiqueta)
         {
             InitializeComponent();
 
             PantallaAnterior = null;
-            _viewmodel = (Pantallas.panImpresionEtiquetaESTIU_ViewModel)this.DataContext;
+            _viewmodel = (Pantallas.panHistorico_ViewModel)this.DataContext;
             _viewmodel.View = View;
             _viewmodel.PantallaPrincipal = csEstadoPermanente.PantallaPrincipal;
             _viewmodel.Configuracion = csEstadoPermanente.Configuracion;
 
             _viewmodel.Inicializa();
+            _viewmodel.CodEtiquetaSeleccionado = codEtiqueta;
+            //_viewmodel
+            _viewmodel.BuscarDatos_Command_Execute();
         }
 
         #region IPantallasContenedor
         public static string CIdentificador
         {
-            get { return "PANTIPOETIQESTIU"; }
+            get { return "PANHISTORICO01"; }
         }
 
         public string Identificador
@@ -97,23 +106,10 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             }
         }
 
-        private void TextBox_KeyUp(object sender, KeyEventArgs e)
+        public void CargarDatosHistorico()
         {
-            if (e.Key == Key.Enter) this._viewmodel.BuscarDatos_Command_Execute();
+            _viewmodel.BuscarDatos_Command_Execute();
         }
-        
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (_viewmodel.Entity.NumPalet == null) return;
-            if (_viewmodel.Entity.NumPalet.Count()==20) this._viewmodel.BuscarDatos_Command_Execute();
-        }
-
-        private void PART_Grid_ListaLineasGridEtiqueta_LostFocus(object sender, RoutedEventArgs e)
-        {
-            _viewmodel.ActualizarDatosTotales();
-        }
-
-
         #endregion
 
         /* public void OnRendered()
