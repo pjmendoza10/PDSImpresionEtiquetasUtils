@@ -45,10 +45,10 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding UIDEtiqueta, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Cliente" MinWidth="300" Width="Auto" IsReadOnly="True" CanUserResize="False" />
-                <DataGridTextColumn Binding="{Binding SSCC, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Cliente" MinWidth="300" Width="Auto" IsReadOnly="True" CanUserResize="False" />
-                <DataGridTextColumn Binding="{Binding FechaCreacion, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Cliente" MinWidth="300" Width="Auto" IsReadOnly="True" CanUserResize="False" />
-                <DataGridTextColumn Binding="{Binding Datos, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Cliente" MinWidth="300" Width="Auto" IsReadOnly="True" CanUserResize="False" />
+                <!--<DataGridTextColumn Binding="{Binding UIDEtiqueta, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="ID Etiqueta" MinWidth="300" Width="Auto" IsReadOnly="True" CanUserResize="False" />-->
+                <DataGridTextColumn Binding="{Binding SSCC, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="SSCC" MinWidth="300" Width="Auto" IsReadOnly="True" CanUserResize="False" />
+                <DataGridTextColumn Binding="{Binding FechaCreacion, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Fecha Creacion" MinWidth="300" Width="Auto" IsReadOnly="True" CanUserResize="False" />
+                <DataGridTextColumn Binding="{Binding Entity, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Datos" MinWidth="300" Width="Auto" IsReadOnly="True" CanUserResize="False" />
             </DataGrid.Columns>
         </DataGrid>
 

@@ -312,23 +312,24 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         }
         public void VerHistoricoEtiqueta_Command_Execute()
         {
-            try
-            {
-                ((panImpresionEtiquetaSIRO)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
+            panHistorico b_pantalla = new Pantallas.panHistorico("2");
 
-                /*if (_bkgwk_FiltrarFicheroArticuloLote.IsBusy != true)
-                {
-                    _bkgwk_FiltrarFicheroArticuloLote.RunWorkerAsync("FILTRAR");
-                }*/
-            }
-            catch (Exception ex)
+            if (Utilidades.UtilesCarga._pantallas_abiertas.Any(z => z.Key == b_pantalla.ToString()))
             {
-                Comun.Utilidades.csLogUtils.EscribeLineaLogError(ex);
+                //if (ListaClientesEtiquetas_SelectedItem.Id == 1) b_pantalla = (Pantallas.panImpresionEtiquetaGen01)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value; 
+               Utilidades.UtilesCarga._pantallas_abiertas.Remove(b_pantalla.ToString());
             }
-            finally
-            {
-                ((panImpresionEtiquetaSIRO)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
-            }
+            Utilidades.UtilesCarga._pantallas_abiertas.Add(b_pantalla.ToString(), b_pantalla);
+            
+            //b_pantalla.CargarDatosHistorico();
+
+            b_pantalla.PantallaAnterior = PantallaPrincipal.PantallaActual;
+
+            PantallaPrincipal.BotonMenuPrincipalPulsado_Animaciones();
+
+            PantallaPrincipal.CambiarPantalla(b_pantalla);
+
+            return;
         }
         
         public ICommand ImprimirEtiqueta_Command { get; set; }

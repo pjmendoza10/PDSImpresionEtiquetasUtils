@@ -312,20 +312,24 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         }
         public void VerHistoricoEtiqueta_Command_Execute()
         {
-            try
-            {
-                ((panImpresionEtiquetaGen01)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
+            panHistorico b_pantalla = new Pantallas.panHistorico("1");
 
+            if (Utilidades.UtilesCarga._pantallas_abiertas.Any(z => z.Key == b_pantalla.ToString()))
+            {
+                //if (ListaClientesEtiquetas_SelectedItem.Id == 1) b_pantalla = (Pantallas.panImpresionEtiquetaGen01)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value; 
+                Utilidades.UtilesCarga._pantallas_abiertas.Remove(b_pantalla.ToString());
+            }
+            Utilidades.UtilesCarga._pantallas_abiertas.Add(b_pantalla.ToString(), b_pantalla);
+            
+            //b_pantalla.CargarDatosHistorico();
 
-            }
-            catch (Exception ex)
-            {
-                Comun.Utilidades.csLogUtils.EscribeLineaLogError(ex);
-            }
-            finally
-            {
-                ((panImpresionEtiquetaGen01)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
-            }
+            b_pantalla.PantallaAnterior = PantallaPrincipal.PantallaActual;
+
+            PantallaPrincipal.BotonMenuPrincipalPulsado_Animaciones();
+
+            PantallaPrincipal.CambiarPantalla(b_pantalla);
+
+            return;
         }               
 
         public ICommand ImprimirEtiqueta_Command { get; set; }

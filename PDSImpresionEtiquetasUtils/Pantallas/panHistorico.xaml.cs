@@ -35,7 +35,8 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             _viewmodel.Inicializa();
             _viewmodel.CodEtiquetaSeleccionado = codEtiqueta;
             //_viewmodel
-            _viewmodel.BuscarDatos_Command_Execute();
+            CargarDatosHistorico();
+            //_viewmodel.BuscarDatos_Command_Execute();
         }
 
         #region IPantallasContenedor
@@ -112,10 +113,11 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         }
         #endregion
 
-        /* public void OnRendered()
+         public void OnRendered()
          {
-             //this._viewmodel.FiltrarFicheroArticuloLote_Command_Execute();
-             this._viewmodel.OnRendered();
-         }*/
+            //this._viewmodel.FiltrarFicheroArticuloLote_Command_Execute();
+            //this._viewmodel.OnRendered();
+            CargarDatosHistorico();
+        }
     }
 }

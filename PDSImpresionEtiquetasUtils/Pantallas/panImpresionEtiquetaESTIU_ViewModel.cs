@@ -381,12 +381,11 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             if (Utilidades.UtilesCarga._pantallas_abiertas.Any(z => z.Key == b_pantalla.ToString()))
             {
                 //if (ListaClientesEtiquetas_SelectedItem.Id == 1) b_pantalla = (Pantallas.panImpresionEtiquetaGen01)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value; 
-                b_pantalla = (Pantallas.panHistorico)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
-            } else
-            {
-                Utilidades.UtilesCarga._pantallas_abiertas.Add(b_pantalla.ToString(), b_pantalla);
+                Utilidades.UtilesCarga._pantallas_abiertas.Remove(b_pantalla.ToString());
             }
-            b_pantalla.CargarDatosHistorico();
+            Utilidades.UtilesCarga._pantallas_abiertas.Add(b_pantalla.ToString(), b_pantalla);
+            
+            //b_pantalla.CargarDatosHistorico();
 
             b_pantalla.PantallaAnterior = PantallaPrincipal.PantallaActual;
 

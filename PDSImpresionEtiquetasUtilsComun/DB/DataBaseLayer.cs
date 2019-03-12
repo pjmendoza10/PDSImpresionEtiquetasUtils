@@ -148,9 +148,9 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
         public List<DB_pds_progutils_ETIQ01_PALETS_HIST01> DB_pds_progutils_HIST_GetHistoricoEtiqueta(string codEtiq)
         {
             List<DB_pds_progutils_ETIQ01_PALETS_HIST01> dB_item = new List<DB_pds_progutils_ETIQ01_PALETS_HIST01>();
-            using (var command = new SqlCommand(@"SELECT TIP.CodEtiqueta, SSCC, FechaCreacion, Datos 
-                FROM [PDSImpresionEtiquetasUtils].[dbo].[HISTORICO_ETIQUETAS] HIS
-                inner join PDSImpresionEtiquetasUtils.dbo.TIPO_ETIQUETA TIP on TIP.uid_tipo_etiqueta = HIS.uid_tipo_etiqueta
+            using (var command = new SqlCommand(@"SELECT HIS.uid_etiqueta,TIP.CodEtiqueta, SSCC, FechaCreacion, Datos 
+                FROM [PDSImpresionEtiquetasUtils].[dbo].[HISTORICO_ETIQUETAS] HIS 
+                inner join PDSImpresionEtiquetasUtils.dbo.TIPO_ETIQUETA TIP on TIP.uid_tipo_etiqueta = HIS.uid_tipo_etiqueta  
                 WHERE TIP.CodEtiqueta = @codEtiqueta order by FechaCreacion desc"))
             {
                 command.Parameters.AddWithValue("@codEtiqueta", codEtiq);
@@ -402,6 +402,7 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
             b_item.FechaCreacion = p_row["FechaCreacion"].ToString();
             b_item.SSCC = p_row["SSCC"].ToString();
             b_item.UidEtiqueta = p_row["uid_etiqueta"].ToString();
+            b_item.CodEtiqueta = p_row["CodEtiqueta"].ToString();
 
             return b_item;
         }

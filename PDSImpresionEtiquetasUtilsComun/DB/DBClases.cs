@@ -10,6 +10,7 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
     public class DB_pds_progutils_ETIQ01_PALETS_HIST01
     {
         public string UidEtiqueta;
+        public string CodEtiqueta;
         public string SSCC;
         public string FechaCreacion;
         public string Datos;

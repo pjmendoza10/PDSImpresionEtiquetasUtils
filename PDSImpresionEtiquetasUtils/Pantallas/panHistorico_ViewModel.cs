@@ -28,7 +28,9 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
         internal override void Inicializa()
         {
-            base.Inicializa();            
+            base.Inicializa();
+            _bkgwk_BuscarDatosEnBDD.DoWork += _bkgwk_BuscarDatosEnBDD_DoWork;
+            _bkgwk_BuscarDatosEnBDD.RunWorkerCompleted += _bkgwk_BuscarDatosEnBDD_RunWorkerCompleted;
         }
 
         #endregion
@@ -40,7 +42,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
             _bkgwk_BuscarDatosEnBDD.Dispose();
 
-            ((panImpresionEtiquetaESTIU)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
+            ((panHistorico)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
 
             return;
         }
@@ -97,9 +99,13 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                         newitem.FechaCreacion = item.FechaCreacion;
                         newitem.SSCC = item.SSCC;
                         newitem.UIDEtiqueta = item.UidEtiqueta;
-                        if (CodEtiquetaSeleccionado == "2") newitem.Entity =  csEstadoPermanente.Deserialize<csitem_EtiquetaSiroT1>(item.Datos);
-                        else if (CodEtiquetaSeleccionado == "3") newitem.Entity = csEstadoPermanente.Deserialize<csitem_EtiquetaEstiuT1>(item.Datos);
+                        newitem.CodEtiqueta = item.CodEtiqueta;
+                        //newitem.Entity = item.Datos;
+                        if (CodEtiquetaSeleccionado == "2") newitem.Entity =  csEstadoPermanente.Deserialize<csitem_EtiquetaSiroT1>(item.Datos); 
+                        else if (CodEtiquetaSeleccionado == "3") newitem.Entity = csEstadoPermanente.Deserialize<csitem_EtiquetaEstiuT1>(item.Datos).Serialize();
                         else newitem.Entity = csEstadoPermanente.Deserialize<csitem_EtiquetaGeneralPaletT1>(item.Datos);
+                        
+                        ListaEtiquetas.Add(newitem);
                     }
                 }
                 catch (Exception ex1)
@@ -176,6 +182,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
         public bool CargarPantallaEtiqueta_Command_CanExecute()
         {
+            if (ListaEtiquetas_SelectedItem == null) return false;
             return true;
         }
         public void CargarPantallaEtiqueta_Command_Execute()
@@ -191,10 +198,8 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             }
             else return;
 
-
             if (Utilidades.UtilesCarga._pantallas_abiertas.Any(z => z.Key == b_pantalla.ToString()))
             {
-                //if (ListaClientesEtiquetas_SelectedItem.Id == 1) b_pantalla = (Pantallas.panImpresionEtiquetaGen01)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value; 
                 if (ListaEtiquetas_SelectedItem.CodEtiqueta == "2") b_pantalla = (Pantallas.panImpresionEtiquetaSIRO)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
                 else if (ListaEtiquetas_SelectedItem.CodEtiqueta == "3") b_pantalla = (Pantallas.panImpresionEtiquetaESTIU)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
                 else b_pantalla = (Pantallas.panImpresionEtiquetaGen01)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
@@ -211,6 +216,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
             return;
         }
+
         public ICommand PART_Grid_ListaEtiquetas_DoubleClick { get; set; }
         public void PART_Grid_ListaEtiquetas_DoubleClick_Execute()
         {
