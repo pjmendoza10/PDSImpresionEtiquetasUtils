@@ -115,7 +115,7 @@
                         <DataGridTextColumn Binding="{Binding NumeroLinea}" ClipboardContentBinding="{x:Null}" Header="" Width="35" />
                         <DataGridTextColumn Binding="{Binding NumCajas, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Nº de Cajas" MinWidth="200" Width="Auto" IsReadOnly="False" CanUserResize="False" />
                         <DataGridTextColumn Binding="{Binding UdsPorCaja, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Uds por Caja" MinWidth="200" Width="Auto" IsReadOnly="False" CanUserResize="False"/>
-                        <DataGridTextColumn Binding="{Binding KgsAprox, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Kgs Aprox." MinWidth="200" Width="Auto" IsReadOnly="False" CanUserResize="False"/>
+                        <DataGridTextColumn Binding="{Binding KgsAprox, NotifyOnValidationError=True, UpdateSourceTrigger=LostFocus , ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Kgs Aprox." MinWidth="200" Width="Auto" IsReadOnly="False" CanUserResize="False"/>
                         <DataGridTextColumn Binding="{Binding TotalUds, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Total Unidades" MinWidth="200" Width="Auto" IsReadOnly="False" CanUserResize="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
