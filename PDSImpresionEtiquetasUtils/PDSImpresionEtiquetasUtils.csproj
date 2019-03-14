@@ -100,12 +100,16 @@
     </ApplicationDefinition>
     <Compile Include="Conectores\DBConector_OLANET_BASE_2013.cs" />
     <Compile Include="Pantallas\csGeneraEtiqRepro_Comun.cs" />
+    <Compile Include="Pantallas\panImpresionEtiquetaGen02.xaml.cs">
+      <DependentUpon>panImpresionEtiquetaGen02.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pantallas\panImpresionEtiquetaGen01.xaml.cs">
       <DependentUpon>panImpresionEtiquetaGen01.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pantallas\panImpresionEtiquetaESTIU.xaml.cs">
       <DependentUpon>panImpresionEtiquetaESTIU.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pantallas\panImpresionEtiquetaGen02_ViewModel.cs" />
     <Compile Include="Pantallas\panImpresionEtiquetaSIRO.xaml.cs">
       <DependentUpon>panImpresionEtiquetaSIRO.xaml</DependentUpon>
     </Compile>
@@ -147,6 +151,9 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pantallas\panImpresionEtiquetaGen02.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pantallas\panImpresionEtiquetaGen01.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
