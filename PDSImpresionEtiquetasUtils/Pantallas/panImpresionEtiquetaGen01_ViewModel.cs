@@ -84,11 +84,11 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 if (e.Argument.ToString() == "GUARDARENBDD")
                 {
                     // TODO Serializar Entity
+                    Entity.UIDEtiqueta = Guid.NewGuid().ToString();
                     string serializado = csEstadoPermanente.Serialize(Entity);
                     DataBaseLayer dbl = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_PDSImpresionEtiquetas);
 
                     // TODO Guardar En BDD
-                    Entity.UIDEtiqueta = Guid.NewGuid().ToString();
                     dbl.DB_pds_progutils_PALETS_Insert(Guid.Parse(Entity.UIDEtiqueta), Entity.Sscc, dbl.DB_pds_progutils_PALETS_GetUIDEtiqueta("1"), serializado);
 
                     IsStoredInBD = true;
@@ -640,14 +640,14 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         public string IN_CodArticulo
         {
             get { return _IN_CodArticulo; }
-            set { _IN_CodArticulo = value; DATO_CodigoArticulo = value; RaisePropertyChanged("IN_CodArticulo"); }
+            set { _IN_CodArticulo = value; DATO_CodigoArticulo = value; Entity.CodArticulo = value; RaisePropertyChanged("IN_CodArticulo"); }
         }
 
         private string _IN_CodLote = "";
         public string IN_CodLote
         {
             get { return _IN_CodLote; }
-            set { _IN_CodLote = value; DATO_CodigoLote = value; RaisePropertyChanged("IN_CodLote"); }
+            set { _IN_CodLote = value; DATO_CodigoLote = value; Entity.Lote = value; RaisePropertyChanged("IN_CodLote"); }
         }
 
         private string _DATO_CodigoArticulo = "";

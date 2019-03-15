@@ -28,6 +28,32 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
             _viewmodel.Inicializa();
         }
+        public bool SetItem(csitem_EtiquetaEstiuT1 p_item)
+        {
+            _viewmodel.Entity.AlbaranPDS = p_item.AlbaranPDS;
+            _viewmodel.Entity.AnchoBobina = p_item.AnchoBobina;
+            _viewmodel.Entity.Cliente = p_item.Cliente;
+            _viewmodel.Entity.CodArticulo = p_item.CodArticulo;
+            _viewmodel.Entity.CodCliente = p_item.CodCliente;
+            _viewmodel.Entity.Descripcion = p_item.Descripcion;
+            _viewmodel.Entity.ListaLineasGridEtiqueta = p_item.ListaLineasGridEtiqueta;
+            _viewmodel.Entity.ListaLineasGridEtiqueta_SelectedItem = p_item.ListaLineasGridEtiqueta_SelectedItem;
+            _viewmodel.Entity.Lote = p_item.Lote;
+            _viewmodel.Entity.MetrosBobina = p_item.MetrosBobina;
+            _viewmodel.Entity.NumBobinas = p_item.NumBobinas;
+            _viewmodel.Entity.NumPalet = p_item.NumPalet;
+            _viewmodel.Entity.PedidoCliente = p_item.PedidoCliente;
+            _viewmodel.Entity.PesoBrutoPaletizado = p_item.PesoBrutoPaletizado;
+            _viewmodel.Entity.PesoMandril = p_item.PesoMandril;
+            _viewmodel.Entity.PesoNetoPaletizado = p_item.PesoNetoPaletizado;
+            _viewmodel.Entity.PesoNetoSMandril = p_item.PesoNetoSMandril;
+            _viewmodel.Entity.PesoPalet = p_item.PesoPalet;
+            _viewmodel.Entity.PesoPlastico = p_item.PesoPlastico;
+            _viewmodel.Entity.RefCliente = p_item.RefCliente;
+            _viewmodel.Entity.TotalMetros = p_item.TotalMetros;
+            //_viewmodel.Entity.UIDEtiqueta = p_item.UIDEtiqueta;
+            return true;
+        }
 
         #region IPantallasContenedor
         public static string CIdentificador

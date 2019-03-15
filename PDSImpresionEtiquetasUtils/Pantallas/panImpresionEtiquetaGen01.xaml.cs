@@ -37,6 +37,22 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             ci.DateTimeFormat.DateSeparator = "/";
             Thread.CurrentThread.CurrentCulture = ci;
         }
+        public bool SetItem(csitem_EtiquetaGeneralPaletT1 p_item)
+        {
+            _viewmodel.Entity.Ean13 = p_item.Ean13;
+            _viewmodel.Entity.Fecha = p_item.Fecha;
+            _viewmodel.IN_CodArticulo = p_item.CodArticulo;
+            _viewmodel.Entity.Descripcion = p_item.Descripcion;
+            _viewmodel.Entity.ListaLineasGridEtiqueta = p_item.ListaLineasGridEtiqueta;
+            _viewmodel.Entity.ListaLineasGridEtiqueta_SelectedItem = p_item.ListaLineasGridEtiqueta_SelectedItem;
+            _viewmodel.IN_CodLote = p_item.Lote;
+            _viewmodel.Entity.Sscc = p_item.Sscc;
+            _viewmodel.Entity.TotalCajas = p_item.TotalCajas;
+            _viewmodel.Entity.TotalKgAprox = p_item.TotalKgAprox;
+            _viewmodel.Entity.TotalUds = p_item.TotalUds;
+            
+            return true;
+        }
 
         #region IPantallasContenedor
         public static string CIdentificador

@@ -28,6 +28,29 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
             _viewmodel.Inicializa();
         }
+        public bool SetItem(csitem_EtiquetaSiroT1 p_item)
+        {
+            _viewmodel.Entity.Cantidad = p_item.Cantidad;
+            _viewmodel.Entity.CodArticulo = p_item.CodArticulo;
+            _viewmodel.Entity.CuentaPaletAlbaran = p_item.CuentaPaletAlbaran;
+            _viewmodel.Entity.DescripcionReferencia = p_item.DescripcionReferencia;
+            _viewmodel.Entity.FabricaDestino = p_item.FabricaDestino;
+            _viewmodel.Entity.FechaCaducidad = p_item.FechaCaducidad;
+            _viewmodel.Entity.FechaEntrega = p_item.FechaEntrega;
+            _viewmodel.Entity.Lote = p_item.Lote;
+            _viewmodel.Entity.FechaFabricacion = p_item.FechaFabricacion;
+            _viewmodel.Entity.NumProveedor = p_item.NumProveedor;
+            _viewmodel.Entity.Observaciones = p_item.Observaciones;
+            _viewmodel.Entity.PedidoGrupoSIRO = p_item.PedidoGrupoSIRO;
+            _viewmodel.Entity.Peso = p_item.Peso;
+            _viewmodel.Entity.PickupSheet = p_item.PickupSheet;
+            _viewmodel.Entity.Proveedor = p_item.Proveedor;
+            _viewmodel.Entity.ReferenciaSIRO = p_item.ReferenciaSIRO;
+            _viewmodel.Entity.Sscc = p_item.Sscc;
+            _viewmodel.Entity.Unidad = p_item.Unidad;
+            _viewmodel.Entity.Volumen = p_item.Volumen;
+            return true;
+        }
 
         #region IPantallasContenedor
         public static string CIdentificador

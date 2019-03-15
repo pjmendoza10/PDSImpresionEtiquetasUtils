@@ -102,7 +102,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                         newitem.CodEtiqueta = item.CodEtiqueta;
                         //newitem.Entity = item.Datos;
                         if (CodEtiquetaSeleccionado == "2") newitem.Entity =  csEstadoPermanente.Deserialize<csitem_EtiquetaSiroT1>(item.Datos); 
-                        else if (CodEtiquetaSeleccionado == "3") newitem.Entity = csEstadoPermanente.Deserialize<csitem_EtiquetaEstiuT1>(item.Datos).Serialize();
+                        else if (CodEtiquetaSeleccionado == "3") newitem.Entity = csEstadoPermanente.Deserialize<csitem_EtiquetaEstiuT1>(item.Datos);
                         else newitem.Entity = csEstadoPermanente.Deserialize<csitem_EtiquetaGeneralPaletT1>(item.Datos);
                         
                         ListaEtiquetas.Add(newitem);
@@ -192,23 +192,41 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             if (ListaEtiquetas_SelectedItem != null)
             {
                 //if (ListaClientesEtiquetas_SelectedItem.Id == 1) b_pantalla = new Pantallas.panImpresionEtiquetaGen01();
-                if (ListaEtiquetas_SelectedItem.CodEtiqueta == "2") b_pantalla = new Pantallas.panImpresionEtiquetaSIRO();
-                else if (ListaEtiquetas_SelectedItem.CodEtiqueta == "3") b_pantalla = new Pantallas.panImpresionEtiquetaESTIU();
-                else b_pantalla = new Pantallas.panImpresionEtiquetaGen01();
+                if (ListaEtiquetas_SelectedItem.CodEtiqueta == "2")
+                {
+                    b_pantalla = new Pantallas.panImpresionEtiquetaSIRO();
+                    ((panImpresionEtiquetaSIRO)b_pantalla).SetItem((csitem_EtiquetaSiroT1)ListaEtiquetas_SelectedItem.Entity);
+                }
+                else if (ListaEtiquetas_SelectedItem.CodEtiqueta == "3") {
+                    b_pantalla = new Pantallas.panImpresionEtiquetaESTIU();
+                    ((panImpresionEtiquetaESTIU)b_pantalla).SetItem((csitem_EtiquetaEstiuT1)ListaEtiquetas_SelectedItem.Entity);
+                }
+                else {
+                    b_pantalla = new Pantallas.panImpresionEtiquetaGen01();
+                    ((panImpresionEtiquetaGen01)b_pantalla).SetItem((csitem_EtiquetaGeneralPaletT1)ListaEtiquetas_SelectedItem.Entity);
+                }
             }
             else return;
 
             if (Utilidades.UtilesCarga._pantallas_abiertas.Any(z => z.Key == b_pantalla.ToString()))
             {
-                if (ListaEtiquetas_SelectedItem.CodEtiqueta == "2") b_pantalla = (Pantallas.panImpresionEtiquetaSIRO)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
-                else if (ListaEtiquetas_SelectedItem.CodEtiqueta == "3") b_pantalla = (Pantallas.panImpresionEtiquetaESTIU)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
-                else b_pantalla = (Pantallas.panImpresionEtiquetaGen01)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
+                if (ListaEtiquetas_SelectedItem.CodEtiqueta == "2") {
+                    b_pantalla = (Pantallas.panImpresionEtiquetaSIRO)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
+                    ((panImpresionEtiquetaSIRO)b_pantalla).SetItem((csitem_EtiquetaSiroT1)ListaEtiquetas_SelectedItem.Entity);
+                } else if (ListaEtiquetas_SelectedItem.CodEtiqueta == "3") {
+                    b_pantalla = (Pantallas.panImpresionEtiquetaESTIU)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
+                    ((panImpresionEtiquetaESTIU)b_pantalla).SetItem((csitem_EtiquetaEstiuT1)ListaEtiquetas_SelectedItem.Entity);
+                } else {
+                    b_pantalla = (Pantallas.panImpresionEtiquetaGen01)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
+                    ((panImpresionEtiquetaGen01)b_pantalla).SetItem((csitem_EtiquetaGeneralPaletT1)ListaEtiquetas_SelectedItem.Entity);
+                }
             }
             else
             {
                 Utilidades.UtilesCarga._pantallas_abiertas.Add(b_pantalla.ToString(), b_pantalla);
             }
-            b_pantalla.PantallaAnterior = PantallaPrincipal.PantallaActual;
+            
+            //b_pantalla.PantallaAnterior = PantallaPrincipal.PantallaActual;
 
             PantallaPrincipal.BotonMenuPrincipalPulsado_Animaciones();
 

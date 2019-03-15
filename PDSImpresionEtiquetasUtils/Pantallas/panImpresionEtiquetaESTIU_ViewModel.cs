@@ -96,11 +96,11 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 if (e.Argument.ToString() == "GUARDARENBDD")
                 {
                     // TODO Serializar Entity
+                    Entity.UIDEtiqueta = Guid.NewGuid().ToString();
                     string serializado = csEstadoPermanente.Serialize(Entity);
                     DataBaseLayer dbl = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_PDSImpresionEtiquetas);
 
                     // TODO Guardar En BDD
-                    Entity.UIDEtiqueta = Guid.NewGuid().ToString();
                     dbl.DB_pds_progutils_PALETS_Insert(Guid.Parse(Entity.UIDEtiqueta), Entity.NumPalet, dbl.DB_pds_progutils_PALETS_GetUIDEtiqueta("3"), serializado);
 
                     IsStoredInBD = true;

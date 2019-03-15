@@ -89,14 +89,14 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 if (e.Argument.ToString() == "GUARDARENBDD")
                 {
                     // TODO Serializar Entity
-                    string serializado = csEstadoPermanente.Serialize(Entity);
                     DataBaseLayer dbl = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_PDSImpresionEtiquetas);
                     DBConector_OLANET_BASE_2013 b_con_obase2013 = new DBConector_OLANET_BASE_2013(csEstadoPermanente.Configuracion.Datos.connectionString_OLANET_BASE_2013);
                     string b_error = "";
                     string b_sscc = b_con_obase2013.GetNewSSCCCode(ref b_error);
                     Entity.Sscc = b_sscc;
-                    // TODO Guardar En BDD
                     Entity.UIDEtiqueta = Guid.NewGuid().ToString(); 
+                    string serializado = csEstadoPermanente.Serialize(Entity);
+                    // TODO Guardar En BDD
                     dbl.DB_pds_progutils_PALETS_Insert(Guid.Parse(Entity.UIDEtiqueta), Entity.Sscc, dbl.DB_pds_progutils_PALETS_GetUIDEtiqueta("2"), serializado);
 
                     TextoBotonImpresion = "Reimprimir";
