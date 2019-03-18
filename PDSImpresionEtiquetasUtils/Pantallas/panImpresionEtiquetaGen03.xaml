@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="PDSImpresionEtiquetasUtils.Pantallas.panImpresionEtiquetaGen03"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PDSImpresionEtiquetasUtils.Pantallas"
+             xmlns:Utilidades="clr-namespace:PDSImpresionEtiquetasUtils.Utilidades"
+             mc:Ignorable="d" Background="White" d:DesignWidth="1367.724" MinWidth="1367.724" d:DesignHeight="602.5" MinHeight="602.5">
+    <UserControl.DataContext>
+        <!-- Declaratively create an instance of our PantallaViewModel -->
+        <local:panImpresionEtiquetaGen03_ViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <Utilidades:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        <Utilidades:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
+        <SolidColorBrush x:Key="ColorLineasGrid01" Color="#FF8F8F8F"/>
+    </UserControl.Resources>
+    <Grid x:Name="gridPrincipal">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button x:Name="btVerFichero" Style="{StaticResource FlatButton}" Command="{Binding VerHistoricoEtiqueta_Command}" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Width="131" Margin="0,10,18,0" ToolTip="Ver datos etiqueta para impresión" >
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Ver Histórico"/></TextBlock>
+        </Button>
+        <Button x:Name="btVolver" Style="{StaticResource FlatButton}" Command="{Binding VolverPantallaAnterior_Command}" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Width="131" Margin="0,10,155,0">
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="&lt;&lt; Volver"/>
+        </Button>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <Image x:Name="cmdHome" Source="/Imagenes/home-simbolo-de-esquema-grueso-24-gris.png" Margin="20,13,10,0" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" MouseLeftButtonDown="cmdHome_MouseLeftButtonDown">
+            </Image>
+            <Label Content=" > " VerticalAlignment="Top" Padding="0,0,5,2" Margin="0,10,0,0" Height="31" FontSize="20" Foreground="#FFCBCBCB" HorizontalAlignment="Left"/>
+            <Label x:Name="Con" Content="Introducir Datos Etiqueta" VerticalAlignment="Top" Padding="0,0,5,2" Margin="0,10,0,0" Height="31" FontSize="20" Foreground="#FFCBCBCB" HorizontalAlignment="Left"/>
+        </StackPanel>
+
+        <GroupBox Header="Datos Impresión Etiqueta" HorizontalAlignment="Left" MinHeight="432" Margin="15,0,0,15" Grid.Row="2" VerticalAlignment="Bottom" Width="1124" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB" Height="517">
+            <Grid>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="10,27,0,0" TextWrapping="Wrap" Text="{Binding Entity.CodArticulo}" VerticalAlignment="Top" Width="140" FontSize="16"/>
+                <Label Content="Cod Artículo:" HorizontalAlignment="Left" Margin="10,1,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15"/>
+                <TextBox HorizontalAlignment="Left" Height="24" Margin="10,82,0,0" TextWrapping="Wrap" Text="{Binding Entity.NumDesde}" VerticalAlignment="Top" Width="140" FontSize="16"/>
+                <Label Content="Nº Desde (página inicial):" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15"/>
+                <TextBox HorizontalAlignment="Left" Height="22" Margin="10,140,0,0" TextWrapping="Wrap" Text="{Binding Entity.NumHasta}" VerticalAlignment="Top" Width="140" FontSize="16"/>
+                <Label Content="Nº Hasta (página final):" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15"/>
+                <TextBox HorizontalAlignment="Left" Height="24" Margin="10,193,0,0" TextWrapping="Wrap" Text="{Binding Entity.NumeroInicial}" VerticalAlignment="Top" Width="140" FontSize="16" />
+                <Label Content="Cuenta Nº Inicio:" HorizontalAlignment="Left" Margin="10,163,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="214,27,0,0" TextWrapping="Wrap" Text="{Binding Entity.Descripcion}" VerticalAlignment="Top" Width="640" FontSize="16" />
+                <Label Content="Descripción:" HorizontalAlignment="Left" Margin="214,1,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15" Width="108"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="214,82,0,0" TextWrapping="Wrap" Text="{Binding Entity.Lote}" VerticalAlignment="Top" Width="265" FontSize="16"/>
+                <Label Content="Lote:" HorizontalAlignment="Left" Margin="214,52,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15"/>
+                <DataGrid HorizontalAlignment="Stretch" Margin="10,236,612,77" VerticalAlignment="Stretch"
+                    x:Name="PART_Grid_ListaLineasGridEtiqueta" ItemsSource="{Binding Entity.ListaLineasGridEtiqueta}" 
+                    AutoGenerateColumns="False" MinWidth="450"
+                    IsReadOnly="False" CanUserAddRows="{Binding ListaLineasGridEtiqueta_CanAdd, Mode=OneWay}" CanUserDeleteRows="True" 
+                    VerticalGridLinesBrush="{DynamicResource ColorLineasGrid01}" 
+                    HorizontalGridLinesBrush="{DynamicResource ColorLineasGrid01}" 
+                    MinRowHeight="25"
+                    SelectionMode="Single" SelectedItem="{Binding Entity.ListaLineasGridEtiqueta_SelectedItem}"
+                    Utilidades:Commands.DataGridDoubleClickCommand ="{Binding PART_Grid_ListaLineasGridEtiqueta_DoubleClick}" 
+    >
+
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="FontWeight" Value="Normal"/>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding NumeroLinea}" ClipboardContentBinding="{x:Null}" Header="" Width="30" />
+                        <DataGridTextColumn Binding="{Binding NumCajas, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Nº de Elementos" MinWidth="150" Width="Auto" IsReadOnly="False" CanUserResize="False" />
+                        <DataGridTextColumn Binding="{Binding UdsPorCaja, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Uds por Elemento" MinWidth="150" Width="Auto" IsReadOnly="False" CanUserResize="False"/>
+                        <DataGridTextColumn Binding="{Binding TotalUds, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Total Unidades" MinWidth="150" Width="Auto" IsReadOnly="False" CanUserResize="False"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Impresora" HorizontalAlignment="Right" Margin="0,15,15,15" Grid.Row="2" Width="200" Height="154" VerticalAlignment="Bottom" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB">
+            <Grid>
+                <RadioButton Content="Ver Pantalla" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="14" GroupName="Impresion" IsChecked="{Binding SeleccionImpresion, ConverterParameter=Pantalla, Converter={StaticResource EnumBooleanConverter}}"/>
+                <RadioButton Content="Impresora" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="14" GroupName="Impresion" IsChecked="{Binding SeleccionImpresion, ConverterParameter=Impresora, Converter={StaticResource EnumBooleanConverter}}" />
+                <Button x:Name="btImprimirEtiqueta" Style="{StaticResource FlatButton}" Command="{Binding ImprimirEtiqueta_Command}" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="132" Margin="28,0,28,10" ToolTip="Imprimir Etiqueta" >
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="{Binding TextoBotonImpresion}"/></TextBlock>
+                </Button>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="btNuevaEtiqueta" Style="{StaticResource FlatButton}" Command="{Binding NuevaEtiqueta_Command}" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Width="131" Margin="0,36,54,0" ToolTip="Limpiar datos y generar nueva etiqueta" Grid.Row="2" >
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Nueva"/></TextBlock>
+        </Button>
+
+        <Button x:Name="btModificarEtiquetaActual" Style="{StaticResource FlatButton}" Command="{Binding ModificarEtiquetaActual_Command}" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Width="131" Margin="0,120,54,0" ToolTip="Limpiar datos y generar nueva etiqueta" Grid.Row="2" >
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Modificar Actual"/></TextBlock>
+        </Button>
+
+    </Grid>
+</UserControl>

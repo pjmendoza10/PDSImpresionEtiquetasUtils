@@ -13,6 +13,7 @@ using PDSIEUCo = PDSImpresionEtiquetasUtils.Comun;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Threading;
 
 namespace PDSImpresionEtiquetasUtils.Pantallas
 {
@@ -117,6 +118,56 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             if (!p_impre_palet.IsValid) p_impre_palet.PrinterName = defaultPrinter;
             DoImpresion(report_palet, p_impre_palet, p_pantalla, p_dialogo_impresion, p_dispatcher);
         }
+
+        public void ImprimeEtiquetaPalet(PrinterSettings p_impre_palet, csItem_EtiquetaChinos p_Etiqueta, bool p_pantalla, bool p_dialogo_impresion, Dispatcher p_dispatcher = null)
+        {
+
+            long num0 = 0;
+            if (long.TryParse(p_Etiqueta.SSCC, out long aux_long)) num0 = aux_long;
+    
+            for (int int32 = System.Convert.ToInt32(p_Etiqueta.NumDesde); int32 <= System.Convert.ToInt32(p_Etiqueta.NumHasta); ++int32)
+            {
+
+                Stimulsoft.Report.StiReport report_palet = new Stimulsoft.Report.StiReport();
+
+                if (File.Exists(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "\\etiquetas_chinos\\P" + p_Etiqueta.CodArticulo + ".mrt"))
+                {
+                    report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "\\etiquetas_chinos\\P" + p_Etiqueta.CodArticulo + ".mrt");
+                } else
+                {
+                    report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "\\etiquetas_chinos\\P_GEN03.mrt");
+                }
+
+                report_palet.Compile();
+
+                long num1 = num0 + int32 * 4L;
+                long num2 = num1 + 1L;
+                long num3 = num2 + 1L;
+                long num4 = num3 + 1L;
+
+                report_palet["CodArticulo"] = p_Etiqueta.CodArticulo;
+                report_palet["Descripcion"] = p_Etiqueta.Descripcion;
+                report_palet["Lote"] = p_Etiqueta.Lote;
+                foreach (csItem_ListaLineasGridEtiqueta item in p_Etiqueta.ListaLineasGridEtiqueta)
+                {
+                    report_palet["NumCajas"] += item.NumCajas.ToString() + "\r";
+                    report_palet["UdsPorCaja"] += item.UdsPorCaja.ToString() + "\r";
+                    report_palet["TotalUds"] += item.TotalUds.ToString() + "\r";
+                }
+                report_palet["Variable1"] = num1.ToString("000000000");
+                report_palet["Variable2"] = num2.ToString("000000000");
+                report_palet["Variable3"] = num3.ToString("000000000");
+                report_palet["Variable4"] = num4.ToString("000000000");
+
+                report_palet.Render();
+
+                string defaultPrinter = p_impre_palet.PrinterName;
+                p_impre_palet.PrinterName = csEstadoPermanente.Configuracion.Datos.Impresora_Palets_GER01;
+                if (!p_impre_palet.IsValid) p_impre_palet.PrinterName = defaultPrinter;
+                DoImpresion(report_palet, p_impre_palet, p_pantalla, p_dialogo_impresion, p_dispatcher);
+            }
+        }
+
         public void ImprimeEtiquetaPalet(PrinterSettings p_impre_palet, csitem_EtiquetaEstiuT1 p_Etiqueta, bool p_pantalla, bool p_dialogo_impresion, Dispatcher p_dispatcher = null)
         {
             

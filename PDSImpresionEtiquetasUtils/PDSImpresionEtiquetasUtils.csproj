@@ -106,6 +106,9 @@
     <Compile Include="Pantallas\panImpresionEtiquetaESTIU.xaml.cs">
       <DependentUpon>panImpresionEtiquetaESTIU.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pantallas\panImpresionEtiquetaGen03.xaml.cs">
+      <DependentUpon>panImpresionEtiquetaGen03.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pantallas\panImpresionEtiquetaSIRO.xaml.cs">
       <DependentUpon>panImpresionEtiquetaSIRO.xaml</DependentUpon>
     </Compile>
@@ -113,6 +116,7 @@
       <DependentUpon>panImpresionEtiqueta.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pantallas\panImpresionEtiquetaESTIU_ViewModel.cs" />
+    <Compile Include="Pantallas\panImpresionEtiquetaGen03_ViewModel.cs" />
     <Compile Include="Pantallas\panImpresionEtiquetaSIRO_ViewModel.cs" />
     <Compile Include="Pantallas\panImpresionEtiquetaGen01_ViewModel.cs" />
     <Compile Include="Pantallas\panOpciones.xaml.cs">
@@ -151,6 +155,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pantallas\panImpresionEtiquetaESTIU.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pantallas\panImpresionEtiquetaGen03.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pantallas\panImpresionEtiquetaSIRO.xaml">
