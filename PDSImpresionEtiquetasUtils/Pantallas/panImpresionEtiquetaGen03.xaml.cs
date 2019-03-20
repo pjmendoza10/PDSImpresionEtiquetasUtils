@@ -105,9 +105,12 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 csEstadoPermanente.PantallaPrincipal.CambiarAPantallaHome();
             }
         }
-       
-        #endregion
 
+        #endregion
+        private void TextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) this._viewmodel.BuscarMaterialLote_Command_Execute();
+        }
         /* public void OnRendered()
          {
              //this._viewmodel.FiltrarFicheroArticuloLote_Command_Execute();

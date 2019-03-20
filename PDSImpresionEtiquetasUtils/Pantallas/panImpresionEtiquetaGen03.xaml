@@ -33,8 +33,16 @@
             <Label Content=" > " VerticalAlignment="Top" Padding="0,0,5,2" Margin="0,10,0,0" Height="31" FontSize="20" Foreground="#FFCBCBCB" HorizontalAlignment="Left"/>
             <Label x:Name="Con" Content="Introducir Datos Etiqueta" VerticalAlignment="Top" Padding="0,0,5,2" Margin="0,10,0,0" Height="31" FontSize="20" Foreground="#FFCBCBCB" HorizontalAlignment="Left"/>
         </StackPanel>
-
-        <GroupBox Header="Datos Impresión Etiqueta" HorizontalAlignment="Left" MinHeight="432" Margin="15,0,0,15" Grid.Row="2" VerticalAlignment="Bottom" Width="1124" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB" Height="517">
+        <GroupBox Header="Búsqueda" HorizontalAlignment="Left" Height="75" Margin="15,15,0,0" Grid.Row="2" VerticalAlignment="Top" Width="205" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB">
+            <Grid>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="10,26,0,0" TextWrapping="Wrap" Text="{Binding Entity.CodArticulo, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="140" FontSize="16" KeyUp="TextBox_KeyUp"/>
+                <Label Content="Cod. Artículo:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15"/>
+                <Button x:Name="btnFiltrar" Style="{StaticResource FlatButton}" Command="{Binding BuscarMaterialLote_Command}" HorizontalAlignment="Left" Margin="155,26,0,0" VerticalAlignment="Top" Height="23" Width="29" >
+                    <Image Source="/Imagenes/lupa.png"/>
+                </Button>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Datos Impresión Etiqueta" HorizontalAlignment="Left" MinHeight="432" Margin="15,0,0,15" Grid.Row="2" VerticalAlignment="Bottom" Width="1124" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB" Height="432">
             <Grid>
                 <TextBox HorizontalAlignment="Left" Height="23" Margin="10,27,0,0" TextWrapping="Wrap" Text="{Binding Entity.CodArticulo}" VerticalAlignment="Top" Width="140" FontSize="16"/>
                 <Label Content="Cod Artículo:" HorizontalAlignment="Left" Margin="10,1,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15"/>
@@ -48,7 +56,7 @@
                 <Label Content="Descripción:" HorizontalAlignment="Left" Margin="214,1,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15" Width="108"/>
                 <TextBox HorizontalAlignment="Left" Height="23" Margin="214,82,0,0" TextWrapping="Wrap" Text="{Binding Entity.Lote}" VerticalAlignment="Top" Width="265" FontSize="16"/>
                 <Label Content="Lote:" HorizontalAlignment="Left" Margin="214,52,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15"/>
-                <DataGrid HorizontalAlignment="Stretch" Margin="10,236,612,77" VerticalAlignment="Stretch"
+                <DataGrid HorizontalAlignment="Stretch" Margin="10,236,515,10" VerticalAlignment="Stretch"
                     x:Name="PART_Grid_ListaLineasGridEtiqueta" ItemsSource="{Binding Entity.ListaLineasGridEtiqueta}" 
                     AutoGenerateColumns="False" MinWidth="450"
                     IsReadOnly="False" CanUserAddRows="{Binding ListaLineasGridEtiqueta_CanAdd, Mode=OneWay}" CanUserDeleteRows="True" 

@@ -23,6 +23,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
     public class panImpresionEtiquetaGen03_ViewModel : panPantallaBase_ViewModel
     {
         BackgroundWorker _bkgwk_GuardarEtiquetaEnBDD = new BackgroundWorker();
+        BackgroundWorker _bkgwk_BuscarMaterialLote = new BackgroundWorker();
         public enum eSeleccionImpresion { Impresora = 0, Pantalla = 1 }
 
         private int _n_max_lineas_detalle_palet = 10;
@@ -34,6 +35,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             ModificarEtiquetaActual_Command = new RelayCommand(ModificarEtiquetaActual_Command_Execute, ModificarEtiquetaActual_Command_CanExecute);
             VerHistoricoEtiqueta_Command = new RelayCommand(VerHistoricoEtiqueta_Command_Execute, VerHistoricoEtiqueta_Command_CanExecute);
             ImprimirEtiqueta_Command = new RelayCommand(ImprimirEtiqueta_Command_Execute, ImprimirEtiqueta_Command_CanExecute);
+            BuscarMaterialLote_Command = new RelayCommand(BuscarMaterialLote_Command_Execute, BuscarMaterialLote_Command_CanExecute);
         }
         #region Overrides
 
@@ -48,6 +50,10 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             _bkgwk_GuardarEtiquetaEnBDD.DoWork += _bkgwk_GuardarEtiquetaEnBDD_DoWork;
             _bkgwk_GuardarEtiquetaEnBDD.RunWorkerCompleted += _bkgwk_GuardarEtiquetaEnBDD_RunWorkerCompleted;
 
+            _bkgwk_BuscarMaterialLote.WorkerReportsProgress = false;
+            _bkgwk_BuscarMaterialLote.WorkerSupportsCancellation = false;
+            _bkgwk_BuscarMaterialLote.DoWork += _bkgwk_BuscarMaterialLote_DoWork;
+            _bkgwk_BuscarMaterialLote.RunWorkerCompleted += _bkgwk_BuscarMaterialLote_RunWorkerCompleted;
         }
 
         /*internal override void OnRendered()
@@ -99,10 +105,100 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             {
                 Comun.Utilidades.csLogUtils.EscribeLineaLogError("_bkgwk_GuardarEtiquetaEnBDD_DoWork", ex);
             }
-        }        
+        }
+
+        void _bkgwk_BuscarMaterialLote_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            CommandManager.InvalidateRequerySuggested();
+
+
+            _bkgwk_BuscarMaterialLote.Dispose();
+
+            //_HayOFSegunLote = true;
+            ((panImpresionEtiquetaGen03)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
+
+            return;
+        }
+
+        void _bkgwk_BuscarMaterialLote_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = e.Argument;
+
+            try
+            {
+                if (e.Argument.ToString() == "ARTICULOLOTE")
+                {
+                    BuscarArticuloLote(Entity.CodArticulo, true);
+                }
+                else
+                {
+                    e.Result = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Comun.Utilidades.csLogUtils.EscribeLineaLogError("_bkgwk_BuscarMaterialLote_DoWork", ex);
+            }
+        }
         #endregion
 
         #region Commands
+        public void BuscarArticuloLote(string p_codig_articulo, bool p_reset_datos_pantalla)
+        {
+            // DataBaseLayer b_base = new DataBaseLayer("Data Source=PDS-BBDD;Initial Catalog=RPS2013;Trusted_Connection=No;User=RPSUser;Password=rpsuser;MultipleActiveResultSets=True");/* FUNCIONA*/
+
+            //DataBaseLayer b_base = new DataBaseLayer("Data Source=localhost;Initial Catalog=RPS2013;Trusted_Connection=No;User=RPSUserDev;Password=rpsuserdev;MultipleActiveResultSets=True");
+
+            DataBaseLayer b_base = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_RPS2013);
+
+            List<DB_pds_progutils_ETIQ01_PALETS_GEN01> db_Gen03_item = b_base.dB_Pds_Progutils_ETIQ01_PALETS_GEN01_GetItems(p_codig_articulo);
+
+            //RellenaListaArticuloCliente(db_Gen03_item);
+            foreach (DB_pds_progutils_ETIQ01_PALETS_GEN01 item in db_Gen03_item) {
+                Entity.Descripcion = item.Descripcion;
+            }
+
+        }
+
+        public ICommand BuscarMaterialLote_Command { get; set; }
+        public bool BuscarMaterialLote_Command_CanExecute()
+        {
+            if (_bkgwk_BuscarMaterialLote.IsBusy) return false;
+
+            return true;
+        }
+        public void BuscarMaterialLote_Command_Execute()
+        {
+            try
+            {
+                ((panImpresionEtiquetaGen03)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
+
+                //TextoErrorBuscarMaterialLote = "";
+
+                if (string.IsNullOrWhiteSpace(Entity.CodArticulo))
+                {
+                    Entity.Descripcion = null;
+                    //TextoErrorBuscarMaterialLote = "Código artículo incorrecto";
+                    ((panImpresionEtiquetaGen03)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
+                    return;
+                }
+
+                if (_bkgwk_BuscarMaterialLote.IsBusy != true)
+                {
+                    //ResetDatosPantalla();
+                    _bkgwk_BuscarMaterialLote.RunWorkerAsync("ARTICULOLOTE");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Comun.Utilidades.csLogUtils.EscribeLineaLogError(ex);
+            }
+            finally
+            {
+                ((panImpresionEtiquetaGen03)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
+            }
+        }
 
         public ICommand VolverPantallaAnterior_Command { get; set; }
 
@@ -149,6 +245,9 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             {
                 ((panImpresionEtiquetaGen03)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
                 Entity.CodArticulo = null;
+                Entity.Descripcion = null;
+                Entity.ListaLineasGridEtiqueta = null;
+                Entity.Lote = null;
                 Entity.SSCC = null;
                 Entity.NumDesde = 0;
                 Entity.NumeroInicial = 1;
