@@ -90,7 +90,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                         Entity.UIDEtiqueta = Guid.NewGuid().ToString();
                         string serializado = csEstadoPermanente.Serialize(Entity);
                         // TODO Guardar En BDD
-                        dbl.DB_pds_progutils_PALETS_Insert(Guid.Parse(Entity.UIDEtiqueta), Entity.SSCC, dbl.DB_pds_progutils_PALETS_GetUIDEtiqueta("5"), serializado);
+                        dbl.DB_pds_progutils_PALETS_Insert(Guid.Parse(Entity.UIDEtiqueta), "0000123456" + Entity.SSCC, dbl.DB_pds_progutils_PALETS_GetUIDEtiqueta("5"), serializado);
                     }
 
                     TextoBotonImpresion = "Reimprimir";
