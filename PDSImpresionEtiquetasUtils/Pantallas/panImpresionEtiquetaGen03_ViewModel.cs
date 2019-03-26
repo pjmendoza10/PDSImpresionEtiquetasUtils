@@ -156,6 +156,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             //RellenaListaArticuloCliente(db_Gen03_item);
             foreach (DB_pds_progutils_ETIQ01_PALETS_GEN01 item in db_Gen03_item) {
                 Entity.Descripcion = item.Descripcion;
+                Entity.EAN13 = item.EAN13;
             }
 
         }
@@ -253,6 +254,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 Entity.NumeroInicial = 1;
                 Entity.NumHasta = 0;
                 Entity.UIDEtiqueta = null;
+                Entity.EAN13 = null;
 
                 TextoBotonImpresion = "Imprimir y Guardar";
                 IsStoredInBD = false;
@@ -345,7 +347,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
                 csGeneraEtiqRepro_Comun imprimir = new csGeneraEtiqRepro_Comun();
                 PrinterSettings printerSettings = new PrinterSettings();
-                imprimir.ImprimeEtiquetaPalet(printerSettings, Entity, Convert.ToBoolean(SeleccionImpresion), true, ((panImpresionEtiquetaGen03)View).Dispatcher);
+                imprimir.ImprimeEtiquetaPalet(printerSettings, Entity, Convert.ToBoolean(SeleccionImpresion), ImprimirEanyLote, ((panImpresionEtiquetaGen03)View).Dispatcher);
 
             }
             catch (Exception ex)
@@ -376,7 +378,12 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         private string textoBotonImpresion = "Imprimir y Guardar";
 
         public bool IsStoredInBD = false;
-
+        private bool _ImprimirEanyLote = false;
+        public bool ImprimirEanyLote
+        {
+            get { return _ImprimirEanyLote; }
+            set { _ImprimirEanyLote = value; RaisePropertyChanged("ImprimirEanyLote"); }
+        }
         private eSeleccionImpresion _SeleccionImpresion = eSeleccionImpresion.Pantalla;
         public eSeleccionImpresion SeleccionImpresion
         {
@@ -404,6 +411,8 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         private int _numeroInicial;
         private string _sscc;
         private string _uidEtiqueta;
+        private string _ean13;
+
         private ObservableCollection<csItem_ListaLineasGridEtiqueta> _ListaLineasGridEtiqueta = new ObservableCollection<csItem_ListaLineasGridEtiqueta>();
         public ObservableCollection<csItem_ListaLineasGridEtiqueta> ListaLineasGridEtiqueta
         {
@@ -430,6 +439,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         public int NumeroInicial { get => _numeroInicial; set { _numeroInicial = value; RaisePropertyChanged("NumeroInicial");
                 long num1 = long.Parse(DateTime.Today.ToString("yyMMdd")) * 1000L + (long)System.Convert.ToInt32(value); SSCC = num1.ToString(); } }
         public string SSCC { get => _sscc; set { _sscc = value; RaisePropertyChanged("SSCC"); } }
+        public string EAN13 { get => _ean13; set { _ean13 = value; RaisePropertyChanged("EAN13"); } }
 
         public string this[string columnName]
         {
@@ -439,5 +449,6 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         {
             get { return ""; }
         }
+
     }
 }

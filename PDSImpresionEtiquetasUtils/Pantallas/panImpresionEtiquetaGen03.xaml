@@ -52,10 +52,15 @@
                 <Label Content="Nº Hasta (página final):" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15"/>
                 <TextBox HorizontalAlignment="Left" Height="24" Margin="10,193,0,0" TextWrapping="Wrap" Text="{Binding Entity.NumeroInicial}" VerticalAlignment="Top" Width="140" FontSize="16" />
                 <Label Content="Cuenta Nº Inicio:" HorizontalAlignment="Left" Margin="10,163,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="214,27,0,0" TextWrapping="Wrap" Text="{Binding Entity.Descripcion}" VerticalAlignment="Top" Width="640" FontSize="16" />
-                <Label Content="Descripción:" HorizontalAlignment="Left" Margin="214,1,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15" Width="108"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="214,82,0,0" TextWrapping="Wrap" Text="{Binding Entity.Lote}" VerticalAlignment="Top" Width="265" FontSize="16"/>
-                <Label Content="Lote:" HorizontalAlignment="Left" Margin="214,52,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="206,27,0,0" TextWrapping="Wrap" Text="{Binding Entity.Descripcion}" VerticalAlignment="Top" Width="640" FontSize="16" />
+                <Label Content="Descripción:" HorizontalAlignment="Left" Margin="206,1,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15" Width="108"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="883,27,0,0" TextWrapping="Wrap" Text="{Binding Entity.EAN13}" VerticalAlignment="Top" Width="199" FontSize="16"/>
+                <Label Content="Ean13:" HorizontalAlignment="Left" Margin="883,-3,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="206,82,0,0" TextWrapping="Wrap" Text="{Binding Entity.Lote}" VerticalAlignment="Top" Width="265" FontSize="16"/>
+                <Label Content="Lote:" HorizontalAlignment="Left" Margin="206,52,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="15"/>
+                
+                <CheckBox Content="Imprimir Codigo Barras EAN y Lote" HorizontalAlignment="Left" Margin="883,61,0,0" VerticalAlignment="Top" IsChecked="{Binding ImprimirEanyLote ,UpdateSourceTrigger=PropertyChanged}"/>
+                
                 <DataGrid HorizontalAlignment="Stretch" Margin="10,236,515,10" VerticalAlignment="Stretch"
                     x:Name="PART_Grid_ListaLineasGridEtiqueta" ItemsSource="{Binding Entity.ListaLineasGridEtiqueta}" 
                     AutoGenerateColumns="False" MinWidth="450"
@@ -79,7 +84,6 @@
                         <DataGridTextColumn Binding="{Binding TotalUds, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Total Unidades" MinWidth="150" Width="Auto" IsReadOnly="False" CanUserResize="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
-
             </Grid>
         </GroupBox>
         <GroupBox Header="Impresora" HorizontalAlignment="Right" Margin="0,15,15,15" Grid.Row="2" Width="200" Height="154" VerticalAlignment="Bottom" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB">

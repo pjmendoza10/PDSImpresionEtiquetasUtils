@@ -14,6 +14,8 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Globalization;
 using System.Threading;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Components;
 
 namespace PDSImpresionEtiquetasUtils.Pantallas
 {
@@ -124,10 +126,14 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
             long num0 = 0;
             if (long.TryParse(p_Etiqueta.SSCC, out long aux_long)) num0 = aux_long;
-    
+
+            StiReport joinedReport = new StiReport();
+            joinedReport.NeedsCompiling = false;
+            joinedReport.IsRendered = true;
+            joinedReport.RenderedPages.Clear();
+
             for (int int32 = System.Convert.ToInt32(p_Etiqueta.NumDesde); int32 <= System.Convert.ToInt32(p_Etiqueta.NumHasta); ++int32)
             {
-
                 Stimulsoft.Report.StiReport report_palet = new Stimulsoft.Report.StiReport();
 
                 if (File.Exists(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "\\etiquetas_chinos\\P" + p_Etiqueta.CodArticulo + ".mrt"))
@@ -135,7 +141,8 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                     report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "\\etiquetas_chinos\\P" + p_Etiqueta.CodArticulo + ".mrt");
                 } else
                 {
-                    report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "\\etiquetas_chinos\\P_GEN03.mrt");
+                    if (p_dialogo_impresion) report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "\\etiquetas_chinos\\P_GEN02.mrt");
+                    else report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "\\etiquetas_chinos\\P_GEN03.mrt");
                 }
 
                 report_palet.Compile();
@@ -145,6 +152,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 long num3 = num2 + 1L;
                 long num4 = num3 + 1L;
 
+                if (p_dialogo_impresion) report_palet["EAN13"] = p_Etiqueta.EAN13;
                 report_palet["CodArticulo"] = p_Etiqueta.CodArticulo;
                 report_palet["Descripcion"] = p_Etiqueta.Descripcion;
                 report_palet["Lote"] = p_Etiqueta.Lote;
@@ -160,12 +168,22 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 report_palet["Variable4"] = num4.ToString("000000000");
 
                 report_palet.Render();
+                foreach(StiPage page in report_palet.CompiledReport.RenderedPages)
+                {
+                    page.Report = joinedReport;
+                    page.NewGuid();
+                    joinedReport.RenderedPages.Add(page);
+                }
 
-                string defaultPrinter = p_impre_palet.PrinterName;
-                p_impre_palet.PrinterName = csEstadoPermanente.Configuracion.Datos.Impresora_Palets_GER01;
-                if (!p_impre_palet.IsValid) p_impre_palet.PrinterName = defaultPrinter;
-                DoImpresion(report_palet, p_impre_palet, p_pantalla, p_dialogo_impresion, p_dispatcher);
             }
+
+            //StiReportResponse.ResponseAsPdf(this, joinedReport, false);
+
+            string defaultPrinter = p_impre_palet.PrinterName;
+            p_impre_palet.PrinterName = csEstadoPermanente.Configuracion.Datos.Impresora_Palets_GER01;
+            if (!p_impre_palet.IsValid) p_impre_palet.PrinterName = defaultPrinter;
+            //DoImpresion(report_palet, p_impre_palet, p_pantalla, p_dialogo_impresion, p_dispatcher);
+            DoImpresion(joinedReport, p_impre_palet, p_pantalla, true, p_dispatcher);
         }
 
         public void ImprimeEtiquetaPalet(PrinterSettings p_impre_palet, csitem_EtiquetaEstiuT1 p_Etiqueta, bool p_pantalla, bool p_dialogo_impresion, Dispatcher p_dispatcher = null)
