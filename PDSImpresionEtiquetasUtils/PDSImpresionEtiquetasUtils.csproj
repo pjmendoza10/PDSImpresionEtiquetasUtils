@@ -98,14 +98,19 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="Conectores\DBConector_PDSImpresionEtiquetas.cs" />
     <Compile Include="Conectores\DBConector_OLANET_BASE_2013.cs" />
     <Compile Include="Pantallas\csGeneraEtiqRepro_Comun.cs" />
+    <Compile Include="Pantallas\panImpresionEtiquetaCOliveRueda.xaml.cs">
+      <DependentUpon>panImpresionEtiquetaCOliveRueda.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pantallas\panImpresionEtiquetaGen01.xaml.cs">
       <DependentUpon>panImpresionEtiquetaGen01.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pantallas\panImpresionEtiquetaESTIU.xaml.cs">
       <DependentUpon>panImpresionEtiquetaESTIU.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pantallas\panImpresionEtiquetaCOliveRueda_ViewModel.cs" />
     <Compile Include="Pantallas\panImpresionEtiquetaGen03.xaml.cs">
       <DependentUpon>panImpresionEtiquetaGen03.xaml</DependentUpon>
     </Compile>
@@ -126,11 +131,15 @@
     <Compile Include="Pantallas\panHistorico.xaml.cs">
       <DependentUpon>panHistorico.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pantallas\panEtiquetaCajaBobina.xaml.cs">
+      <DependentUpon>panEtiquetaCajaBobina.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pantallas\panTipoEtiqueta.xaml.cs">
       <DependentUpon>panTipoEtiqueta.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pantallas\panImpresionEtiqueta_ViewModel.cs" />
     <Compile Include="Pantallas\panHistorico_ViewModel.cs" />
+    <Compile Include="Pantallas\panEtiquetaCajaBobina_ViewModel.cs" />
     <Compile Include="Pantallas\panTipoEtiqueta_ViewModel.cs" />
     <Compile Include="Utilidades\ModControles.cs" />
     <Compile Include="Utilidades\UtilesCarga.cs" />
@@ -151,6 +160,9 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pantallas\panImpresionEtiquetaCOliveRueda.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pantallas\panImpresionEtiquetaGen01.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,6 +185,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pantallas\panHistorico.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pantallas\panEtiquetaCajaBobina.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pantallas\panTipoEtiqueta.xaml">

@@ -32,7 +32,12 @@
                     <Grid>
                         <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Creación Etiqueta Packing List (PALETS)"/></TextBlock>
                     </Grid>
-                </Button>                
+                </Button>
+                <Button Margin="0,8,0,0" x:Name="btPanEtiquetaCaja01" Style="{StaticResource FlatButton}" Width="165" Command="{Binding ViewEtiquetaCajaBobina_Command}" Height="58" VerticalAlignment="Top" SizeChanged="Window_SizeChanged" >
+                    <Grid>
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Creación Etiqueta Caja / Bobina"/></TextBlock>
+                    </Grid>
+                </Button>
             </StackPanel>
 
             <Label Content="{Binding Version, Mode=OneWay}" HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFC1C1C1" FontSize="10"/>

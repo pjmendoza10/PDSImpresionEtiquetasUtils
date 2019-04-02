@@ -28,8 +28,8 @@ namespace PDSImpresionEtiquetasUtils
             // commands
             ViewInicial_Command = new RelayCommand(ViewInicial_Command_Execute, ViewInicial_Command_CanExecute);
             ViewTipoEtiqueta_Command = new RelayCommand(ViewTipoEtiqueta_Command_Execute, ViewTipoEtiqueta_Command_CanExecute);
-            /*ViewModifCantMatTarea01_Command = new RelayCommand(ViewModifCantMatTarea01_Command_Execute, ViewModifCantMatTarea01_Command_CanExecute);
-            ViewGeneraEtiqRepro01_Command = new RelayCommand(ViewGeneraEtiqRepro01_Command_Execute, ViewGeneraEtiqRepro01_Command_CanExecute);
+            ViewEtiquetaCajaBobina_Command = new RelayCommand(ViewEtiquetaCajaBobina_Command_Execute, ViewEtiquetaCajaBobina_Command_CanExecute);
+            /*ViewGeneraEtiqRepro01_Command = new RelayCommand(ViewGeneraEtiqRepro01_Command_Execute, ViewGeneraEtiqRepro01_Command_CanExecute);
             ViewAdiccionMatTarea01_Command = new RelayCommand(ViewAdiccionMatTarea01_Command_Execute, ViewAdiccionMatTarea01_Command_CanExecute);
             ReevioOFEjecutableAlSGA01_Command = new RelayCommand(ReevioOFEjecutableAlSGA01_Command_Execute, ReevioOFEjecutableAlSGA01_Command_CanExecute);*/
 
@@ -168,7 +168,34 @@ namespace PDSImpresionEtiquetasUtils
 
             return;
         }
+        
+        public ICommand ViewEtiquetaCajaBobina_Command { get; set; }
+        public bool ViewEtiquetaCajaBobina_Command_CanExecute()
+        {
+            return true;
+        }
 
+        public void ViewEtiquetaCajaBobina_Command_Execute()
+        {
+            if (_pantalla_Principal.PantallaActual.Identificador == Pantallas.panEtiquetaCajaBobina.CIdentificador) return;
+
+            Pantallas.panEtiquetaCajaBobina b_pantalla = new Pantallas.panEtiquetaCajaBobina();
+
+            if (Utilidades.UtilesCarga._pantallas_abiertas.Any(z => z.Key == b_pantalla.ToString()))
+            {
+                b_pantalla = (Pantallas.panEtiquetaCajaBobina)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
+            }
+            else
+            {
+                Utilidades.UtilesCarga._pantallas_abiertas.Add(b_pantalla.ToString(), b_pantalla);
+            }
+            b_pantalla.PantallaAnterior = PantallaPrincipal.PantallaActual;
+            PantallaPrincipal.BotonMenuPrincipalPulsado_Animaciones();
+
+            PantallaPrincipal.CambiarPantalla(b_pantalla);
+
+            return;
+        }
         public ICommand ViewPanOpcionesGlobal_Command { get; set; }
         public bool ViewPanOpcionesGlobal_Command_CanExecute()
         {
