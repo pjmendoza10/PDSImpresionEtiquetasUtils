@@ -108,7 +108,29 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
         #endregion
 
         #region Especificas
-        
+        public List<DB_pds_progutils_ETIQ01_PALETS_GEN01> dB_Pds_Progutils_ETIQ_BOBINA_GEN01_GetItem(string cliente)
+        {
+            List<DB_pds_progutils_ETIQ01_PALETS_GEN01> db_item = new List<DB_pds_progutils_ETIQ01_PALETS_GEN01>();
+            using (var command = new SqlCommand(@"SELECT CodCustomer, Description
+                                              FROM [RPS2013].[dbo].[FACCustomer]
+                                              WHERE 1 = 1 AND CodCustomer LIKE @cliente or Description LIKE @cliente"))
+            {
+                command.Parameters.AddWithValue("@cliente", "%" + cliente + "%");
+                DataTable b_dt = MyExecuteQueryCommand(command);
+                foreach (DataRow i_dr in b_dt.Rows)
+                {
+                    try
+                    {
+                        DB_pds_progutils_ETIQ01_PALETS_GEN01 b_item = new DB_pds_progutils_ETIQ01_PALETS_GEN01();
+                        b_item.NombreCliente = b_dt.Rows[0]["Description"].ToString();
+                        b_item.IDCustomer = b_dt.Rows[0]["CodCustomer"].ToString();
+                        db_item.Add(b_item);
+                    }
+                    catch (Exception ex) { }
+                }
+            }
+            return db_item;
+        }
         public DB_pds_progutils_ETIQ01_PALETS_SIRO_LINEAS dB_Pds_Progutils_ETIQ01_PALETS_SIRO_LINEAS_GetItem(string CodPedido, string ReferenciaSIRO)
         {
             DB_pds_progutils_ETIQ01_PALETS_SIRO_LINEAS db_item = new DB_pds_progutils_ETIQ01_PALETS_SIRO_LINEAS();

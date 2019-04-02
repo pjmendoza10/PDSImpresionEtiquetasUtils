@@ -16,6 +16,7 @@ using System.Globalization;
 using System.Threading;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Components;
+using static PDSImpresionEtiquetasUtils.Pantallas.panImpresionEtiquetaCOliveRueda_ViewModel;
 
 namespace PDSImpresionEtiquetasUtils.Pantallas
 {
@@ -81,6 +82,73 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
             return filename;
         }
+
+
+        public void ImprimeEtiquetaPalet(PrinterSettings p_impre_palet, csitem_EtiquetaGeneralCajaBobinaT1 p_Etiqueta, bool p_pantalla, bool p_dialogo_impresion, Dispatcher p_dispatcher = null)
+        {
+
+            StiReport joinedReport = new StiReport();
+            joinedReport.NeedsCompiling = false;
+            joinedReport.IsRendered = true;
+            joinedReport.RenderedPages.Clear();
+
+            for (int i = 0; i < p_Etiqueta.TotalEtiquetas; i++)
+            {
+                Stimulsoft.Report.StiReport report_palet = new Stimulsoft.Report.StiReport();
+
+                if (File.Exists(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "C_" + p_Etiqueta.CodCliente + ".mrt"))
+                {
+                    report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "C_" + p_Etiqueta.CodCliente + ".mrt");
+                }
+                else
+                {
+                    report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "C_GEN01.mrt");
+                    //if (p_dialogo_impresion) report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "\\etiquetas_chinos\\P_GEN02.mrt");
+                    //else report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "\\etiquetas_chinos\\P_GEN03.mrt");
+                }
+
+                report_palet.Compile();
+
+                report_palet["SREF"] = p_Etiqueta.CodArticulo;
+                report_palet["DESCRIPCION"] = p_Etiqueta.Descripcion;
+                report_palet["LOTE"] = p_Etiqueta.Lote;
+                
+                report_palet["METROS"] = "Bolsas: " + p_Etiqueta.TotalUds;
+                if (File.Exists(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "C_" + p_Etiqueta.CodCliente + ".mrt"))
+                {
+                    report_palet["codigobarras"] = p_Etiqueta.Sscc.ElementAt(12 * i);
+                    report_palet["codigobarras2"] = p_Etiqueta.Sscc.ElementAt(12 * i + 1);
+                    report_palet["codigobarras3"] = p_Etiqueta.Sscc.ElementAt(12 * i + 2);
+                    report_palet["codigobarras4"] = p_Etiqueta.Sscc.ElementAt(12 * i + 3);
+                    report_palet["codigobarras5"] = p_Etiqueta.Sscc.ElementAt(12 * i + 4);
+                    report_palet["codigobarras6"] = p_Etiqueta.Sscc.ElementAt(12 * i + 5);
+                    report_palet["codigobarras7"] = p_Etiqueta.Sscc.ElementAt(12 * i + 6);
+                    report_palet["codigobarras8"] = p_Etiqueta.Sscc.ElementAt(12 * i + 7);
+                    report_palet["codigobarras9"] = p_Etiqueta.Sscc.ElementAt(12 * i + 8);
+                    report_palet["codigobarras10"] = p_Etiqueta.Sscc.ElementAt(12 * i + 9);
+                    report_palet["codigobarras11"] = p_Etiqueta.Sscc.ElementAt(12 * i + 10);
+                    report_palet["codigobarras12"] = p_Etiqueta.Sscc.ElementAt(12 * i + 11);
+                }else{
+                    report_palet["codigobarras"] = p_Etiqueta.CodArticulo;
+                }
+                report_palet.Render();
+                foreach (StiPage page in report_palet.CompiledReport.RenderedPages)
+                {
+                    page.Report = joinedReport;
+                    page.NewGuid();
+                    joinedReport.RenderedPages.Add(page);
+                }
+
+            }
+
+            string defaultPrinter = p_impre_palet.PrinterName;
+            p_impre_palet.PrinterName = csEstadoPermanente.Configuracion.Datos.Impresora_Palets_GER01;
+            if (!p_impre_palet.IsValid) p_impre_palet.PrinterName = defaultPrinter;
+            //DoImpresion(report_palet, p_impre_palet, p_pantalla, p_dialogo_impresion, p_dispatcher);
+            DoImpresion(joinedReport, p_impre_palet, p_pantalla, true, p_dispatcher);
+        }
+
+
         public void ImprimeEtiquetaPalet(PrinterSettings p_impre_palet, csitem_EtiquetaSiroT1 p_Etiqueta, bool p_pantalla, bool p_dialogo_impresion, Dispatcher p_dispatcher = null)
         {
             //PDSIEUCo.DB.DataBaseLayer b_db = new PDSIEUCo.DB.DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_RPS2013_OLANET);
