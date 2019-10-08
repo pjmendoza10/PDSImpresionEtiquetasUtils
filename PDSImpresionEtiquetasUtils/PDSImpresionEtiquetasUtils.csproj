@@ -117,6 +117,9 @@
     <Compile Include="Pantallas\panImpresionEtiquetaCOliveRueda.xaml.cs">
       <DependentUpon>panImpresionEtiquetaCOliveRueda.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pantallas\panImpresionEtiquetaGen04.xaml.cs">
+      <DependentUpon>panImpresionEtiquetaGen04.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pantallas\panReImpresionEtiquetaGen01.xaml.cs">
       <DependentUpon>panReImpresionEtiquetaGen01.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,7 @@
     <Compile Include="Pantallas\panImpresionEtiquetaGen03.xaml.cs">
       <DependentUpon>panImpresionEtiquetaGen03.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pantallas\panImpresionEtiquetaGen04_ViewModel.cs" />
     <Compile Include="Pantallas\panImpresionEtiquetaSIRO.xaml.cs">
       <DependentUpon>panImpresionEtiquetaSIRO.xaml</DependentUpon>
     </Compile>
@@ -180,7 +184,7 @@
     <Page Include="Pantallas\panImpresionEtiquetaCOliveRueda.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pantallas\panImpresionEtiquetaGen02.xaml">
+    <Page Include="Pantallas\panImpresionEtiquetaGen04.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pantallas\panReImpresionEtiquetaGen01.xaml">

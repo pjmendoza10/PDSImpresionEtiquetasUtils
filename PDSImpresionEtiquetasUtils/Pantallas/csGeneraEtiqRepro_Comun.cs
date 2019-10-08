@@ -300,6 +300,36 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             if (!p_impre_palet.IsValid) p_impre_palet.PrinterName = defaultPrinter;
             DoImpresion(report_palet, p_impre_palet, p_pantalla, p_dialogo_impresion, p_dispatcher);
         }
+        public void ImprimeEtiquetaPaletIberbag(PrinterSettings p_impre_palet, csitem_EtiquetaGeneralPaletT1 p_Etiqueta, bool p_pantalla, bool p_dialogo_impresion, Dispatcher p_dispatcher = null)
+        {
+
+            Stimulsoft.Report.StiReport report_palet = new Stimulsoft.Report.StiReport();
+            report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_informe_Palet_Iberbag);
+            report_palet.Compile();
+
+            report_palet["Lote"] = p_Etiqueta.Lote;
+            report_palet["EAN13"] = p_Etiqueta.Ean13;
+            report_palet["CodArticulo"] = p_Etiqueta.CodArticulo;
+            report_palet["Descripcion"] = p_Etiqueta.Descripcion;
+            foreach (csItem_ListaLineasGridEtiqueta item in p_Etiqueta.ListaLineasGridEtiqueta)
+            {
+                report_palet["NumCajas"] += item.NumCajas.ToString() + "\r";
+                report_palet["UdsPorCaja"] += item.UdsPorCaja.ToString() + "\r";
+                report_palet["KgsAprox"] += item.KgsAprox.ToString() + "\r";
+                report_palet["TotalUds"] += item.TotalUds.ToString() + "\r";
+            }
+            report_palet["TotalUnidades"] = p_Etiqueta.TotalUds.ToString();
+            report_palet["TotalKgsAprox"] = p_Etiqueta.TotalKgAprox.ToString();
+            report_palet["TotalCajas"] = p_Etiqueta.TotalCajas.ToString();
+            report_palet["CodigoBarras"] = p_Etiqueta.Sscc.ToString();
+
+            report_palet.Render();
+
+            string defaultPrinter = p_impre_palet.PrinterName;
+            p_impre_palet.PrinterName = "Microsoft Print to PDF";//csEstadoPermanente.Configuracion.Datos.Impresora_Bobinas_GER01;
+            if (!p_impre_palet.IsValid) p_impre_palet.PrinterName = defaultPrinter;
+            DoImpresion(report_palet, p_impre_palet, p_pantalla, p_dialogo_impresion, p_dispatcher);
+        }
 
         public delegate void DoImpresion_Callback(Stimulsoft.Report.StiReport p_report, PrinterSettings p_printersettings, bool p_pantalla, bool p_dialogo_impresion, Dispatcher p_dispatcher);
         private void DoImpresion(Stimulsoft.Report.StiReport p_report, PrinterSettings p_printersettings, bool p_pantalla, bool p_dialogo_impresion, Dispatcher p_dispatcher)

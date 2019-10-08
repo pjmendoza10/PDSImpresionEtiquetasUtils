@@ -1,0 +1,145 @@
+﻿<UserControl x:Class="PDSImpresionEtiquetasUtils.Pantallas.panImpresionEtiquetaGen04"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PDSImpresionEtiquetasUtils.Pantallas"
+             xmlns:Utilidades="clr-namespace:PDSImpresionEtiquetasUtils.Utilidades"
+             mc:Ignorable="d" d:DesignHeight="550" d:DesignWidth="1244.131" MinWidth="1244.131" MinHeight="550" Background="White">
+    <UserControl.Resources>
+        <Utilidades:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        <Utilidades:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
+        <SolidColorBrush x:Key="ColorLineasGrid01" Color="#FF8F8F8F"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <!-- Declaratively create an instance of our PantallaViewModel -->
+        <local:panImpresionEtiquetaGen04_ViewModel/>
+    </UserControl.DataContext>
+    <Grid x:Name="gridPrincipal" Margin="0,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--<Border BorderBrush="#FF008BFF" BorderThickness="0,0,0,1" Margin="0" Opacity="0.5"/>-->
+        <Button x:Name="btVerFichero" Style="{StaticResource FlatButton}" Command="{Binding VerHistoricoEtiqueta_Command}" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Width="131" Margin="0,10,18,0" ToolTip="Ver datos etiqueta para impresión" >
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Ver Histórico"/></TextBlock>
+        </Button>
+        <Button x:Name="btVolver" Style="{StaticResource FlatButton}" Command="{Binding VolverPantallaAnterior_Command}" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Width="131" Margin="0,10,155,0">
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="&lt;&lt; Volver"/>
+        </Button>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <Image x:Name="cmdHome" Source="/Imagenes/home-simbolo-de-esquema-grueso-24-gris.png" Margin="20,13,10,0" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" MouseLeftButtonDown="cmdHome_MouseLeftButtonDown">
+            </Image>
+            <Label Content=" > " VerticalAlignment="Top" Padding="0,0,5,2" Margin="0,10,0,0" Height="31" FontSize="20" Foreground="#FFCBCBCB" HorizontalAlignment="Left"/>
+            <Label x:Name="Con" Content="Introducir Datos Etiqueta" VerticalAlignment="Top" Padding="0,0,5,2" Margin="0,10,0,0" Height="31" FontSize="20" Foreground="#FFCBCBCB" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <GroupBox Header="Búsqueda" HorizontalAlignment="Stretch" MinHeight="200" Margin="15,10,225,0" Grid.Row="2" VerticalAlignment="Top" MinWidth="975" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="90"/>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBox x:Name="txtCodArticulo" HorizontalAlignment="Left" Margin="130,13,0,0" TextWrapping="Wrap" Text="{Binding IN_CodArticulo, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="188" FontSize="16" VerticalContentAlignment="Center" Height="27" PreviewTextInput="NumberIntegerValidationTextBox" Padding="0,-3,0,0" KeyDown="txtCodArticulo_KeyDown" />
+                <Label Content="Código Artículo" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="txtLoteArticulo" HorizontalAlignment="Left" Margin="130,49,0,14" TextWrapping="Wrap" Text="{Binding IN_CodLote, UpdateSourceTrigger=PropertyChanged}" Width="188" FontSize="16" VerticalContentAlignment="Center" KeyDown="txtLoteArticulo_KeyDown" PreviewTextInput="NumberIntegerValidationTextBox" Padding="0,-3,0,0"/>
+                <Label Content="Lote/Ped. Iberbag" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="btBuscarArticuloLote" Style="{StaticResource FlatButton}" Command="{Binding BuscarMaterialLote_Command}" Height="63" VerticalAlignment="Top" HorizontalAlignment="Left" Width="131" Margin="350,14,0,0">
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Buscar por Artículo"/></TextBlock>
+                </Button>
+                <TextBox Height="62" Margin="517,14,230,0" TextWrapping="Wrap" Text="{Binding TextoErrorBuscarMaterialLote}" VerticalAlignment="Top" BorderThickness="0" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                <!--DATOS DE ARTICULO LOTE-->
+                <Label Content="Código Art. :" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+                <Label x:Name="lbCodigoArticulo" Content="{Binding PAN_CodigoArticulo, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="93,5,0,0" VerticalAlignment="Top" Grid.Row="1" Width="125" Height="26"/>
+                <Label Content="Lote / O.F.:" HorizontalAlignment="Left" Margin="228,5,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+                <Label x:Name="LbCodigoLote" Content="{Binding PAN_CodigoLote, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="300,5,0,0" VerticalAlignment="Top" Grid.Row="1" Width="84" Height="26"/>
+                <Label x:Name="lbDescripcionArticulo" Content="{Binding PAN_ArticuloDescripcion}" HorizontalAlignment="Left" Margin="121,36,0,0" VerticalAlignment="Top" Grid.Row="1" Width="518" Height="26"/>
+                <Label x:Name="LbCodigoLote_Comentario" Content="{Binding PAN_CodigoLote_Comentario}" HorizontalAlignment="Left" Margin="389,5,0,0" VerticalAlignment="Top" Grid.Row="1" Width="424" Height="26" Foreground="#FFC50000"/>
+
+                <RadioButton x:Name="optDescripcionArticulo" Content="Desc. Ficha" HorizontalAlignment="Left" Margin="18,36,0,0" Grid.Row="1" VerticalAlignment="Top" GroupName="SeleccionDescripcion" Height="26" VerticalContentAlignment="Center" IsChecked="{Binding SeleccionDescripcion01, ConverterParameter=Articulo, Converter={StaticResource EnumBooleanConverter}}"/>
+                <RadioButton x:Name="optDescripcionCliente" Content="Desc. Cliente" HorizontalAlignment="Left" Margin="18,67,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" GroupName="SeleccionDescripcion" IsChecked="{Binding SeleccionDescripcion01, ConverterParameter=ArticuloCliente, Converter={StaticResource EnumBooleanConverter}}" IsEnabled="{Binding ListaArticuloCliente_Existen, Mode=OneWay}"/>
+                <ComboBox x:Name="cbArticuloCliente" HorizontalAlignment="Left" Margin="121,67,0,0" Grid.Row="1" VerticalAlignment="Top" Width="608" Height="43" ItemsSource="{Binding ListaArticuloCliente}" SelectedItem="{Binding ListaArticuloCliente_SelectedItem}" IsEnabled="{Binding ListaArticuloCliente_Existen, Mode=OneWay}">
+                    <ComboBox.Resources>
+                        <Style x:Key="EstiloCentrado01" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                            <Setter Property="Padding" Value="1" />
+                        </Style>
+                    </ComboBox.Resources>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Width="Auto" Content="Cliente:" Style="{DynamicResource EstiloCentrado01}"/>
+                                    <Label Content="{Binding CodCustomer}" FontWeight="Bold" Width="50" Style="{DynamicResource EstiloCentrado01}" />
+                                    <Label Content="{Binding DescripcionCustomer}" Width="300" Style="{DynamicResource EstiloCentrado01}" />
+                                    <Label Content="S. Ref: " Width="Auto" Style="{DynamicResource EstiloCentrado01}" />
+                                    <Label Content="{Binding RefArticuloCliente}" Width="100" Style="{DynamicResource EstiloCentrado01}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Width="Auto" Content="Descripción Artículo:" Style="{DynamicResource EstiloCentrado01}"/>
+                                    <Label Width="Auto" Style="{DynamicResource EstiloCentrado01}">
+                                        <TextBlock Text="{Binding DescripcionArticuloCliente}" TextTrimming="CharacterEllipsis" />
+                                    </Label>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <CheckBox Content="Imprimir Ref. Artículo Cliente" HorizontalAlignment="Left" Margin="746,70,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="12" 
+                  ToolTip="Utiliza la referencia del cliente para la impresión de la etiqueta" IsChecked="{Binding UtilizaRefArticuloCliente}" IsEnabled="{Binding ListaArticuloCliente_Existen, Mode=OneWay}"/>
+                <CheckBox Content="Imprimir Ambos Códigos de Artículo" HorizontalAlignment="Left" Margin="746,95,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="12" 
+                  ToolTip="Utiliza tanto nuestro Código de Artículo (entre paréntesis en la descripción) como el del cliente para la impresión de la etiqueta" IsChecked="{Binding UtilizaAmbosCodigosArticulo}" IsEnabled="{Binding ListaArticuloCliente_Existen, Mode=OneWay}"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Datos Impresión Etiqueta" HorizontalAlignment="Stretch" MinHeight="165" Margin="15,250,225,15" Grid.Row="2" VerticalAlignment="Stretch" MinWidth="975" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB">
+            <Grid>
+                <DataGrid HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch"
+                          x:Name="PART_Grid_ListaLineasGridEtiqueta" ItemsSource="{Binding Entity.ListaLineasGridEtiqueta}" 
+                            AutoGenerateColumns="False" MinWidth="800"
+                            IsReadOnly="False" CanUserAddRows="{Binding ListaLineasGridEtiqueta_CanAdd, Mode=OneWay}" CanUserDeleteRows="True" 
+                            VerticalGridLinesBrush="{DynamicResource ColorLineasGrid01}" 
+                            HorizontalGridLinesBrush="{DynamicResource ColorLineasGrid01}" 
+                         MinRowHeight="25"
+                          LostFocus="PART_Grid_ListaLineasGridEtiqueta_LostFocus"
+                         SelectionMode="Single" SelectedItem="{Binding Entity.ListaLineasGridEtiqueta_SelectedItem}"
+					     Utilidades:Commands.DataGridDoubleClickCommand ="{Binding PART_Grid_ListaLineasGridEtiqueta_DoubleClick}" 
+                         Grid.ColumnSpan="2">
+
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="FontWeight" Value="Normal"/>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding NumeroLinea}" ClipboardContentBinding="{x:Null}" Header="" Width="35" />
+                        <DataGridTextColumn Binding="{Binding NumCajas, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Nº de Cajas" MinWidth="200" Width="Auto" IsReadOnly="False" CanUserResize="False" />
+                        <DataGridTextColumn Binding="{Binding UdsPorCaja, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Uds por Caja" MinWidth="200" Width="Auto" IsReadOnly="False" CanUserResize="False"/>
+                        <DataGridTextColumn Binding="{Binding KgsAprox, NotifyOnValidationError=True, UpdateSourceTrigger=LostFocus , ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Kgs Aprox." MinWidth="200" Width="Auto" IsReadOnly="False" CanUserResize="False"/>
+                        <DataGridTextColumn Binding="{Binding TotalUds, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ClipboardContentBinding="{x:Null}" Header="Total Unidades" MinWidth="200" Width="Auto" IsReadOnly="False" CanUserResize="False"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Header="Impresora" HorizontalAlignment="Right" Margin="0,15,15,15" Grid.Row="2" Width="200" Height="154" VerticalAlignment="Bottom" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB">
+            <Grid>
+                <RadioButton Content="Ver Pantalla" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="14" GroupName="Impresion" IsChecked="{Binding SeleccionImpresion, ConverterParameter=Pantalla, Converter={StaticResource EnumBooleanConverter}}"/>
+                <RadioButton Content="Impresora" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="14" GroupName="Impresion" IsChecked="{Binding SeleccionImpresion, ConverterParameter=Impresora, Converter={StaticResource EnumBooleanConverter}}" />
+                <Button x:Name="btImprimirEtiqueta" Style="{StaticResource FlatButton}" Command="{Binding ImprimirEtiqueta_Command}" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="132" Margin="28,0,28,10" ToolTip="Imprimir Etiqueta" >
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="{Binding TextoBotonImpresion}"/></TextBlock>
+                </Button>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="btNuevaEtiqueta" Style="{StaticResource FlatButton}" Command="{Binding NuevaEtiqueta_Command}" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Width="131" Margin="0,36,54,0" ToolTip="Limpiar datos y generar nueva etiqueta" Grid.Row="2" >
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Nueva"/></TextBlock>
+        </Button>
+        <Button x:Name="btModificarEtiquetaActual" Style="{StaticResource FlatButton}" Command="{Binding ModificarEtiquetaActual_Command}" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Width="131" Margin="0,120,54,0" ToolTip="Limpiar datos y generar nueva etiqueta" Grid.Row="2" >
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Modificar Actual"/></TextBlock>
+        </Button>
+        <CheckBox Content="Guardar Imagen etiqueta" HorizontalAlignment="Right" Margin="0,0,27,174" Grid.Row="2" VerticalAlignment="Bottom" Foreground="#FFCBCBCB" FontSize="14" 
+                  ToolTip="Genera un fichero imagen png con la vista previa de la etiqueta en formato ZPL" IsChecked="{Binding ImprimirZPL}"/>
+
+
+    </Grid>
+</UserControl>

@@ -264,6 +264,7 @@ namespace PDSImpresionEtiquetasUtils.Comun
 
             public string Ruta_informe_Palet_CGrupoSiroT1 { get; set; }
             public string Ruta_informe_Palet_CEstiu { get; set; }
+            public string Ruta_informe_Palet_Iberbag { get; set; }
             public string Ruta_informe_GER01_Palet01 { get; set; }
             public string Ruta_informe_GER01_Caja01 { get; set; }
             public string Ruta_informe_GER01_Caja02 { get; set; }
