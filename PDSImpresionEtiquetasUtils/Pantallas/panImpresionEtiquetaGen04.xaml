@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PDSImpresionEtiquetasUtils.Pantallas.panImpresionEtiquetaGen02"
+﻿<UserControl x:Class="PDSImpresionEtiquetasUtils.Pantallas.panImpresionEtiquetaGen04"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -13,7 +13,7 @@
     </UserControl.Resources>
     <UserControl.DataContext>
         <!-- Declaratively create an instance of our PantallaViewModel -->
-        <local:panImpresionEtiquetaGen02_ViewModel/>
+        <local:panImpresionEtiquetaGen04_ViewModel/>
     </UserControl.DataContext>
     <Grid x:Name="gridPrincipal" Margin="0,0,0,0">
         <Grid.RowDefinitions>

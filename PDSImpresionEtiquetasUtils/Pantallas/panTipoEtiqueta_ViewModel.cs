@@ -42,7 +42,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             Estiu.NombrePantalla = "panImpresionEtiquetaESTIU";
             Estiu.Id = 3;
             Iberbag.NombreCliente = "Cliente Iberbag";
-            Iberbag.NombrePantalla = "panImpresionEtiquetaGen02";
+            Iberbag.NombrePantalla = "panImpresionEtiquetaGen04";
             Iberbag.Id = 4;
             /*ListaClientesEtiquetas.Add(Gen);
             ListaClientesEtiquetas.Add(Siro);
@@ -113,7 +113,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 //if (ListaClientesEtiquetas_SelectedItem.Id == 1) b_pantalla = new Pantallas.panImpresionEtiquetaGen01();
                 if (ListaClientesEtiquetas_SelectedItem.Id == 2) b_pantalla = new Pantallas.panImpresionEtiquetaSIRO();
                 else if (ListaClientesEtiquetas_SelectedItem.Id == 3) b_pantalla = new Pantallas.panImpresionEtiquetaESTIU();
-                else if (ListaClientesEtiquetas_SelectedItem.Id == 4) b_pantalla = new Pantallas.panImpresionEtiquetaGen02();
+                else if (ListaClientesEtiquetas_SelectedItem.Id == 4) b_pantalla = new Pantallas.panImpresionEtiquetaGen04();
                 else b_pantalla = new Pantallas.panImpresionEtiquetaGen01();
             }
             else return;
@@ -124,7 +124,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 //if (ListaClientesEtiquetas_SelectedItem.Id == 1) b_pantalla = (Pantallas.panImpresionEtiquetaGen01)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value; 
                 if (ListaClientesEtiquetas_SelectedItem.Id == 2) b_pantalla = (Pantallas.panImpresionEtiquetaSIRO)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
                 else if (ListaClientesEtiquetas_SelectedItem.Id == 3) b_pantalla = (Pantallas.panImpresionEtiquetaESTIU)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
-                else if (ListaClientesEtiquetas_SelectedItem.Id == 4) b_pantalla = (Pantallas.panImpresionEtiquetaGen02)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
+                else if (ListaClientesEtiquetas_SelectedItem.Id == 4) b_pantalla = (Pantallas.panImpresionEtiquetaGen04)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
                 else b_pantalla = (Pantallas.panImpresionEtiquetaGen01)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
             }
             else

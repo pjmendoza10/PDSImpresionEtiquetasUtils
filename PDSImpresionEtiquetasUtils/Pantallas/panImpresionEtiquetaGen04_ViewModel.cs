@@ -19,7 +19,7 @@ using System.Threading;
 
 namespace PDSImpresionEtiquetasUtils.Pantallas
 {
-    public class panImpresionEtiquetaGen02_ViewModel : panPantallaBase_ViewModel
+    public class panImpresionEtiquetaGen04_ViewModel : panPantallaBase_ViewModel
     {
         BackgroundWorker _bkgwk_GuardarEtiquetaEnBDD = new BackgroundWorker();
         BackgroundWorker _bkgwk_BuscarMaterialLote = new BackgroundWorker();
@@ -28,7 +28,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
         private int _n_max_lineas_detalle_palet = 10;
 
-        public panImpresionEtiquetaGen02_ViewModel()
+        public panImpresionEtiquetaGen04_ViewModel()
         {
             VolverPantallaAnterior_Command = new RelayCommand(VolverPantallaAnterior_Command_Execute, VolverPantallaAnterior_Command_CanExecute);
             NuevaEtiqueta_Command = new RelayCommand(NuevaEtiqueta_Command_Execute, NuevaEtiqueta_Command_CanExecute);
@@ -71,7 +71,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
             _bkgwk_GuardarEtiquetaEnBDD.Dispose();                       
            
-            ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
+            ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
 
             return;
         }
@@ -113,7 +113,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             _bkgwk_BuscarMaterialLote.Dispose();
 
             //_HayOFSegunLote = true;
-            ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
+            ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
 
             return;
         }
@@ -145,7 +145,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         public delegate void RellenaListaArticuloCliente_Callback(List<DB_pds_progutils_ETIQ01_PALETS_GEN01> db_list_items);
         public void RellenaListaArticuloCliente(List<DB_pds_progutils_ETIQ01_PALETS_GEN01> db_list_items)
         {
-            panImpresionEtiquetaGen02 b_vista = (panImpresionEtiquetaGen02)View;
+            panImpresionEtiquetaGen04 b_vista = (panImpresionEtiquetaGen04)View;
 
             if (!b_vista.Dispatcher.CheckAccess())
             {
@@ -251,7 +251,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         {
             try
             {
-                ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
+                ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
 
                 _IN_CodArticulo = "";
                 _IN_CodLote = "";
@@ -280,7 +280,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             }
             finally
             {
-                ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
+                ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
             }
         }
 
@@ -293,7 +293,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         {
             try
             {
-                ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
+                ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
 
                 TextoBotonImpresion = "Imprimir y Guardar";
                 IsStoredInBD = false;
@@ -304,7 +304,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             }
             finally
             {
-                ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
+                ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
             }
         }
 
@@ -319,7 +319,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
 
             if (Utilidades.UtilesCarga._pantallas_abiertas.Any(z => z.Key == b_pantalla.ToString()))
             {
-                //if (ListaClientesEtiquetas_SelectedItem.Id == 1) b_pantalla = (Pantallas.panImpresionEtiquetaGen02)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value; 
+                //if (ListaClientesEtiquetas_SelectedItem.Id == 1) b_pantalla = (Pantallas.panImpresionEtiquetaGen04)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value; 
                 Utilidades.UtilesCarga._pantallas_abiertas.Remove(b_pantalla.ToString());
             }
             Utilidades.UtilesCarga._pantallas_abiertas.Add(b_pantalla.ToString(), b_pantalla);
@@ -344,13 +344,13 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         {
             try
             {
-                ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
+                ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
 
                 if (!CamposCorrectosParaImpresion()) return;
                 Entity.Lote = DATO_CodigoLote;
                 csGeneraEtiqRepro_Comun imprimir = new csGeneraEtiqRepro_Comun();
                 PrinterSettings printerSettings = new PrinterSettings();
-                imprimir.ImprimeEtiquetaPaletIberbag(printerSettings, Entity, Convert.ToBoolean(SeleccionImpresion), true, ((panImpresionEtiquetaGen02)View).Dispatcher);
+                imprimir.ImprimeEtiquetaPaletIberbag(printerSettings, Entity, Convert.ToBoolean(SeleccionImpresion), true, ((panImpresionEtiquetaGen04)View).Dispatcher);
 
                 /*if (!IsStoredInBD)
                 {
@@ -367,7 +367,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             }
             finally
             {
-                ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
+                ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
             }
         }
         public Boolean CamposCorrectosParaImpresion()
@@ -404,14 +404,14 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         {
             try
             {
-                ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
+                ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
 
                 TextoErrorBuscarMaterialLote = "";
 
                 if (string.IsNullOrWhiteSpace(_IN_CodArticulo.Trim()))
                 {
                     TextoErrorBuscarMaterialLote = "Código artículo incorrecto";
-                    ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
+                    ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
                     return;
                 }
                 
@@ -428,7 +428,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             }
             finally
             {
-                ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
+                ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
             }
         }
 
@@ -444,7 +444,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
         {
             try
             {
-                ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
+                ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Wait.ToString());
 
                 TextoErrorBuscarMaterialLote = "";
                 NuevaEtiqueta_Command_Execute();
@@ -452,7 +452,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 if (string.IsNullOrWhiteSpace(_IN_CodArticulo.Trim()))
                 {
                     TextoErrorBuscarMaterialLote = "Código artículo incorrecto";
-                    ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
+                    ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
                     return;
                 }
 
@@ -469,7 +469,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             }
             finally
             {
-                ((panImpresionEtiquetaGen02)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
+                ((panImpresionEtiquetaGen04)this.View).SetCursor(System.Windows.Input.Cursors.Arrow.ToString());
             }
         }
 

@@ -16,16 +16,16 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
     /// <summary>
     /// Lógica de interacción para panImpresionEtiquetaGen01.xaml
     /// </summary>
-    public partial class panImpresionEtiquetaGen02 : UserControl, IPantallasContenedor
+    public partial class panImpresionEtiquetaGen04 : UserControl, IPantallasContenedor
     {
-        private panImpresionEtiquetaGen02_ViewModel _viewmodel;
+        private panImpresionEtiquetaGen04_ViewModel _viewmodel;
 
-        public panImpresionEtiquetaGen02()
+        public panImpresionEtiquetaGen04()
         {
             InitializeComponent();
 
             PantallaAnterior = null;
-            _viewmodel = (Pantallas.panImpresionEtiquetaGen02_ViewModel)this.DataContext;
+            _viewmodel = (Pantallas.panImpresionEtiquetaGen04_ViewModel)this.DataContext;
             _viewmodel.View = View;
             _viewmodel.PantallaPrincipal = csEstadoPermanente.PantallaPrincipal;
             _viewmodel.Configuracion = csEstadoPermanente.Configuracion;
