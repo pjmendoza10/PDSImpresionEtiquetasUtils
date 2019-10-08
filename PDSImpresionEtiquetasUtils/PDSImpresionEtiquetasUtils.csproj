@@ -184,6 +184,9 @@
     <Page Include="Pantallas\panImpresionEtiquetaCOliveRueda.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pantallas\panImpresionEtiquetaGen02.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pantallas\panImpresionEtiquetaGen04.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
