@@ -44,10 +44,10 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             Chinos.NombreCliente = "Etiquetas Chinos";
             Chinos.NombrePantalla = "panImpresionEtiquetaGen03";
             Chinos.Id = 5;
-            ListaClientesEtiquetas.Add(Gen);
-            ListaClientesEtiquetas.Add(Siro);
-            ListaClientesEtiquetas.Add(Estiu);
-            ListaClientesEtiquetas.Add(Chinos);
+            if (PantallaPrincipal.ViewModel.HayPermiso_panImpresionEtiquetaGen01) ListaClientesEtiquetas.Add(Gen);
+            if (PantallaPrincipal.ViewModel.HayPermiso_panImpresionEtiquetaSIRO) ListaClientesEtiquetas.Add(Siro);
+            if (PantallaPrincipal.ViewModel.HayPermiso_panImpresionEtiquetaESTIU) ListaClientesEtiquetas.Add(Estiu);
+            if (PantallaPrincipal.ViewModel.HayPermiso_panImpresionEtiquetaGen03) ListaClientesEtiquetas.Add(Chinos);
         }
 
         /*internal override void OnRendered()

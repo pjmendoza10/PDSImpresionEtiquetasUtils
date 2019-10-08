@@ -69,6 +69,9 @@
     <Reference Include="Basoa.Framework">
       <HintPath>..\..\SgaRpsOlanetUtilidades\SgaRpsOlanetUtilidades\bin\Debug\Basoa.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="KeepAutomation.Barcode.Windows">
+      <HintPath>..\..\..\..\Temporales\KA.Barcode.for.WindowsForms\DLL\Net40\KeepAutomation.Barcode.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="Stimulsoft.Base, Version=2016.3.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Program Files (x86)\Stimulsoft Reports.Net 2016.3\Bin\Stimulsoft.Base.dll</HintPath>
@@ -98,11 +101,24 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="cDBOvt.cs" />
+    <Compile Include="Pantallas\winLogin01.xaml.cs" />
+    <Compile Include="Pantallas\winLogin01_ViewModel.cs" />
+    <Compile Include="Pantallas\panImpresionEtiquetaGen02.xaml.cs">
+      <DependentUpon>panImpresionEtiquetaGen02.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pantallas\panImpresionEtiquetaGen02_ViewModel.cs" />
+    <Compile Include="RawPrinterHelper.cs" />
+    <Compile Include="clImprimirEtiquetas.cs" />
+    <Compile Include="Conectores\DBConectorUtils.cs" />
     <Compile Include="Conectores\DBConector_PDSImpresionEtiquetas.cs" />
     <Compile Include="Conectores\DBConector_OLANET_BASE_2013.cs" />
     <Compile Include="Pantallas\csGeneraEtiqRepro_Comun.cs" />
     <Compile Include="Pantallas\panImpresionEtiquetaCOliveRueda.xaml.cs">
       <DependentUpon>panImpresionEtiquetaCOliveRueda.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pantallas\panReImpresionEtiquetaGen01.xaml.cs">
+      <DependentUpon>panReImpresionEtiquetaGen01.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pantallas\panImpresionEtiquetaGen01.xaml.cs">
       <DependentUpon>panImpresionEtiquetaGen01.xaml</DependentUpon>
@@ -111,6 +127,7 @@
       <DependentUpon>panImpresionEtiquetaESTIU.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pantallas\panImpresionEtiquetaCOliveRueda_ViewModel.cs" />
+    <Compile Include="Pantallas\panReImpresionEtiquetaGen01_ViewModel.cs" />
     <Compile Include="Pantallas\panImpresionEtiquetaGen03.xaml.cs">
       <DependentUpon>panImpresionEtiquetaGen03.xaml</DependentUpon>
     </Compile>
@@ -163,6 +180,12 @@
     <Page Include="Pantallas\panImpresionEtiquetaCOliveRueda.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pantallas\panImpresionEtiquetaGen02.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pantallas\panReImpresionEtiquetaGen01.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pantallas\panImpresionEtiquetaGen01.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -191,6 +214,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pantallas\panTipoEtiqueta.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pantallas\winLogin01.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Recursos01.xaml">
@@ -244,6 +270,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Informes\" />
+    <Folder Include="Pantallas\Dialogos\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\home-simbolo-de-esquema-grueso %281%29.png" />
@@ -280,6 +307,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\estiu-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\arrow-down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

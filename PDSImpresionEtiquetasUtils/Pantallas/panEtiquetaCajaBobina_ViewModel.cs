@@ -36,8 +36,8 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             Estiu.NombreCliente = "Cliente Olive Rueda";
             Estiu.NombrePantalla = "panImpresionEtiquetaCOliveRueda";
             Estiu.Id = 02;
-            ListaClientesEtiquetas.Add(Gen);
-            ListaClientesEtiquetas.Add(Estiu);
+            if (PantallaPrincipal.ViewModel.HayPermiso_panImpresionEtiquetaCOliveRueda) ListaClientesEtiquetas.Add(Gen);
+            if (PantallaPrincipal.ViewModel.HayPermiso_panImpresionEtiquetaESTIU) ListaClientesEtiquetas.Add(Estiu);
         }
 
         /*internal override void OnRendered()

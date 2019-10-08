@@ -1,0 +1,162 @@
+﻿<UserControl x:Class="PDSImpresionEtiquetasUtils.Pantallas.panReImpresionEtiquetaGen01"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PDSImpresionEtiquetasUtils.Pantallas"
+             xmlns:Utilidades="clr-namespace:PDSImpresionEtiquetasUtils.Utilidades"
+             mc:Ignorable="d" d:DesignHeight="550" d:DesignWidth="1444.131" MinWidth="1444.131" MinHeight="550" Background="White">
+    <UserControl.Resources>
+        <Utilidades:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        <Utilidades:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
+        <SolidColorBrush x:Key="ColorLineasGrid01" Color="#FF8F8F8F"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <!-- Declaratively create an instance of our PantallaViewModel -->
+        <local:panReImpresionEtiquetaGen01_ViewModel/>
+    </UserControl.DataContext>
+    <Grid x:Name="gridPrincipal" Margin="0,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--<Border BorderBrush="#FF008BFF" BorderThickness="0,0,0,1" Margin="0" Opacity="0.5"/>-->
+        <Button x:Name="btVerFichero" Style="{StaticResource FlatButton}" Command="{Binding VerHistoricoEtiqueta_Command}" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Width="131" Margin="0,5,18,0" ToolTip="Ver datos etiqueta para impresión" >
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Ver Histórico"/></TextBlock>
+        </Button>
+        <Button x:Name="btVolver" Style="{StaticResource FlatButton}" Command="{Binding VolverPantallaAnterior_Command}" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Width="131" Margin="0,5,155,0">
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="&lt;&lt; Volver"/>
+        </Button>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <Image x:Name="cmdHome" Source="/Imagenes/home-simbolo-de-esquema-grueso-24-gris.png" Margin="20,13,10,0" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" MouseLeftButtonDown="cmdHome_MouseLeftButtonDown"/>
+            <Label Content=" > " VerticalAlignment="Top" Padding="0,0,5,2" Margin="0,10,0,0" Height="31" FontSize="20" Foreground="#FFCBCBCB" HorizontalAlignment="Left"/>
+            <Label x:Name="Con" Content="Reimprimir Etiquetas " VerticalAlignment="Top" Padding="0,0,5,2" Margin="0,10,0,0" Height="31" FontSize="20" Foreground="#FFCBCBCB" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <GroupBox Header="Filtros" HorizontalAlignment="Stretch" MinHeight="105" Margin="15,0,225,0" Grid.Row="2" VerticalAlignment="Top" MinWidth="975" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB" Height="130">
+            <Grid>
+                <GroupBox Header="Orden Fabricación" FontSize="10" HorizontalAlignment="Left" Margin="415,5,0,0" VerticalAlignment="Top" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB" Height="103" Width="200">
+                    <Grid>
+                        <RadioButton Content="Todas" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="9" GroupName="OF" IsChecked="{Binding SeleccionOF, ConverterParameter=Todas, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <RadioButton Content="Selección" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="76,10,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="9" GroupName="OF" IsChecked="{Binding SeleccionOF, ConverterParameter=Seleccion, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <TextBox x:Name="txtOFDesde" HorizontalAlignment="Left" Margin="56,36,0,0" TextWrapping="Wrap" Text="{Binding IN_OFDesde, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="89" FontSize="12" VerticalContentAlignment="Center" PreviewTextInput="NumberIntegerValidationTextBox" IsEnabled="{Binding SeleccionOF, ConverterParameter=Seleccion, Converter={StaticResource EnumBooleanConverter}}" />
+                        <Label Content="Desde:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12" Margin="3,32,0,0"/>
+                        <TextBox x:Name="txtOFHasta" HorizontalAlignment="Left" Margin="56,62,0,0" TextWrapping="Wrap" Text="{Binding IN_OFHasta, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="89" FontSize="12" VerticalContentAlignment="Center" PreviewTextInput="NumberIntegerValidationTextBox" IsEnabled="{Binding SeleccionOF, ConverterParameter=Seleccion, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <Label Content="Hasta:" HorizontalAlignment="Left" Margin="5,58,0,0" VerticalAlignment="Top" FontSize="12"/>
+                        <Image x:Name="cmdOF" Source="/Imagenes/arrow-down.png" Margin="152,43,0,0" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" MouseLeftButtonDown="cmdOF_MouseLeftButtonDown" Height="30" Width="30" />
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Fecha" FontSize="10" HorizontalAlignment="Left" Margin="210,5,0,0" VerticalAlignment="Top" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB" Height="103" Width="200">
+                    <Grid>
+                        <RadioButton Content="Todas" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="10" GroupName="Fecha" IsChecked="{Binding SeleccionFecha, ConverterParameter=Todas, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <RadioButton Content="Selección" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="76,10,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="10" GroupName="Fecha" IsChecked="{Binding SeleccionFecha, ConverterParameter=Seleccion, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <TextBox x:Name="txtCodArticulo" HorizontalAlignment="Left" Margin="56,36,0,0" TextWrapping="Wrap" Text="{Binding IN_FechaDesde, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="89" FontSize="12" VerticalContentAlignment="Center" IsEnabled="{Binding SeleccionFecha, ConverterParameter=Seleccion, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <Label Content="Desde:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12" Margin="3,32,0,0"/>
+                        <TextBox x:Name="txtLoteArticulo" HorizontalAlignment="Left" Margin="56,62,0,0" TextWrapping="Wrap" Text="{Binding IN_FechaHasta, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="89" FontSize="12" VerticalContentAlignment="Center"  IsEnabled="{Binding SeleccionFecha, ConverterParameter=Seleccion, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <Label Content="Hasta:" HorizontalAlignment="Left" Margin="5,58,0,0" VerticalAlignment="Top" FontSize="12"/>
+                        <Image x:Name="cmdFechas" Source="/Imagenes/arrow-down.png" Margin="152,43,0,0" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" MouseLeftButtonDown="CmdFechas_MouseLeftButtonDown" Height="30" Width="30" />
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Máquina" FontSize="10" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB" Height="103" Width="200">
+                    <Grid>
+                        <RadioButton Content="Todas" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="45,10,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="10" GroupName="MQ" IsChecked="{Binding SeleccionMQ, ConverterParameter=Todas, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <RadioButton Content="Selección" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="45,36,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="10" GroupName="MQ" IsChecked="{Binding SeleccionMQ, ConverterParameter=Seleccion, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <ComboBox x:Name="cmbMaquina" HorizontalAlignment="Left" Margin="45,62,0,0" ItemsSource="{Binding ListaMQs, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="NmeMaquina" SelectedValuePath="IDMaquina" VerticalAlignment="Top" Width="89" FontSize="12" SelectedItem="{Binding ListaMQs_SelectedItem, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" IsEnabled="{Binding SeleccionMQ, ConverterParameter=Seleccion, Converter={StaticResource EnumBooleanConverter}}" Height="18"/>
+                        <Label Content="MQ:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12" Margin="10,57,0,0"/>
+                        <Image x:Name="cmdMaquina" Source="/Imagenes/arrow-down.png" Margin="148,50,0,0" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" MouseLeftButtonDown="CmdMaquina_MouseLeftButtonDown" Height="30" Width="30" />
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Estado Bobinas" FontSize="10" HorizontalAlignment="Left" Margin="620,5,0,0" VerticalAlignment="Top" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB" Height="103" Width="130">
+                    <Grid>
+                        <RadioButton Content="Todas" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="10" GroupName="EstadoBobina" IsChecked="{Binding SeleccionBobina, ConverterParameter=Todas, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <RadioButton Content="Consumidas (1)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5,25,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="10" GroupName="EstadoBobina" IsChecked="{Binding SeleccionBobina, ConverterParameter=Consumidas, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <RadioButton Content="NO Consumidas (0)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5,45,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="10" GroupName="EstadoBobina" IsChecked="{Binding SeleccionBobina, ConverterParameter=NoConsumidas, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <RadioButton Content="Final (3)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5,65,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="10" GroupName="EstadoBobina" IsChecked="{Binding SeleccionBobina, ConverterParameter=Final, Converter={StaticResource EnumBooleanConverter}}"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Estado Bobinas" FontSize="10" HorizontalAlignment="Left" Margin="755,5,0,0" VerticalAlignment="Top" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB" Height="103" Width="100">
+                    <Grid>
+                        <RadioButton Content="Todas" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="10" GroupName="EstadoOF" IsChecked="{Binding SeleccionEstadoOF, ConverterParameter=Todas, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <RadioButton Content="Abiertas" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5,25,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="10" GroupName="EstadoOF" IsChecked="{Binding SeleccionEstadoOF, ConverterParameter=Abiertas, Converter={StaticResource EnumBooleanConverter}}"/>
+                        <RadioButton Content="Cerradas" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="5,45,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="10" GroupName="EstadoOF" IsChecked="{Binding SeleccionEstadoOF, ConverterParameter=Cerradas, Converter={StaticResource EnumBooleanConverter}}"/>
+                    </Grid>
+                </GroupBox>
+                <TextBox Height="92" Margin="860,16,123,0" TextWrapping="Wrap" Text="{Binding TextoErrorBuscarMaterialLote}" VerticalAlignment="Top" BorderThickness="0" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                <Button x:Name="btBuscarArticuloLote" Style="{StaticResource FlatButton}" Command="{Binding BuscarEtiquetas_Command}" Height="60" VerticalAlignment="Top" HorizontalAlignment="Right" Width="108" Margin="0,25,10,0">
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Buscar Etiquetas"/></TextBlock>
+                </Button>
+
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Historico Etiquetas" HorizontalAlignment="Stretch" MinHeight="165" Margin="15,130,225,15" Grid.Row="2" VerticalAlignment="Stretch" MinWidth="975" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB">
+            <Grid>
+                <DataGrid HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch"
+                          x:Name="PART_Grid_ListaLineasGridBobina" ItemsSource="{Binding ListaLineasGridBobina, UpdateSourceTrigger=PropertyChanged}" 
+                            MinWidth="800"
+                            IsReadOnly="True" CanUserDeleteRows="False" CanUserResizeRows="False" 
+                            VerticalGridLinesBrush="{DynamicResource ColorLineasGrid01}" 
+                            HorizontalGridLinesBrush="{DynamicResource ColorLineasGrid01}" 
+                         MinRowHeight="20" RowHeaderWidth="20" SelectionUnit="FullRow" 
+                         SelectionMode="Extended" SelectedItem="{Binding ListaLineasGridBobina_SelectedItem, UpdateSourceTrigger=PropertyChanged}" 
+					     Utilidades:Commands.DataGridDoubleClickCommand ="{Binding PART_Grid_ListaLineasGridBobina_DoubleClick}" 
+                          SelectionChanged="PART_Grid_ListaLineasGridBobina_SelectionChanged"
+                         Grid.ColumnSpan="2">
+
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="FontWeight" Value="Normal"/>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding FechaRegistro, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Fecha Registro" Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding Estado, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="EST"  Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding OrdenID, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="OF"  Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding Codart, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Cod. Artículo"  Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding Descripcion, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Descripción"  Width="200"  />
+                        <DataGridTextColumn Binding="{Binding Sit, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="SIT"  Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding OperarioID, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Operario" Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding NomOperario, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Nombre Operario" Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding CodMatEnt, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="(1)Bobina Consumida" Width="Auto"  />
+                        <DataGridTextColumn Binding="{Binding CodMatEnt2, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="(2)Bobina Consumida"  Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding CodMatEnt3, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="(3)Bobina Consumida" Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding CodMatSal, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Nº Bobina"  Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding MetrosBobina, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Metros"  Width="Auto"  />
+                        <DataGridTextColumn Binding="{Binding MaquinaID, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="MQ"  Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding SeccionID, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Sección" Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding KgsCalculados, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Kgs Calc." Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding OperacionID, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="C.O." Width="Auto"  />
+                        <DataGridTextColumn Binding="{Binding DescripOperacionID, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Des.Operación"  Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding BobinaOrigen, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Bobina Origen" Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding BobinaOrigen2, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="2 bobina Origen" Width="Auto" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Header="Impresora" HorizontalAlignment="Right" Margin="0,15,15,15" Grid.Row="2" Width="200" Height="154" VerticalAlignment="Bottom" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB">
+            <Grid>
+                <RadioButton Content="Ver Pantalla" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="14" GroupName="Impresion" IsChecked="{Binding SeleccionImpresion, ConverterParameter=Pantalla, Converter={StaticResource EnumBooleanConverter}}"/>
+                <RadioButton Content="Impresora" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="14" GroupName="Impresion" IsChecked="{Binding SeleccionImpresion, ConverterParameter=Impresora, Converter={StaticResource EnumBooleanConverter}}" />
+                <Button x:Name="btImprimirEtiqueta" Style="{StaticResource FlatButton}" Command="{Binding ImprimirEtiqueta_Command}" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="132" Margin="28,0,28,10" ToolTip="Imprimir Etiqueta" >
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="{Binding TextoBotonImpresion}"/></TextBlock>
+                </Button>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="btNuevaEtiqueta" Style="{StaticResource FlatButton}" Command="{Binding NuevaEtiqueta_Command}" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Width="131" Margin="0,36,54,0" ToolTip="Limpiar datos y generar nueva etiqueta" Grid.Row="2" >
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Nueva"/></TextBlock>
+        </Button>
+        <Button x:Name="btModificarEtiquetaActual" Style="{StaticResource FlatButton}" Command="{Binding ModificarEtiquetaActual_Command}" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Width="131" Margin="0,120,54,0" ToolTip="Limpiar datos y generar nueva etiqueta" Grid.Row="2" >
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Modificar Actual"/></TextBlock>
+        </Button>
+        <CheckBox Content="Imprimir por ZPL" HorizontalAlignment="Right" Margin="0,0,76,177" Grid.Row="2" VerticalAlignment="Bottom" Foreground="#FFCBCBCB" FontSize="14" 
+                  ToolTip="Genera un fichero imagen png con la vista previa de la etiqueta en formato ZPL" IsChecked="{Binding ImprimirZPL}"/>
+        <GroupBox Header="Formato" HorizontalAlignment="Right" Margin="0,0,15,208" Grid.Row="2" Width="200" Height="86" VerticalAlignment="Bottom" BorderBrush="#FFCBCBCB" Foreground="#FFCBCBCB">
+            <Grid>
+                <RadioButton Content="Packing List Pequeño" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="14" GroupName="Formato" IsChecked="{Binding SeleccionFormato, ConverterParameter=Pequeño, Converter={StaticResource EnumBooleanConverter}}"/>
+                <RadioButton Content="Packing List Grande" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Foreground="#FFCBCBCB" FontSize="14" GroupName="Formato" IsChecked="{Binding SeleccionFormato, ConverterParameter=Grande, Converter={StaticResource EnumBooleanConverter}}" />
+            </Grid>
+        </GroupBox>
+
+
+    </Grid>
+</UserControl>

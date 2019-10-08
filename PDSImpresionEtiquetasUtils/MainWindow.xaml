@@ -20,23 +20,30 @@
         </Grid.ColumnDefinitions>
         <ContentControl x:Name="contenedorPrincipal" Content="ContentControl" Grid.Row="1" HorizontalAlignment="Left" Margin="190,0,0,0"/>
         <Grid Height="Auto" Width="190"  Grid.Row="1" HorizontalAlignment="Left" x:Name="gridMenuPrincipal" MouseEnter="gridMenuPrincipal_MouseEnter" MouseLeave="gridMenuPrincipal_MouseLeave" Background="#CBFFFFFF" Margin="0">
-            <Button Content="Opciones" Height="58" HorizontalAlignment="Left" Margin="100,0,0,25" x:Name="btOpciones" Style="{StaticResource FlatButton}" VerticalAlignment="Bottom" Width="77" Grid.Row="2" Command="{Binding ViewPanOpcionesGlobal_Command}" />
+            <Button Content="Opciones" Height="58" HorizontalAlignment="Left" Margin="100,0,0,25" x:Name="btOpciones" Style="{StaticResource FlatButton}" VerticalAlignment="Bottom" Width="77" Grid.Row="2" Command="{Binding ViewPanOpcionesGlobal_Command}" 
+                    Visibility="Hidden"/>
 
             <Image HorizontalAlignment="Left" VerticalAlignment="Top" Source="Imagenes/logotipo-PDS-1.png"/>
 
             <StackPanel Margin="12,119,13,222" Orientation="Vertical">
-                <Button x:Name="btInicio" Style="{StaticResource FlatButton}" Width="165" Command="{Binding ViewInicial_Command}" Height="58" VerticalAlignment="Top">
+                <Button x:Name="btInicio" Style="{StaticResource FlatButton}" Width="165" Command="{Binding ViewInicial_Command}" Height="58" VerticalAlignment="Top" >
                     <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Inicio"/></TextBlock>
                 </Button>
-                <Button Margin="0,8,0,0" x:Name="btPanModifCantMatTarea01" Style="{StaticResource FlatButton}" Width="165" Command="{Binding ViewTipoEtiqueta_Command}" Height="58" VerticalAlignment="Top" SizeChanged="Window_SizeChanged" >
-                    <Grid>
-                        <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Creación Etiqueta Packing List (PALETS)"/></TextBlock>
-                    </Grid>
+                <Button Margin="0,8,0,0" x:Name="btPanModifCantMatTarea01" Style="{StaticResource FlatButton}" Width="165" Command="{Binding ViewTipoEtiqueta_Command}" Height="58" VerticalAlignment="Top" SizeChanged="Window_SizeChanged" 
+                        Visibility="{Binding HayPermiso_panTipoEtiqueta, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Creación Etiqueta Packing List (PALETS)"/></TextBlock>
                 </Button>
-                <Button Margin="0,8,0,0" x:Name="btPanEtiquetaCaja01" Style="{StaticResource FlatButton}" Width="165" Command="{Binding ViewEtiquetaCajaBobina_Command}" Height="58" VerticalAlignment="Top" SizeChanged="Window_SizeChanged" >
-                    <Grid>
-                        <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Creación Etiqueta Caja / Bobina"/></TextBlock>
-                    </Grid>
+                <Button Margin="0,8,0,0" x:Name="btPanEtiquetaCaja01" Style="{StaticResource FlatButton}" Width="165" Command="{Binding ViewEtiquetaCajaBobina_Command}" Height="58" VerticalAlignment="Top" SizeChanged="Window_SizeChanged" 
+                        Visibility="{Binding HayPermiso_panEtiquetaCajaBobina, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Creación Etiqueta Caja / Bobina"/></TextBlock>
+                </Button>
+                <Button Margin="0,8,0,0" x:Name="btPanReimpresion01" Style="{StaticResource FlatButton}" Width="165" Command="{Binding ViewReimpresionEtiqueta_Command}" Height="58" VerticalAlignment="Top" SizeChanged="Window_SizeChanged" 
+                        Visibility="{Binding HayPermiso_panReImpresionEtiquetaGen01, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Reimpresión Etiquetas"/></TextBlock>
+                </Button>
+                <Button Margin="0,8,0,0" x:Name="btPanEtiuqueta02" Style="{StaticResource FlatButton}" Width="165" Command="{Binding ViewimpresionEtiqueta02_Command}" Height="58" VerticalAlignment="Top" SizeChanged="Window_SizeChanged" 
+                        Visibility="{Binding HayPermiso_panImpresionEtiquetaGen02, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center"><Run Language="es-es" Text="Generar Etiquetas Caja"/></TextBlock>
                 </Button>
             </StackPanel>
 

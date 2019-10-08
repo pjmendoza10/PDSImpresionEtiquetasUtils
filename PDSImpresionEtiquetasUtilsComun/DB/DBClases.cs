@@ -16,7 +16,7 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
         public string Datos;
     }
 
-        public class DBInt_Usuario : ICloneable
+    public class DBInt_Usuario : ICloneable
     {
         public string IDUsuario { get; set; }
         public string CodUsuario { get; set; }
@@ -30,6 +30,13 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
         }
     }
 
+    public class DBPermisos_Usuario 
+    {
+        public string IDUsuario { get; set; }
+        public string IDPantalla { get; set; }
+        public string CodPantalla { get; set; }
+        public int Permiso { get; set; }
+    }
     #endregion
 
     #region RPS2013_OLANET
@@ -99,7 +106,35 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
         public string Lote { get; set; }
         public string IDEtiquetaPalet { get; set; }
     }
-
+    public class DB_pds_progutils_Lista_MQs_GEN01
+    {
+        public string IDMaquina { get; set; }
+        public string NmeMaquina { get; set; }
+    }
+    public class DB_pds_progutils_Listado_Etiquetas_GEN01
+    {
+        public int NumeroLinea { get; set ;}
+        public string FechaRegistro { get; set; }
+        public string Estado { get; set; }
+        public string OrdenID { get; set; }
+        public string Codart { get; set; }
+        public string Descripcion { get; set; }
+        public string Sit { get; set; }
+        public string OperarioID { get; set; }
+        public string NomOperario { get; set; }
+        public string CodMatEnt { get; set; }
+        public string CodMatEnt2 { get; set; }
+        public string CodMatEnt3 { get; set; }
+        public string CodMatSal { get; set; }
+        public string MetrosBobina { get; set; }
+        public string MaquinaID { get; set; }
+        public string SeccionID { get; set; }
+        public string KgsCalculados { get; set; }
+        public string OperacionID { get; set; }
+        public string DescripOperacionID{ get; set; }
+        public string BobinaOrigen { get; set; }
+        public string BobinaOrigen2 { get; set; }
+    }
     #endregion
 
     #endregion
@@ -109,6 +144,6 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
     #endregion
 
     #region RPS2013
-    
+
     #endregion
 }

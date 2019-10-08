@@ -27,10 +27,48 @@ namespace PDSImpresionEtiquetasUtils.Conectores
             #region Basico
 
             #region Usuarios
+            private PDSIEUCoBD.DBPermisos_Usuario Permisos_Usuario_GetObjByDataRow(DataRow p_row)
+            {
+                PDSIEUCoBD.DBPermisos_Usuario b_item = new PDSIEUCoBD.DBPermisos_Usuario();
+
+                b_item.IDUsuario = p_row["IDUsuario"].ToString();
+
+                b_item.IDPantalla = p_row["IDPantalla"].ToString();
+                b_item.CodPantalla = p_row["CodPantalla"].ToString();
+                b_item.Permiso = (int)p_row["Permiso"];
+
+            return b_item;
+            }
+            public List<PDSIEUCoBD.DBPermisos_Usuario> Permisos_Usuario_GetListObj(string usuario)
+            {
+                List<PDSIEUCoBD.DBPermisos_Usuario> b_resultado = new List<PDSIEUCoBD.DBPermisos_Usuario>();
+
+                string _mi_sql = string.Empty;
+
+                _mi_sql = "select * from TABLA_PERMISOS_USUARIO PER INNER JOIN USUARIOS USU ON PER.IDUsuario = USU.IDUsuario WHERE USU.CodUsuario = '" + usuario + "'";
+    
+                DataTable b_dt = MyExecuteQuery(_mi_sql);
+
+                foreach (DataRow i_dr in b_dt.Rows)
+                {
+                    try
+                    {
+                        PDSIEUCoBD.DBPermisos_Usuario b_item = Permisos_Usuario_GetObjByDataRow(i_dr);
+
+                        b_resultado.Add(b_item);
+                    }
+                    catch (Exception ex)
+                    {
+                        Comun.Utilidades.csLogUtils.EscribeLineaLogError(ex);
+                    }
+                }
+
+                return b_resultado;
+            }
 
             private PDSIEUCoBD.DBInt_Usuario Usuario_GetObjByDataRow(DataRow p_row)
             {
-            PDSIEUCoBD.DBInt_Usuario b_item = new PDSIEUCoBD.DBInt_Usuario();
+                PDSIEUCoBD.DBInt_Usuario b_item = new PDSIEUCoBD.DBInt_Usuario();
 
                 b_item.IDUsuario = p_row["IDUsuario"].ToString();
 
@@ -217,7 +255,7 @@ namespace PDSImpresionEtiquetasUtils.Conectores
                     else
                     {
                         // Contraseña incorrecta
-                        return 0;
+                        return 2;
                     }
                 }
             }

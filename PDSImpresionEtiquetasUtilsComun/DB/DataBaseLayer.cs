@@ -53,7 +53,7 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
             using (var command = new SqlCommand(
                     @"INSERT INTO PDSImpresionEtiquetasUtils.dbo.HISTORICO_ETIQUETAS 
 
-                    ([uid_etiqueta],
+                    ([ui7d_etiqueta],
                     [SSCC],
                     [FechaCreacion],
                     [uid_tipo_etiqueta],
@@ -387,6 +387,127 @@ namespace PDSImpresionEtiquetasUtils.Comun.DB
                     try
                     {
                         DB_pds_progutils_LINEAS_SSCC_REP01 b_item = DB_Pds_Progutils_LINEAS_SSCC_REP01_GetObjByDataRow(i_dr);
+
+                        b_resultado.Add(b_item);
+                    }
+                    catch (Exception ex) { }
+                }
+            }
+
+            return b_resultado;
+        }
+        public List<DB_pds_progutils_Lista_MQs_GEN01> DB_Pds_Progutils_Lista_Maquinas_GetItems()
+        {
+            List<DB_pds_progutils_Lista_MQs_GEN01> b_resultado = new List<DB_pds_progutils_Lista_MQs_GEN01>();
+
+            using (var command = new SqlCommand("SELECT maquina_id, maquina_nme FROM LYM_MAQUINAS ORDER BY MAQUINA_NME"))
+            {
+                DataTable b_dt = MyExecuteQueryCommand(command);
+
+                foreach (DataRow i_dr in b_dt.Rows)
+                {
+                    try
+                    {
+                        DB_pds_progutils_Lista_MQs_GEN01 b_item = new DB_pds_progutils_Lista_MQs_GEN01();
+                        b_item.IDMaquina = i_dr["maquina_id"].ToString();
+                        b_item.NmeMaquina = i_dr["maquina_nme"].ToString();
+                        b_resultado.Add(b_item);
+                    }
+                    catch (Exception ex) { }
+                }
+            }
+
+            return b_resultado;
+        }
+        public List<DB_pds_progutils_Listado_Etiquetas_GEN01> DB_Pds_Progutils_Listado_Etiquetas_GetItems(string MQ, string fechaDesde, string fechaHasta, string OFDesde, string OFHasta, int estadoBobina, int estadoOF)
+        {
+            List<DB_pds_progutils_Listado_Etiquetas_GEN01> b_resultado = new List<DB_pds_progutils_Listado_Etiquetas_GEN01>();
+
+            using (var command = new SqlCommand(@"SELECT h.fecha_registro, h.estado,h.orden_id,orf.codart,orf.descriart,orf.sit,operario_id, op.nomope,  
+                            cod_mat_ent,cod_mat_ent2,cod_mat_ent3,cod_mat_sal,Metros_bobina,h.Maquina_id,Seccion_id ,KgsCalculados,h.Operacion_id,Desc_operacion_id, 
+                            CASE 
+                            WHEN LEFT(hcn.cod_mat,10)='3843603794' THEN   
+                              (SELECT TOP 1 '(' + htt.orden_id+') ' +SERIE  
+                              FROM OLANET_BASE_DATOS_2013.dbo.HISTORICO_PALETS_LIN hl 
+                              inner join olanet_base_datos_2013.dbo.HISTORICO_TRAZABILIDAD htt on hl.serie=htt.cod_mat_sal WHERE hl.SSCC=hcn.cod_mat)  
+                            when left(hcn.cod_mat,2)<>'18' and left(hcn.cod_mat,2)<>'17' and  left(hcn.cod_mat,2)<>'19' and len(hcn.cod_mat)<>15 then
+                              'C: ' + hcn.cod_mat + (select top 1 '(' + art.CodArticle + ') ' + m.Series from rps2013.dbo.CPRImputationMaterialMO m  
+                              inner join rps2013.dbo.stkarticle art on m.idarticle=art.IDArticle  where DocumentNumber=hcn.cod_mat order by m.RowTimestamp desc)  
+                              ELSE hcn.cod_mat  
+                            End  bobina_origen,  
+                            CASE WHEN LEFT(hcn2.cod_mat,10)='3843603794' THEN   
+                              (SELECT TOP 1 '(' + htt.orden_id+') ' +SERIE  FROM OLANET_BASE_DATOS_2013.dbo.HISTORICO_PALETS_LIN hl 
+                              inner join olanet_base_datos_2013.dbo.HISTORICO_TRAZABILIDAD htt on hl.serie=htt.cod_mat_sal WHERE hl.SSCC=hcn2.cod_mat)  
+                            when left(hcn2.cod_mat,2)<>'18' and left(hcn2.cod_mat,2)<>'17' and  left(hcn2.cod_mat,2)<>'19' and len(hcn2.cod_mat)<>15 then  
+                              'C: ' + hcn2.cod_mat + (select top 1 '(' + art.CodArticle + ') ' + m.Series from rps2013.dbo.CPRImputationMaterialMO m  
+                              inner join rps2013.dbo.stkarticle art on m.idarticle=art.IDArticle  where DocumentNumber=hcn2.cod_mat order by m.RowTimestamp desc)  
+                            ELSE hcn2.cod_mat  END bobina_origen2  FROM HISTORICO_TRAZABILIDAD H 
+                            INNER JOIN dbo.cpcurcab_t orf on H.Orden_id=orf.nordfab 
+                            inner join dbo.cpoperar op on h.Operario_id=op.codope  
+                            left join historico_consumos_nuevos hcn on h.id_origen=hcn.id 
+                            left join historico_consumos_nuevos hcn2 on h.id_origen2=hcn2.id WHERE "))
+            {
+                command.CommandText += !String.IsNullOrWhiteSpace(MQ) ? " h.MAQUINA_ID = '" + MQ + "' " : " 1 = 1 ";
+                if (!String.IsNullOrWhiteSpace(fechaDesde) && !String.IsNullOrWhiteSpace(fechaHasta))
+                {
+                    command.CommandText += " AND " + "h.fecha_registro>='" + fechaDesde+ " 00:00:00' AND h.fecha_registro<='" + fechaHasta + " 23:59:59'"; 
+                }
+                if (!String.IsNullOrWhiteSpace(OFDesde) && !String.IsNullOrWhiteSpace(OFHasta))
+                {
+                    command.CommandText += " AND " + " h.orden_id>='" + OFDesde + "' AND h.orden_id<='" + OFHasta + "'";
+                }
+                if (estadoOF > 0)
+                {
+                    if (estadoOF == 1) //Abiertas
+                    {
+                        command.CommandText += " AND " + " orf.sit>0 and orf.sit<6 ";
+                    } else if (estadoOF == 2) //Cerradas
+                    {
+                        command.CommandText += " AND " + " orf.sit=6 ";
+                    }
+                }
+                if (estadoBobina > 0)
+                {
+                    if (estadoBobina == 1) //Consumidas
+                    {
+                        command.CommandText += " AND " + " estado=1 ";
+                    }
+                    else if (estadoBobina == 2) //No Consumidas
+                    {
+                        command.CommandText += " AND " + " estado=0 ";
+                    }
+                    else if (estadoBobina == 3) //Final
+                    {
+                        command.CommandText += " AND " + " estado=2 ";
+                    }
+                }
+                DataTable b_dt = MyExecuteQueryCommand(command);
+                foreach (DataRow i_dr in b_dt.Rows)
+                {
+                    try
+                    {
+                        DB_pds_progutils_Listado_Etiquetas_GEN01 b_item = new DB_pds_progutils_Listado_Etiquetas_GEN01();
+
+                        b_item.FechaRegistro = i_dr["fecha_registro"].ToString();
+                        b_item.Estado = i_dr["estado"].ToString();
+                        b_item.OrdenID = i_dr["orden_id"].ToString();
+                        b_item.Codart = i_dr["codart"].ToString();
+                        b_item.Descripcion = i_dr["descriart"].ToString();
+                        b_item.Sit = i_dr["sit"].ToString();
+                        b_item.OperarioID = i_dr["operario_id"].ToString();
+                        b_item.NomOperario = i_dr["nomope"].ToString();
+                        b_item.CodMatEnt = i_dr["cod_mat_ent"].ToString();
+                        b_item.CodMatEnt2 = i_dr["cod_mat_ent2"].ToString();
+                        b_item.CodMatEnt3 = i_dr["cod_mat_ent3"].ToString();
+                        b_item.CodMatSal = i_dr["cod_mat_sal"].ToString();
+                        b_item.MetrosBobina = i_dr["Metros_bobina"].ToString();
+                        b_item.MaquinaID = i_dr["Maquina_id"].ToString();
+                        b_item.SeccionID = i_dr["Seccion_id"].ToString();
+                        b_item.KgsCalculados = i_dr["KgsCalculados"].ToString();
+                        b_item.OperacionID = i_dr["Operacion_id"].ToString();
+                        b_item.DescripOperacionID = i_dr["Desc_operacion_id"].ToString();
+                        b_item.BobinaOrigen = i_dr["bobina_origen"].ToString();
+                        b_item.BobinaOrigen2 = i_dr["bobina_origen2"].ToString();
 
                         b_resultado.Add(b_item);
                     }

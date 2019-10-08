@@ -124,7 +124,7 @@
         "Entry"
         {
         "MsmKey" = "8:_CFA03FAF4CEC9E24D434D9E89E35CE9B"
-        "OwnerKey" = "8:_22DCDE177C2A42FD8721F88653D025EB"
+        "OwnerKey" = "8:_FE3D7C92756D114723BB679A52B11EEF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -136,7 +136,7 @@
         "Entry"
         {
         "MsmKey" = "8:_CFA03FAF4CEC9E24D434D9E89E35CE9B"
-        "OwnerKey" = "8:_FE3D7C92756D114723BB679A52B11EEF"
+        "OwnerKey" = "8:_22DCDE177C2A42FD8721F88653D025EB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -190,61 +190,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_23D73A19C2F90E9325032FA4033AF161"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_22DCDE177C2A42FD8721F88653D025EB"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1E0F1F3FB05518445202C84DCC42799C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D4A5CAE63EC64F42B8E182BA595BFD81"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_06FD88557D7D4ADF6F3A16E0AFA7449C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_299FD6D6D2A60C94BB27BE8B526834CE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D5913C927BF71A7EDAC42934960D5CE0"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_91508C91C0E6EDFE00615BD7BB7CBC0E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A4E4817B106AA4C1C517239772A80AC5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FE3D7C92756D114723BB679A52B11EEF"
+        "OwnerKey" = "8:_EC920DD0E5FACD07E80D2F50D8DA84D8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -256,7 +202,61 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_EC920DD0E5FACD07E80D2F50D8DA84D8"
+        "OwnerKey" = "8:_FE3D7C92756D114723BB679A52B11EEF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A4E4817B106AA4C1C517239772A80AC5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_91508C91C0E6EDFE00615BD7BB7CBC0E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_D5913C927BF71A7EDAC42934960D5CE0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_299FD6D6D2A60C94BB27BE8B526834CE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_06FD88557D7D4ADF6F3A16E0AFA7449C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_D4A5CAE63EC64F42B8E182BA595BFD81"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_1E0F1F3FB05518445202C84DCC42799C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_22DCDE177C2A42FD8721F88653D025EB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_23D73A19C2F90E9325032FA4033AF161"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -361,11 +361,6 @@
             "AssemblyAsmDisplayName" = "8:Basoa.Framework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=00c4c75f9543faad, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_06FD88557D7D4ADF6F3A16E0AFA7449C"
-                    {
-                    "Name" = "8:Basoa.Framework.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Basoa.Framework.dll"
             "TargetName" = "8:"
@@ -390,7 +385,7 @@
             "SourcePath" = "8:C:\\ProgramData\\PDSImpresionEtiquetas\\PDSImpresionEtiquetas\\PDSImpresionEtiquetasUtils.ini.xml"
             "TargetName" = "8:PDSImpresionEtiquetasUtils.ini.xml"
             "Tag" = "8:"
-            "Folder" = "8:_D9C1CEEE23714575B679842968D7EE1D"
+            "Folder" = "8:_B246994AF0654A139A1D5CD9085D2D6F"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -505,11 +500,6 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_299FD6D6D2A60C94BB27BE8B526834CE"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
@@ -554,7 +544,7 @@
             "SourcePath" = "8:C:\\ProgramData\\PDSImpresionEtiquetas\\PDSImpresionEtiquetas\\version_instalador.txt"
             "TargetName" = "8:version_instalador.txt"
             "Tag" = "8:"
-            "Folder" = "8:_D9C1CEEE23714575B679842968D7EE1D"
+            "Folder" = "8:_B246994AF0654A139A1D5CD9085D2D6F"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -574,7 +564,7 @@
             "SourcePath" = "8:C:\\ProgramData\\PDSImpresionEtiquetas\\PDSImpresionEtiquetas\\PDSImpresionEtiquetasInit.ini.xml"
             "TargetName" = "8:PDSImpresionEtiquetasInit.ini.xml"
             "Tag" = "8:"
-            "Folder" = "8:_D9C1CEEE23714575B679842968D7EE1D"
+            "Folder" = "8:_B246994AF0654A139A1D5CD9085D2D6F"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -614,7 +604,7 @@
             "SourcePath" = "8:C:\\ProgramData\\PDSImpresionEtiquetas\\PDSImpresionEtiquetas\\version.txt"
             "TargetName" = "8:version.txt"
             "Tag" = "8:"
-            "Folder" = "8:_D9C1CEEE23714575B679842968D7EE1D"
+            "Folder" = "8:_B246994AF0654A139A1D5CD9085D2D6F"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -636,11 +626,6 @@
             "AssemblyAsmDisplayName" = "8:PDSImpresionEtiquetasUtils.Comun, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_91508C91C0E6EDFE00615BD7BB7CBC0E"
-                    {
-                    "Name" = "8:PDSImpresionEtiquetasUtils.Comun.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:PDSImpresionEtiquetasUtils.Comun.dll"
             "TargetName" = "8:"
@@ -667,11 +652,6 @@
             "AssemblyAsmDisplayName" = "8:PDS.DataBaseLayerBasico, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_A4E4817B106AA4C1C517239772A80AC5"
-                    {
-                    "Name" = "8:PDS.DataBaseLayerBasico.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:PDS.DataBaseLayerBasico.dll"
             "TargetName" = "8:"
@@ -718,11 +698,6 @@
             "AssemblyAsmDisplayName" = "8:Stimulsoft.Base, Version=2016.3.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_CFA03FAF4CEC9E24D434D9E89E35CE9B"
-                    {
-                    "Name" = "8:Stimulsoft.Base.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Stimulsoft.Base.dll"
             "TargetName" = "8:"
@@ -749,11 +724,6 @@
             "AssemblyAsmDisplayName" = "8:Basoa.Framework.Admin, Version=5.0.0.0, Culture=neutral, PublicKeyToken=00c4c75f9543faad, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_D5913C927BF71A7EDAC42934960D5CE0"
-                    {
-                    "Name" = "8:Basoa.Framework.Admin.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Basoa.Framework.Admin.dll"
             "TargetName" = "8:"
@@ -780,11 +750,6 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_EC920DD0E5FACD07E80D2F50D8DA84D8"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -811,11 +776,6 @@
             "AssemblyAsmDisplayName" = "8:Stimulsoft.Report, Version=2016.3.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_FE3D7C92756D114723BB679A52B11EEF"
-                    {
-                    "Name" = "8:Stimulsoft.Report.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Stimulsoft.Report.dll"
             "TargetName" = "8:"
@@ -862,6 +822,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_B246994AF0654A139A1D5CD9085D2D6F"
+                    {
+                    "Name" = "8:Config"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_5E0ED38B9D5D4F078429A4BC2783E101"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_4D0F0B9B988040B5AB6DAECAAAA02C97"

@@ -36,6 +36,21 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                 RawPrinterHelper.SendStringToPrinter(pd.PrinterSettings.PrinterName, ZPLCode);
             }
         }
+        public void imprimirZPL(string ZPLCode, int numVececs)
+        {
+            System.Windows.Forms.PrintDialog pd = new System.Windows.Forms.PrintDialog();
+            pd.PrinterSettings = new PrinterSettings();
+            string defaultPrinter = pd.PrinterSettings.PrinterName;
+            pd.PrinterSettings.PrinterName = csEstadoPermanente.Configuracion.Datos.Impresora_Palets_GER01;
+            if (!pd.PrinterSettings.IsValid) pd.PrinterSettings.PrinterName = defaultPrinter;
+            if (DialogResult.OK == pd.ShowDialog())
+            {
+                for (int i = 0; i < numVececs; i++)
+                {
+                    RawPrinterHelper.SendStringToPrinter(pd.PrinterSettings.PrinterName, ZPLCode);
+                }
+            }
+        }
         public string GenerarPDFdesdeZPL (string ZPLCode)
         {
             /*byte[] zpl = Encoding.UTF8.GetBytes("^XA~TA000~JSN^LT0^MNW^MTT^PON^PMN^LH0,0^JMA^PR8,8~SD23^JUS^LRN^CI0^XZ^XA^MMT^PW1183^LL1662^LS0^FT381,1373^A0N,32,31^FH\\\\^FD(01)08480000933454(10)059505^FS^BY5,3,255^FT166,1330^BCN,,N,N^FD>" +
@@ -285,6 +300,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
             if (!p_impre_palet.IsValid) p_impre_palet.PrinterName = defaultPrinter;
             DoImpresion(report_palet, p_impre_palet, p_pantalla, p_dialogo_impresion, p_dispatcher);
         }
+
         public delegate void DoImpresion_Callback(Stimulsoft.Report.StiReport p_report, PrinterSettings p_printersettings, bool p_pantalla, bool p_dialogo_impresion, Dispatcher p_dispatcher);
         private void DoImpresion(Stimulsoft.Report.StiReport p_report, PrinterSettings p_printersettings, bool p_pantalla, bool p_dialogo_impresion, Dispatcher p_dispatcher)
         {
@@ -324,6 +340,64 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                     if (d != null) d.Dispose();
                 }
             }
+        }
+
+
+        public void ImprimeEtiquetaCaja(PrinterSettings p_impre_palet, csItem_EtiquetaCaja p_Etiqueta, bool p_pantalla, bool p_dialogo_impresion, Dispatcher p_dispatcher = null)
+        {
+
+            StiReport joinedReport = new StiReport();
+            joinedReport.NeedsCompiling = false;
+            joinedReport.IsRendered = true;
+            joinedReport.RenderedPages.Clear();
+
+            string defaultPrinter = p_impre_palet.PrinterName;
+            p_impre_palet.PrinterName = csEstadoPermanente.Configuracion.Datos.Impresora_Bobinas_GER01;
+            if (!p_impre_palet.IsValid)
+            {
+                p_impre_palet.PrinterName = defaultPrinter;
+                p_dialogo_impresion = true;
+            }
+      
+            for (int i = 0; i < p_Etiqueta.TotalEtiquetas; i++)
+            {
+                Stimulsoft.Report.StiReport report_palet = new Stimulsoft.Report.StiReport();
+
+                if (File.Exists(csEstadoPermanente.Configuracion.Datos.Ruta_informe_GER01_Caja01))
+                {
+                    report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_informe_GER01_Caja01);
+                    /*}
+                    else
+                    {
+                        report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "C_GEN01.mrt");
+                        //if (p_dialogo_impresion) report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "\\etiquetas_chinos\\P_GEN02.mrt");
+                        //else report_palet.Load(csEstadoPermanente.Configuracion.Datos.Ruta_imagenes_GER01_Palet01 + "\\etiquetas_chinos\\P_GEN03.mrt");
+                    }*/
+
+                    report_palet.Compile();
+
+                    report_palet["CODART"] = p_Etiqueta.CodArticulo;
+                    report_palet["codigobarras"] = p_Etiqueta.CodArticulo;
+                    report_palet["DESCRIPCION"] = p_Etiqueta.Descripcion;
+                    report_palet["LOTE"] = p_Etiqueta.Lote;
+                    report_palet["Seccion"] = p_Etiqueta.Seccion;
+                    report_palet["Logo"] = p_Etiqueta.PDS;
+                    report_palet["NUMELE"] = p_Etiqueta.NumEle;
+                    
+                    
+                    report_palet.Render();
+
+                    DoImpresion(report_palet, p_impre_palet, p_pantalla, p_dialogo_impresion, p_dispatcher);
+                    //DoImpresion(joinedReport, p_impre_palet, p_dialogo_impresion, true, p_dispatcher);
+                    /*foreach (StiPage page in report_palet.CompiledReport.RenderedPages)
+                    {
+                        page.Report = joinedReport;
+                        page.NewGuid();
+                        joinedReport.RenderedPages.Add(page);
+                    }*/
+                }
+            }
+            //DoImpresion(report_palet, p_impre_palet, p_pantalla, p_dialogo_impresion, p_dispatcher);
         }
 
         private string DameFormatoEtiquetaBobina(string p_CodArticulo, string p_CodCliente)

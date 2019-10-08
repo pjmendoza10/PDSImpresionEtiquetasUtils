@@ -26,6 +26,28 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Label Content="Inicial" HorizontalAlignment="Left" Margin="25,1,0,0" VerticalAlignment="Top" Grid.Row="0" Foreground="{DynamicResource LabelTituloPantalla_Foreground}" FontSize="22"/>
+            <GroupBox x:Name="GB_Usuario" BorderBrush="{x:Null}" BorderThickness="0" Background="White" Padding="0" Margin="5" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="43" Width="170">
+                <GroupBox.Effect>
+                    <DropShadowEffect Opacity="0.25" ShadowDepth="1"/>
+                </GroupBox.Effect>
+                <Grid Width="150" Margin="0,5,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="55"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Usuario" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" FontSize="10" FontWeight="Bold"/>
+                    <Label Content="{Binding CodUsuarioActual, Mode=OneWay}" VerticalAlignment="Top" Grid.Row="1" Padding="1" Grid.ColumnSpan="2" FontSize="10"/>
+                    <Button Margin="0" x:Name="btInicialCambiarUsuario" Style="{DynamicResource FlatButtonMini2}" Grid.Column="3" Grid.RowSpan="2" Command="{Binding CambiarUsuario_Command}" Width="50" Foreground="Black" BorderBrush="#FFDEDEDE" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" >
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="10" Margin="0,-2,0,0"><Run Language="es-es" Text="Cambiar"/></TextBlock>
+                    </Button>
+                </Grid>
+
+            </GroupBox>
             <!--<StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Top" Margin="5,5,25,5">
                 <Label Content="Agente:" HorizontalAlignment="Left" Margin="3,0" VerticalAlignment="Center" />
                 <Label Content="{Binding NombreUsuarioActual, Mode=OneWay}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic" />

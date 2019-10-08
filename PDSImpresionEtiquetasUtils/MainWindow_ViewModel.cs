@@ -12,6 +12,9 @@ using System.Reflection;
 using System.Windows.Input;
 using PDSIEUCo = PDSImpresionEtiquetasUtils.Comun;
 using System.ComponentModel;
+using PDSImpresionEtiquetasUtils.Comun.DB;
+using PDSImpresionEtiquetasUtils.Comun;
+using System.Windows;
 
 namespace PDSImpresionEtiquetasUtils
 { 
@@ -29,12 +32,13 @@ namespace PDSImpresionEtiquetasUtils
             ViewInicial_Command = new RelayCommand(ViewInicial_Command_Execute, ViewInicial_Command_CanExecute);
             ViewTipoEtiqueta_Command = new RelayCommand(ViewTipoEtiqueta_Command_Execute, ViewTipoEtiqueta_Command_CanExecute);
             ViewEtiquetaCajaBobina_Command = new RelayCommand(ViewEtiquetaCajaBobina_Command_Execute, ViewEtiquetaCajaBobina_Command_CanExecute);
+            ViewReimpresionEtiqueta_Command = new RelayCommand(ViewReimpresionEtiqueta_Command_Execute, ViewReimpresionEtiqueta_Command_CanExecute);
+            ViewimpresionEtiqueta02_Command = new RelayCommand(ViewimpresionEtiqueta02_Command_Execute, ViewimpresionEtiqueta02_Command_CanExecute);
             /*ViewGeneraEtiqRepro01_Command = new RelayCommand(ViewGeneraEtiqRepro01_Command_Execute, ViewGeneraEtiqRepro01_Command_CanExecute);
             ViewAdiccionMatTarea01_Command = new RelayCommand(ViewAdiccionMatTarea01_Command_Execute, ViewAdiccionMatTarea01_Command_CanExecute);
             ReevioOFEjecutableAlSGA01_Command = new RelayCommand(ReevioOFEjecutableAlSGA01_Command_Execute, ReevioOFEjecutableAlSGA01_Command_CanExecute);*/
 
             ViewPanOpcionesGlobal_Command = new RelayCommand(ViewPanOpcionesGlobal_Command_Execute, ViewPanOpcionesGlobal_Command_CanExecute);
-
 
             Assembly assem = Assembly.GetEntryAssembly();
             AssemblyName assemName = assem.GetName();
@@ -69,6 +73,26 @@ namespace PDSImpresionEtiquetasUtils
             get { return _Version; }
         }
 
+        private bool _HayPermiso_panEtiquetaCajaBobina = false;
+        public bool HayPermiso_panEtiquetaCajaBobina { get { return _HayPermiso_panEtiquetaCajaBobina; } set { _HayPermiso_panEtiquetaCajaBobina = value; RaisePropertyChanged("HayPermiso_panEtiquetaCajaBobina"); } }
+        private bool _HayPermiso_panHistorico = false;
+        public bool HayPermiso_panHistorico { get { return _HayPermiso_panHistorico; } set { _HayPermiso_panHistorico = value; RaisePropertyChanged("HayPermiso_panHistorico"); } }
+        private bool _HayPermiso_panImpresionEtiquetaCOliveRueda = false;
+        public bool HayPermiso_panImpresionEtiquetaCOliveRueda { get { return _HayPermiso_panImpresionEtiquetaCOliveRueda; } set { _HayPermiso_panImpresionEtiquetaCOliveRueda = value; RaisePropertyChanged("HayPermiso_panImpresionEtiquetaCOliveRueda"); } }
+        private bool _HayPermiso_panImpresionEtiquetaESTIU = false;
+        public bool HayPermiso_panImpresionEtiquetaESTIU { get { return _HayPermiso_panImpresionEtiquetaESTIU; } set { _HayPermiso_panImpresionEtiquetaESTIU = value; RaisePropertyChanged("HayPermiso_panImpresionEtiquetaESTIU"); } }
+        private bool _HayPermiso_panImpresionEtiquetaSIRO = false;
+        public bool HayPermiso_panImpresionEtiquetaSIRO { get { return _HayPermiso_panImpresionEtiquetaSIRO; } set { _HayPermiso_panImpresionEtiquetaSIRO = value; RaisePropertyChanged("HayPermiso_panImpresionEtiquetaSIRO"); } }
+        private bool _HayPermiso_panImpresionEtiquetaGen01 = false;
+        public bool HayPermiso_panImpresionEtiquetaGen01 { get { return _HayPermiso_panImpresionEtiquetaGen01; } set { _HayPermiso_panImpresionEtiquetaGen01 = value; RaisePropertyChanged("_HayPermiso_panImpresionEtiquetaGen01"); } }
+        private bool _HayPermiso_panImpresionEtiquetaGen02 = false;
+        public bool HayPermiso_panImpresionEtiquetaGen02 { get { return _HayPermiso_panImpresionEtiquetaGen02; } set { _HayPermiso_panImpresionEtiquetaGen02 = value; RaisePropertyChanged("HayPermiso_panImpresionEtiquetaGen02"); } }
+        private bool _HayPermiso_panImpresionEtiquetaGen03 = false;
+        public bool HayPermiso_panImpresionEtiquetaGen03 { get { return _HayPermiso_panImpresionEtiquetaGen03; } set { _HayPermiso_panImpresionEtiquetaGen03 = value; RaisePropertyChanged("HayPermiso_panImpresionEtiquetaGen03"); } }
+        private bool _HayPermiso_panReImpresionEtiquetaGen01 = false;
+        public bool HayPermiso_panReImpresionEtiquetaGen01 { get { return _HayPermiso_panReImpresionEtiquetaGen01; } set { _HayPermiso_panReImpresionEtiquetaGen01 = value; RaisePropertyChanged("HayPermiso_panReImpresionEtiquetaGen01"); } }
+        private bool _HayPermiso_panTipoEtiqueta = false;
+        public bool HayPermiso_panTipoEtiqueta { get { return _HayPermiso_panTipoEtiqueta; } set { _HayPermiso_panTipoEtiqueta = value; RaisePropertyChanged("HayPermiso_panTipoEtiqueta"); } }
         //public SROUCo.Conectores.IConector Conector { get; set; }
 
         /*#region Comportamiento y Estilo
@@ -141,6 +165,61 @@ namespace PDSImpresionEtiquetasUtils
             //report.Show();*/
         }
 
+        public ICommand ViewReimpresionEtiqueta_Command { get; set; }
+        public bool ViewReimpresionEtiqueta_Command_CanExecute()
+        {
+            return true;
+        }
+
+        public void ViewReimpresionEtiqueta_Command_Execute()
+        {
+            if (_pantalla_Principal.PantallaActual.Identificador == Pantallas.panReImpresionEtiquetaGen01.CIdentificador) return;
+
+            Pantallas.panReImpresionEtiquetaGen01 b_pantalla = new Pantallas.panReImpresionEtiquetaGen01();
+
+            if (Utilidades.UtilesCarga._pantallas_abiertas.Any(z => z.Key == b_pantalla.ToString()))
+            {
+                b_pantalla = (Pantallas.panReImpresionEtiquetaGen01)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
+            }
+            else
+            {
+                Utilidades.UtilesCarga._pantallas_abiertas.Add(b_pantalla.ToString(), b_pantalla);
+            }
+            b_pantalla.PantallaAnterior = PantallaPrincipal.PantallaActual;
+            PantallaPrincipal.BotonMenuPrincipalPulsado_Animaciones();
+
+            PantallaPrincipal.CambiarPantalla(b_pantalla);
+
+            return;
+        }
+       
+        public ICommand ViewimpresionEtiqueta02_Command { get; set; }
+        public bool ViewimpresionEtiqueta02_Command_CanExecute()
+        {
+            return true;
+        }
+
+        public void ViewimpresionEtiqueta02_Command_Execute()
+        {
+            if (_pantalla_Principal.PantallaActual.Identificador == Pantallas.panImpresionEtiquetaGen02.CIdentificador) return;
+
+            Pantallas.panImpresionEtiquetaGen02 b_pantalla = new Pantallas.panImpresionEtiquetaGen02();
+
+            if (Utilidades.UtilesCarga._pantallas_abiertas.Any(z => z.Key == b_pantalla.ToString()))
+            {
+                b_pantalla = (Pantallas.panImpresionEtiquetaGen02)Utilidades.UtilesCarga._pantallas_abiertas.FirstOrDefault(z => z.Key == b_pantalla.ToString()).Value;
+            }
+            else
+            {
+                Utilidades.UtilesCarga._pantallas_abiertas.Add(b_pantalla.ToString(), b_pantalla);
+            }
+            b_pantalla.PantallaAnterior = PantallaPrincipal.PantallaActual;
+            PantallaPrincipal.BotonMenuPrincipalPulsado_Animaciones();
+
+            PantallaPrincipal.CambiarPantalla(b_pantalla);
+
+            return;
+        }
         public ICommand ViewTipoEtiqueta_Command { get; set; }
         public bool ViewTipoEtiqueta_Command_CanExecute()
         {
@@ -224,7 +303,7 @@ namespace PDSImpresionEtiquetasUtils
             do
             {
 
-                //b_login = EjecutaProcesoLogin(false);
+                b_login = EjecutaProcesoLogin(false);
                 b_login = 1;
 
             } while (b_login == 0);
@@ -255,7 +334,7 @@ namespace PDSImpresionEtiquetasUtils
         {
             _pantallas_abiertas.Remove(p_pantalla.IDUnico.ToString());
         }
-
+        
         public void InicializarDirectorioDatos()
         {
             // Inicializamos el directorio de datos
@@ -356,7 +435,7 @@ namespace PDSImpresionEtiquetasUtils
         }*/
 
         #endregion
-        /*
+        
         #region private function
 
         public int EjecutaProcesoLogin(bool p_cambiar)
@@ -372,7 +451,6 @@ namespace PDSImpresionEtiquetasUtils
 
             DBConector_Internal b_conector = new DBConector_Internal(this.Configuracion.Datos.connectionString_PDSImpresionEtiquetas);
 
-
             int b_res_auto = b_conector.CompruebaCredencialesUsuario(_configuracion.OpcionesAplicacion.UsuarioLogin ?? string.Empty, _configuracion.OpcionesAplicacion.UsuarioPassword ?? string.Empty, out b_IDUsuario);
             if ((b_res_auto == 1) && (!p_cambiar))
             {
@@ -383,69 +461,106 @@ namespace PDSImpresionEtiquetasUtils
             else
             {
 
-                //PDSScdClienteSCADA.Pantallas.Dialogos.winLogin01 p_logon = new Pantallas.Dialogos.winLogin01(_configuracion);
+                Pantallas.winLogin01 p_logon = new Pantallas.winLogin01(_configuracion);
 
-                //res = p_logon.ShowDialog();
+                res = p_logon.ShowDialog();
 
-                //if ((res != null) && ((bool)res))
-                //{
-                //    _configuracion.IDUsuarioActual = p_logon.ViewModel.IDUsuario;
-                //    _configuracion.CodUsuarioActual = p_logon.ViewModel.CodUsuario;
-                //    if (p_logon.ViewModel.IDUsuario != "") b_hay_login = true;
-                //}
+                if ((res != null) && ((bool)res))
+                {
+                    _configuracion.IDUsuarioActual = p_logon.ViewModel.IDUsuario;
+                    _configuracion.CodUsuarioActual = p_logon.ViewModel.CodUsuario;
+                    if (p_logon.ViewModel.IDUsuario != "") b_hay_login = true;
+                }
             }
 
             if (b_hay_login)
             {
                 // Cargar las opciones del usuario
-                AplicarOpcionesUsuario(_configuracion.IDUsuarioActual);
+                AplicarOpcionesUsuario(_configuracion.CodUsuarioActual);
                 return 1;
             }
 
             // Cancelado
             return -1;
         }
-
+        public void CerrarTodasVentanasLibres()
+        {
+            foreach (object i_pan in ListaPantallasAbiertas)
+            {
+                ListaPantallasAbiertas.Remove((IPantallasContenedor)i_pan);
+                /*if (((IPantallasContenedor)i_pan).Identificador != "INICIAL")
+                {
+                    if (((IPantallasContenedor)i_pan).Window is Window)
+                    {
+                        ((IPantallasContenedor)i_pan).Window.C();
+                    }
+                    else
+                    {
+                        try
+                        {
+                            ((Window)i_pan).Close();
+                        }
+                        catch { }
+                    }
+                }*/
+            }
+        }
         public void AplicarOpcionesUsuario(string p_IDUsuarioActual)
         {
 
-            //DBConector_Internal b_conector = new DBConector_Internal(this.Configuracion.Datos.connectionString_PDSImpresionEtiquetas);
+            DBConector_Internal b_conector = new DBConector_Internal(this.Configuracion.Datos.connectionString_PDSImpresionEtiquetas);
 
-            //List<DB_Usuarios_PermisosSeccionesApp> b_lista_permisos = b_db.Usuarios_PermisosSeccionesApp_GetListObj(p_IDUsuarioActual);
+            List<DBPermisos_Usuario> b_lista_permisos = b_conector.Permisos_Usuario_GetListObj(p_IDUsuarioActual);
 
-            //foreach (DB_Usuarios_PermisosSeccionesApp i_item in b_lista_permisos)
-            //{
-            //    bool b_valor = i_item.Valor;
-            //    switch (i_item.CodSeccionApp)
-            //    {
-            //        case "EDITORMAIN01":
-            //            _HayPermiso_EDITORMAIN01 = b_valor;
-            //            RaisePropertyChanged("HayPermiso_EDITORMAIN01");
-            //            break;
-            //        case "PANVIEWALLTAGS01":
-            //            _HayPermiso_PANVIEWALLTAGS01 = b_valor;
-            //            RaisePropertyChanged("HayPermiso_PANVIEWALLTAGS01");
-            //            break;
-            //        case "PANSCADAGENERAL01":
-            //            _HayPermiso_PANSCADAGENERAL01 = b_valor;
-            //            RaisePropertyChanged("HayPermiso_PANSCADAGENERAL01");
-            //            break;
-            //        case "PANSCADAMAQUINASSECCIONES01":
-            //            _HayPermiso_PANSCADAMAQUINASSECCIONES01 = b_valor;
-            //            RaisePropertyChanged("HayPermiso_PANSCADAMAQUINASSECCIONES01");
-            //            break;
-            //        case "OPCIONES01":
-            //            _HayPermiso_OPCIONES01 = b_valor;
-            //            RaisePropertyChanged("HayPermiso_OPCIONES01");
-            //            break;
-            //        case "PANSGAUT_MODCANTIDADESMATERIALES01":
-            //            _HayPermiso_PANSGAUT_MODCANTIDADESMATERIALES01 = b_valor;
-            //            RaisePropertyChanged("HayPermiso_PANSGAUT_MODCANTIDADESMATERIALES01");
-            //            break;
-            //    }
-            //}
+            foreach (DBPermisos_Usuario i_item in b_lista_permisos)
+            {
+                int b_valor = i_item.Permiso;
+                switch (i_item.CodPantalla)
+                {
+                    case "panHistorico":
+                        if (b_valor > 0) _HayPermiso_panHistorico = true; else _HayPermiso_panHistorico = false;
+                        RaisePropertyChanged("HayPermiso_panHistorico");
+                        break;
+                    case "panEtiquetaCajaBobina":
+                        if (b_valor > 0) _HayPermiso_panEtiquetaCajaBobina = true; else _HayPermiso_panEtiquetaCajaBobina = false;
+                        RaisePropertyChanged("HayPermiso_panEtiquetaCajaBobina");
+                        break;
+                    case "panImpresionEtiquetaCOliveRueda":
+                        if (b_valor > 0) _HayPermiso_panImpresionEtiquetaCOliveRueda = true; else _HayPermiso_panImpresionEtiquetaCOliveRueda = false;
+                        RaisePropertyChanged("HayPermiso_panImpresionEtiquetaCOliveRueda");
+                        break;
+                    case "panImpresionEtiquetaESTIU":
+                        if (b_valor > 0) _HayPermiso_panImpresionEtiquetaESTIU = true; else _HayPermiso_panImpresionEtiquetaESTIU = false;
+                        RaisePropertyChanged("HayPermiso_panImpresionEtiquetaESTIU");
+                        break;
+                    case "panImpresionEtiquetaSIRO":
+                        if (b_valor > 0) _HayPermiso_panImpresionEtiquetaSIRO = true; else _HayPermiso_panImpresionEtiquetaSIRO = false;
+                        RaisePropertyChanged("HayPermiso_panImpresionEtiquetaSIRO");
+                        break;
+                    case "panImpresionEtiquetaGen01":
+                        if (b_valor > 0) _HayPermiso_panImpresionEtiquetaGen01 = true; else _HayPermiso_panImpresionEtiquetaGen01 = false;
+                        RaisePropertyChanged("HayPermiso_panImpresionEtiquetaGen01");
+                        break;
+                    case "panImpresionEtiquetaGen02":
+                        if (b_valor > 0) _HayPermiso_panImpresionEtiquetaGen02 = true; else _HayPermiso_panImpresionEtiquetaGen02 = false;
+                        RaisePropertyChanged("HayPermiso_panImpresionEtiquetaGen02");
+                        break;
+                    case "panImpresionEtiquetaGen03":
+                        if (b_valor > 0) _HayPermiso_panImpresionEtiquetaGen03 = true; else _HayPermiso_panImpresionEtiquetaGen03 = false;
+                        RaisePropertyChanged("HayPermiso_panImpresionEtiquetaGen03");
+                        break;
+                    case "panReImpresionEtiquetaGen01":
+                        if (b_valor > 0) _HayPermiso_panReImpresionEtiquetaGen01 = true; else _HayPermiso_panReImpresionEtiquetaGen01 = false;
+                        RaisePropertyChanged("HayPermiso_panReImpresionEtiquetaGen01");
+                        break;
+                    case "panTipoEtiqueta":
+                        if (b_valor > 0) _HayPermiso_panTipoEtiqueta = true; else _HayPermiso_panEtiquetaCajaBobina = false;
+                        RaisePropertyChanged("HayPermiso_panTipoEtiqueta");
+                        break;
+                }
+            }
         }
 
-        #endregion*/
+        #endregion
     }
 }

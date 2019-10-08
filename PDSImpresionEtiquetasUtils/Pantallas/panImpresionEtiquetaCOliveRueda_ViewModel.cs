@@ -86,7 +86,7 @@ namespace PDSImpresionEtiquetasUtils.Pantallas
                     DataBaseLayer dbl = new DataBaseLayer(csEstadoPermanente.Configuracion.Datos.connectionString_PDSImpresionEtiquetas);
 
                     // TODO Guardar En BDD
-                    dbl.DB_pds_progutils_PALETS_Insert(Guid.Parse(Entity.UIDEtiqueta), Entity.Sscc.Serialize(), dbl.DB_pds_progutils_PALETS_GetUIDEtiqueta("6"), serializado);
+                    dbl.DB_pds_progutils_PALETS_Insert(Guid.Parse(Entity.UIDEtiqueta), Entity.Sscc.Serialize(), dbl.DB_pds_progutils_PALETS_GetUIDEtiqueta("7"), serializado);
 
                     IsStoredInBD = true;
                     TextoBotonImpresion = "Reimprimir";
